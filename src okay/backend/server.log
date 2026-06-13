@@ -1,0 +1,1522 @@
+
+2026/04/19 04:58:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[173.444ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2026/04/19 04:58:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[166.435ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.909ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.609ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.565ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[186.365ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.877ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2026/04/19 04:58:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[187.717ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:49 [32m
+[0m[33m[170.560ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:49 [32m
+[0m[33m[185.864ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:49 [32m
+[0m[33m[169.994ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:49 [32m
+[0m[33m[184.959ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:49 [32m
+[0m[33m[185.132ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:50 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[210.473ms] [33m[rows:-][35m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'[0m
+
+2026/04/19 04:58:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[212.250ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'address') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:58:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.118ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'email') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.772ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'username') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:50 [32m
+[0m[33m[169.250ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:51 [32m
+[0m[33m[183.341ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:51 [32m
+[0m[33m[190.761ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:51 [32m
+[0m[33m[186.365ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:51 [32m
+[0m[33m[178.169ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:51 [32m
+[0m[33m[174.998ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2026/04/19 04:58:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[173.424ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'referral_code') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.168ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'referred_by') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:52 [32m
+[0m[33m[179.990ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:52 [32m
+[0m[33m[193.616ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:52 [32m
+[0m[33m[169.079ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:52 [32m
+[0m[33m[188.828ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:53 [32m
+[0m[33m[177.262ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:53 [32m
+[0m[33m[174.359ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2026/04/19 04:58:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[173.639ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'network') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:53 [32m
+[0m[33m[171.645ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:53 [32m
+[0m[33m[185.253ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:53 [32m
+[0m[33m[171.714ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:54 [32m
+[0m[33m[184.121ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:54 [32m
+[0m[33m[188.961ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:54 [32m
+[0m[33m[174.631ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2026/04/19 04:58:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[181.114ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:54 [32m
+[0m[33m[169.157ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:55 [32m
+[0m[33m[179.602ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'users'
+
+2026/04/19 04:58:55 [32m
+[0m[33m[169.611ms] [34;1m[rows:-][0m SELECT * FROM "users" LIMIT 1
+
+2026/04/19 04:58:55 [32m
+[0m[33m[184.815ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:55 [32m
+[0m[33m[198.063ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'users'
+
+2026/04/19 04:58:55 [32m
+[0m[33m[188.094ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'users'
+
+2026/04/19 04:58:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.063ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'users' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'users' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[171.458ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND table_type = 'BASE TABLE'
+
+2026/04/19 04:58:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[169.040ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.126ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:58:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.093ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:58:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[190.055ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:58:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[193.145ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:58:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.337ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:58:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.690ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:57 [32m
+[0m[33m[168.938ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:57 [32m
+[0m[33m[190.029ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:58:57 [32m
+[0m[33m[169.066ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:58:58 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[202.837ms] [33m[rows:-][35m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'[0m
+
+2026/04/19 04:58:58 [32m
+[0m[33m[194.643ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:58:58 [32m
+[0m[33m[176.353ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:58:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.615ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'order_hash') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.970ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'user_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.766ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'network') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.065ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'pair_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.355ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'side') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:58:59 [32m
+[0m[33m[168.254ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:58:59 [32m
+[0m[33m[188.077ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:58:59 [32m
+[0m[33m[176.819ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:00 [32m
+[0m[33m[193.349ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:00 [32m
+[0m[33m[196.857ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:00 [32m
+[0m[33m[179.864ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.573ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'order_type') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[184.202ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'price') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[181.466ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'amount') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:01 [32m
+[0m[33m[172.997ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:01 [32m
+[0m[33m[198.122ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:59:01 [32m
+[0m[33m[184.857ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:01 [32m
+[0m[33m[186.347ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:02 [32m
+[0m[33m[192.636ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:02 [32m
+[0m[33m[176.867ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.766ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'filled_amount') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.257ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'amount_in') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.399ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'amount_out_min') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.669ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'token_in') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.293ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'token_out') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.581ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'receiver') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[189.516ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'maker') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.759ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'signature') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.102ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'expiration') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.070ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'nonce') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.583ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'salt') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:04 [32m
+[0m[33m[169.232ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:04 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[233.157ms] [33m[rows:-][35m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'[0m
+
+2026/04/19 04:59:04 [32m
+[0m[33m[175.701ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:04 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[220.337ms] [33m[rows:-][35m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'[0m
+
+2026/04/19 04:59:05 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[224.651ms] [33m[rows:-][35m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'[0m
+
+2026/04/19 04:59:05 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[201.957ms] [33m[rows:-][35m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'[0m
+
+2026/04/19 04:59:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[180.084ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'status') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.150ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'is_ladder') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.323ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_levels') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.655ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_price_start') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.443ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_price_end') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.175ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_parent_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[243.529ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_total_amount_in') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[182.050ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'ladder_total_amount_out_min') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.898ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'commit_hash') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.337ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'commit_revealed') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.767ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'commit_expired') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.203ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'trigger_price') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.123ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'triggered_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[184.416ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'is_post_only') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[184.493ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'reduce_only') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:08 [32m
+[0m[33m[174.790ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:08 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[202.244ms] [33m[rows:-][35m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'[0m
+
+2026/04/19 04:59:08 [32m
+[0m[33m[185.107ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:08 [32m
+[0m[33m[194.192ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:09 [32m
+[0m[33m[189.718ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:09 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[205.969ms] [33m[rows:-][35m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'[0m
+
+2026/04/19 04:59:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.729ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'time_in_force') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[181.519ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'stop_loss_type') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:09 [32m
+[0m[33m[169.399ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:10 [32m
+[0m[33m[185.775ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:59:10 [32m
+[0m[33m[170.291ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:10 [32m
+[0m[33m[188.399ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:10 [32m
+[0m[33m[189.394ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:10 [32m
+[0m[33m[190.757ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.224ms] [34;1m[rows:1][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'amount_in_decimals') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:11 [32m
+[0m[33m[175.015ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:11 [32m
+[0m[33m[191.296ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:59:11 [32m
+[0m[33m[187.035ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:11 [32m
+[0m[33m[193.925ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:11 [32m
+[0m[33m[194.746ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:12 [32m
+[0m[33m[186.127ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.430ms] [34;1m[rows:1][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'amount_out_decimals') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:12 [32m
+[0m[33m[188.992ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:12 [32m
+[0m[33m[194.526ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:59:12 [32m
+[0m[33m[182.097ms] [34;1m[rows:-][0m SELECT * FROM "orders" LIMIT 1
+
+2026/04/19 04:59:13 [32m
+[0m[33m[190.973ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:13 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[206.005ms] [33m[rows:-][35m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'[0m
+
+2026/04/19 04:59:13 [32m
+[0m[33m[196.737ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.795ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:13 [32m
+[0m[33m[170.435ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:14 [32m
+[0m[33m[189.277ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'orders'
+
+2026/04/19 04:59:14 [32m [33mSLOW SQL >= 200ms
+[0m[31;1m[207.902ms] [33m[rows:-][35m SELECT * FROM "orders" LIMIT 1[0m
+
+2026/04/19 04:59:14 [32m
+[0m[33m[187.800ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:14 [32m
+[0m[33m[196.763ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'orders'
+
+2026/04/19 04:59:14 [32m
+[0m[33m[169.902ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'orders'
+
+2026/04/19 04:59:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.590ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'orders' AND column_name = 'updated_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'orders' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[170.185ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND table_type = 'BASE TABLE'
+
+2026/04/19 04:59:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[169.121ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[187.793ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'fills'
+
+2026/04/19 04:59:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[167.580ms] [34;1m[rows:-][0m SELECT * FROM "fills" LIMIT 1
+
+2026/04/19 04:59:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[187.317ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'fills' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[198.888ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'fills'
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.238ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'fills'
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.462ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.273ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'network') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.587ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'pair_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.255ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'order_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:17 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[188.642ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'maker_order_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:17 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[215.566ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'taker_order_id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:17 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[180.453ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'maker') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:17 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[176.107ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'taker') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:17 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[172.963ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'side') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:18 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.959ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'price') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:18 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.628ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'amount') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:18 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[303.448ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'amount_in') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:18 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[198.468ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'amount_out') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:18 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.371ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'fee') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:19 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[248.015ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'token_in') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:19 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[222.911ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'token_out') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:19 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[187.885ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'tx_hash') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:19 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[178.348ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'block_number') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:19 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.816ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'gas_used') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:20 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[182.182ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'status') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:20 [32m
+[0m[33m[182.402ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:20 [32m
+[0m[33m[189.295ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'fills'
+
+2026/04/19 04:59:20 [32m
+[0m[33m[175.961ms] [34;1m[rows:-][0m SELECT * FROM "fills" LIMIT 1
+
+2026/04/19 04:59:20 [32m
+[0m[33m[192.558ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'fills' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:21 [32m
+[0m[33m[185.796ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'fills'
+
+2026/04/19 04:59:21 [32m
+[0m[33m[177.163ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'fills'
+
+2026/04/19 04:59:21 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.589ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'fills' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'fills' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:21 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[287.733ms] [33m[rows:1][35m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND table_type = 'BASE TABLE'[0m
+
+2026/04/19 04:59:22 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[316.276ms] [33m[rows:1][35m SELECT CURRENT_DATABASE()[0m
+
+2026/04/19 04:59:22 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[189.371ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'pairs'
+
+2026/04/19 04:59:22 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[242.780ms] [33m[rows:-][35m SELECT * FROM "pairs" LIMIT 1[0m
+
+2026/04/19 04:59:22 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.425ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'pairs' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:22 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[186.682ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'pairs'
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.914ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'pairs'
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[182.663ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[181.790ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'network') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[182.584ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'base_token') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[187.383ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'quote_token') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:23 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[184.403ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'base_symbol') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:24 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.491ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'quote_symbol') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:24 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[174.431ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'dex') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:24 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[363.683ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'pool_address') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:25 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[350.515ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'pairs' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'pairs' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:25 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.325ms] [34;1m[rows:1][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND table_type = 'BASE TABLE'
+
+2026/04/19 04:59:25 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[257.005ms] [33m[rows:1][35m SELECT CURRENT_DATABASE()[0m
+
+2026/04/19 04:59:25 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[195.559ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'tokens'
+
+2026/04/19 04:59:25 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[165.330ms] [34;1m[rows:-][0m SELECT * FROM "tokens" LIMIT 1
+
+2026/04/19 04:59:26 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[185.327ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:26 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[186.482ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens'
+
+2026/04/19 04:59:26 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.222ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'tokens'
+
+2026/04/19 04:59:26 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[177.616ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'id') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:26 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[182.550ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'network') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:26 [32m
+[0m[33m[169.050ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:27 [32m
+[0m[33m[183.996ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'tokens'
+
+2026/04/19 04:59:27 [32m
+[0m[33m[173.430ms] [34;1m[rows:-][0m SELECT * FROM "tokens" LIMIT 1
+
+2026/04/19 04:59:27 [32m
+[0m[33m[189.203ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:27 [32m
+[0m[33m[182.960ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens'
+
+2026/04/19 04:59:27 [32m
+[0m[33m[172.157ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'tokens'
+
+2026/04/19 04:59:28 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[183.341ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'address') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:28 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[175.867ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'symbol') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:28 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.814ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'name') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:28 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187 [33mSLOW SQL >= 200ms
+[0m[31;1m[239.352ms] [33m[rows:0][35m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'decimals') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))[0m
+
+2026/04/19 04:59:28 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[193.491ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'logo_uri') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+
+2026/04/19 04:59:29 [32m
+[0m[33m[174.279ms] [34;1m[rows:1][0m SELECT CURRENT_DATABASE()
+
+2026/04/19 04:59:29 [32m
+[0m[33m[181.306ms] [34;1m[rows:-][0m SELECT c.column_name, c.is_nullable = 'YES', c.udt_name, c.character_maximum_length, c.numeric_precision, c.numeric_precision_radix, c.numeric_scale, c.datetime_precision, 8 * typlen, c.column_default, pd.description, c.identity_increment FROM information_schema.columns AS c JOIN pg_type AS pgt ON c.udt_name = pgt.typname LEFT JOIN pg_catalog.pg_description as pd ON pd.objsubid = c.ordinal_position AND pd.objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = c.table_name AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = c.table_schema)) where table_catalog = 'postgres' AND table_schema = CURRENT_SCHEMA() AND table_name = 'tokens'
+
+2026/04/19 04:59:29 [32m
+[0m[33m[168.352ms] [34;1m[rows:-][0m SELECT * FROM "tokens" LIMIT 1
+
+2026/04/19 04:59:29 [32m
+[0m[33m[183.903ms] [34;1m[rows:-][0m SELECT constraint_name FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens' AND constraint_type = 'UNIQUE'
+
+2026/04/19 04:59:29 [32m
+[0m[33m[186.757ms] [34;1m[rows:-][0m SELECT c.column_name, constraint_name, constraint_type FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_catalog, table_name, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name WHERE constraint_type IN ('PRIMARY KEY', 'UNIQUE') AND c.table_catalog = 'postgres' AND c.table_schema = CURRENT_SCHEMA() AND c.table_name = 'tokens'
+
+2026/04/19 04:59:29 [32m
+[0m[33m[184.431ms] [34;1m[rows:-][0m SELECT a.attname as column_name, format_type(a.atttypid, a.atttypmod) AS data_type
+		FROM pg_attribute a JOIN pg_class b ON a.attrelid = b.oid AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA())
+		WHERE a.attnum > 0 -- hide internal columns
+		AND NOT a.attisdropped -- hide deleted columns
+		AND b.relname = 'tokens'
+
+2026/04/19 04:59:30 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/cmd/api/main.go:187
+[0m[33m[179.513ms] [34;1m[rows:0][0m SELECT description FROM pg_catalog.pg_description WHERE objsubid = (SELECT ordinal_position FROM information_schema.columns WHERE table_schema = CURRENT_SCHEMA() AND table_name = 'tokens' AND column_name = 'created_at') AND objoid = (SELECT oid FROM pg_catalog.pg_class WHERE relname = 'tokens' AND relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = CURRENT_SCHEMA()))
+[Executor] Starting settlement executor...
+[Executor] RPC BSC: https://bsc-dataseed.defibit.io/, Settlement BSC: 0x7b542928496A7ca12aEd331D0b1c16024fDce476
+[Executor] RPC Base: https://base-mainnet.infura.io/v3/184a5ca86a594fe49d52739a2827b627, Settlement Base: 0x4D8dBF3c0DF7838E510eD4f9EFb8eF12847bd47c
+[Executor] PrivateKey loaded: true
+
+2026/04/19 04:59:40 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/pair.go:43 [33mSLOW SQL >= 200ms
+[0m[31;1m[520.386ms] [33m[rows:100][35m SELECT * FROM "pairs" LIMIT 100[0m
+
+2026/04/19 04:59:40 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.161ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb720ea2a201c03578cca05191e8b4ab859704cfe' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:40 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.771ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb720ea2a201c03578cca05191e8b4ab859704cfe' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xb720ea2a201c03578cca05191e8b4ab859704cfe, asks=0, bids=0
+
+2026/04/19 04:59:40 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[190.546ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xd3a74a99e91317ad74869e07b48164cd537b1ee2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:40 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.352ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xd3a74a99e91317ad74869e07b48164cd537b1ee2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xd3a74a99e91317ad74869e07b48164cd537b1ee2, asks=0, bids=0
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.891ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xcaaf3c41a40103a23eeaa4bba468af3cf5b0e0d8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.939ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xcaaf3c41a40103a23eeaa4bba468af3cf5b0e0d8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xcaaf3c41a40103a23eeaa4bba468af3cf5b0e0d8, asks=0, bids=0
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[191.009ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd3a50dc13d085f8093c2bbf4e2429915b7b47489b67e2f104568678982d13810' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.037ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd3a50dc13d085f8093c2bbf4e2429915b7b47489b67e2f104568678982d13810' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xd3a50dc13d085f8093c2bbf4e2429915b7b47489b67e2f104568678982d13810, asks=0, bids=0
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.203ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x6ec31af1bb9a72aacec12e4ded508861b05f4503' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:41 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.885ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x6ec31af1bb9a72aacec12e4ded508861b05f4503' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x6ec31af1bb9a72aacec12e4ded508861b05f4503, asks=0, bids=0
+
+2026/04/19 04:59:42 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[184.019ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb2af49dbf526054faf19602860a5e298a79f3d05' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:42 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.307ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb2af49dbf526054faf19602860a5e298a79f3d05' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xb2af49dbf526054faf19602860a5e298a79f3d05, asks=0, bids=0
+
+2026/04/19 04:59:42 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.108ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x8908749b4b370b75434949c8dff08aa493b3d28d2509a4b6dd7058d7484c031a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:42 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.662ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x8908749b4b370b75434949c8dff08aa493b3d28d2509a4b6dd7058d7484c031a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x8908749b4b370b75434949c8dff08aa493b3d28d2509a4b6dd7058d7484c031a, asks=0, bids=0
+
+2026/04/19 04:59:42 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.732ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x5ec8fd9b09454e7e2662a2c4c0432f95e896ea79' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.225ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x5ec8fd9b09454e7e2662a2c4c0432f95e896ea79' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x5ec8fd9b09454e7e2662a2c4c0432f95e896ea79, asks=0, bids=0
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.880ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xa46d5090499efb9c5dd7d95f7ca69f996b9fb761' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[171.371ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xa46d5090499efb9c5dd7d95f7ca69f996b9fb761' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xa46d5090499efb9c5dd7d95f7ca69f996b9fb761, asks=0, bids=0
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.593ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x9cfea9ef82f26857c3426487774c088330555da6113c61ac7fb8b30d0ae434b3' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[171.363ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x9cfea9ef82f26857c3426487774c088330555da6113c61ac7fb8b30d0ae434b3' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x9cfea9ef82f26857c3426487774c088330555da6113c61ac7fb8b30d0ae434b3, asks=0, bids=0
+
+2026/04/19 04:59:43 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.934ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x97ef267d87abd28dd5070d485efc7cdd960e1b3045a4e2dc0b2e9abbdc9b1837' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.881ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x97ef267d87abd28dd5070d485efc7cdd960e1b3045a4e2dc0b2e9abbdc9b1837' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x97ef267d87abd28dd5070d485efc7cdd960e1b3045a4e2dc0b2e9abbdc9b1837, asks=0, bids=0
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.529ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x3f0296bf652e19bca772ec3df08b32732f93014a' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.900ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x3f0296bf652e19bca772ec3df08b32732f93014a' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x3f0296bf652e19bca772ec3df08b32732f93014a, asks=0, bids=0
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.260ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc1a6fbedae68e1472dbb91fe29b51f7a0bd44f97' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[185.937ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc1a6fbedae68e1472dbb91fe29b51f7a0bd44f97' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xc1a6fbedae68e1472dbb91fe29b51f7a0bd44f97, asks=0, bids=0
+
+2026/04/19 04:59:44 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.797ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x6487725b383954e05ca56f3c2b93a104b3dd2c25' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:45 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.719ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x6487725b383954e05ca56f3c2b93a104b3dd2c25' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x6487725b383954e05ca56f3c2b93a104b3dd2c25, asks=0, bids=0
+
+2026/04/19 04:59:45 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.466ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc9034c3e7f58003e6ae0c8438e7c8f4598d5acaa' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:45 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[190.622ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc9034c3e7f58003e6ae0c8438e7c8f4598d5acaa' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xc9034c3e7f58003e6ae0c8438e7c8f4598d5acaa, asks=0, bids=0
+
+2026/04/19 04:59:45 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.658ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x98c8f03094a9e65ccedc14c40130e4a5dd0ce14fb12ea58cbeac11f662b458b9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:45 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.750ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x98c8f03094a9e65ccedc14c40130e4a5dd0ce14fb12ea58cbeac11f662b458b9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x98c8f03094a9e65ccedc14c40130e4a5dd0ce14fb12ea58cbeac11f662b458b9, asks=0, bids=0
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.978ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x19ae1813d020302e624bd4a02703e0241264baf8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.113ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x19ae1813d020302e624bd4a02703e0241264baf8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x19ae1813d020302e624bd4a02703e0241264baf8, asks=0, bids=0
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73 [33mSLOW SQL >= 200ms
+[0m[31;1m[1654.805ms] [33m[rows:0][35m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50[0m
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.034ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2c412bafe4f83f4591b4434d4655d7d12d489c3a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.402ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2c412bafe4f83f4591b4434d4655d7d12d489c3a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x2c412bafe4f83f4591b4434d4655d7d12d489c3a, asks=0, bids=0
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.217ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xaef7d0c944d40717ad98bc7d317d96796ff11de9' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:46 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[189.012ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xaef7d0c944d40717ad98bc7d317d96796ff11de9' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xaef7d0c944d40717ad98bc7d317d96796ff11de9, asks=0, bids=0
+
+2026/04/19 04:59:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[185.325ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x995985c9027e8a90c823a5e0a9112fea72d1f4dd' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.753ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x995985c9027e8a90c823a5e0a9112fea72d1f4dd' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x995985c9027e8a90c823a5e0a9112fea72d1f4dd, asks=0, bids=0
+
+2026/04/19 04:59:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.591ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x4e829f8a5213c42535ab84aa40bd4adcce9cba02' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78 [33mSLOW SQL >= 200ms
+[0m[31;1m[206.868ms] [33m[rows:0][35m SELECT * FROM "orders" WHERE (pair_id = 'base_0x4e829f8a5213c42535ab84aa40bd4adcce9cba02' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000[0m
+[Matching] Loaded pair=base_0x4e829f8a5213c42535ab84aa40bd4adcce9cba02, asks=0, bids=0
+
+2026/04/19 04:59:47 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.611ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xa5dbeaf16fc031eae92175974f8d0a439be4ad17' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[192.420ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xa5dbeaf16fc031eae92175974f8d0a439be4ad17' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xa5dbeaf16fc031eae92175974f8d0a439be4ad17, asks=0, bids=0
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.869ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x80cc08712aa61ce9dc7604f9ce7560a25094b862' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.883ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x80cc08712aa61ce9dc7604f9ce7560a25094b862' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x80cc08712aa61ce9dc7604f9ce7560a25094b862, asks=0, bids=0
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.270ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x7f51bbf34156ba802deb0e38b7671dc4fa32041d' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.908ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x7f51bbf34156ba802deb0e38b7671dc4fa32041d' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x7f51bbf34156ba802deb0e38b7671dc4fa32041d, asks=0, bids=0
+
+2026/04/19 04:59:48 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[171.727ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x886928eb467ef5e69b4ebc2c8af4275b21af41bd' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[190.859ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x886928eb467ef5e69b4ebc2c8af4275b21af41bd' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x886928eb467ef5e69b4ebc2c8af4275b21af41bd, asks=0, bids=0
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.607ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf8efb5234b2ca948e51e126acc7b543d761afa5a4d183b4f9371ad2ae135341b' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[198.247ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf8efb5234b2ca948e51e126acc7b543d761afa5a4d183b4f9371ad2ae135341b' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xf8efb5234b2ca948e51e126acc7b543d761afa5a4d183b4f9371ad2ae135341b, asks=0, bids=0
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.951ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x659be70647b0f63217d60e077f4417b1ecc65064' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73 [33mSLOW SQL >= 200ms
+[0m[31;1m[345.727ms] [33m[rows:0][35m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50[0m
+
+2026/04/19 04:59:49 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78 [33mSLOW SQL >= 200ms
+[0m[31;1m[308.520ms] [33m[rows:0][35m SELECT * FROM "orders" WHERE (pair_id = 'base_0x659be70647b0f63217d60e077f4417b1ecc65064' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000[0m
+[Matching] Loaded pair=base_0x659be70647b0f63217d60e077f4417b1ecc65064, asks=0, bids=0
+
+2026/04/19 04:59:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[197.976ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x35c765765132d9ba94063a26d5eab98e9f005354b614d0e3f58ba1e7dc08a679' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[171.172ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x35c765765132d9ba94063a26d5eab98e9f005354b614d0e3f58ba1e7dc08a679' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x35c765765132d9ba94063a26d5eab98e9f005354b614d0e3f58ba1e7dc08a679, asks=0, bids=0
+
+2026/04/19 04:59:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.424ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x4426b1072f7bab649b3ee053b9b5c415fef1d0e8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.826ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x4426b1072f7bab649b3ee053b9b5c415fef1d0e8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x4426b1072f7bab649b3ee053b9b5c415fef1d0e8, asks=0, bids=0
+
+2026/04/19 04:59:50 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.289ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xb30540172f1b37d1ee1d109e49f883e935e69219' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.250ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xb30540172f1b37d1ee1d109e49f883e935e69219' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xb30540172f1b37d1ee1d109e49f883e935e69219, asks=0, bids=0
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.895ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe1acb466421ed24dd8bd381d1205bad0ad43ca9c' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.364ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe1acb466421ed24dd8bd381d1205bad0ad43ca9c' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xe1acb466421ed24dd8bd381d1205bad0ad43ca9c, asks=0, bids=0
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.241ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x3ce99c117ae6ac0819c498b4a29a690a94d778b631ef736f8cbebdf834c79750' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[167.866ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x3ce99c117ae6ac0819c498b4a29a690a94d778b631ef736f8cbebdf834c79750' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x3ce99c117ae6ac0819c498b4a29a690a94d778b631ef736f8cbebdf834c79750, asks=0, bids=0
+
+2026/04/19 04:59:51 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.403ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x50a9663b08a33eddd9a642590f5cb8fb4079b8f8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.603ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x50a9663b08a33eddd9a642590f5cb8fb4079b8f8' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x50a9663b08a33eddd9a642590f5cb8fb4079b8f8, asks=0, bids=0
+
+2026/04/19 04:59:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.878ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x172fcd41e0913e95784454622d1c3724f546f849' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.553ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x172fcd41e0913e95784454622d1c3724f546f849' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x172fcd41e0913e95784454622d1c3724f546f849, asks=0, bids=0
+
+2026/04/19 04:59:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.279ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x1b54cd932b6b751803c996cbef36280b53795f81' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:52 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.263ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x1b54cd932b6b751803c996cbef36280b53795f81' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x1b54cd932b6b751803c996cbef36280b53795f81, asks=0, bids=0
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[188.579ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x69a8a0334da80063ddf919ad68ddf861528a87b7fdc13c496de124c8980dcbcb' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.890ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x69a8a0334da80063ddf919ad68ddf861528a87b7fdc13c496de124c8980dcbcb' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x69a8a0334da80063ddf919ad68ddf861528a87b7fdc13c496de124c8980dcbcb, asks=0, bids=0
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.726ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe6edc555061d1d9fe0145867b7ea7b07da840898' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.929ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe6edc555061d1d9fe0145867b7ea7b07da840898' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xe6edc555061d1d9fe0145867b7ea7b07da840898, asks=0, bids=0
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.864ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x3c79593e01a7f7fed5d0735b16621e2d52a6bc58' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:53 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.416ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x3c79593e01a7f7fed5d0735b16621e2d52a6bc58' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x3c79593e01a7f7fed5d0735b16621e2d52a6bc58, asks=0, bids=0
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.200ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xa37f23b49088bd52cb3e23a696caf26ba3a4d55a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.099ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xa37f23b49088bd52cb3e23a696caf26ba3a4d55a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xa37f23b49088bd52cb3e23a696caf26ba3a4d55a, asks=0, bids=0
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.635ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x8ffd336d457ada04a2d5112f8f0c1f1a84577f2f' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.685ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x8ffd336d457ada04a2d5112f8f0c1f1a84577f2f' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x8ffd336d457ada04a2d5112f8f0c1f1a84577f2f, asks=0, bids=0
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.127ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xed8f799da7ee2b91d23ea7272930b066b7c3755743818a5a3add4bb4c7ee55b8' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73
+[0m[33m[191.805ms] [34;1m[rows:0][0m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50
+
+2026/04/19 04:59:54 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.657ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xed8f799da7ee2b91d23ea7272930b066b7c3755743818a5a3add4bb4c7ee55b8' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xed8f799da7ee2b91d23ea7272930b066b7c3755743818a5a3add4bb4c7ee55b8, asks=0, bids=0
+
+2026/04/19 04:59:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.447ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x15f351bf1637b43d70631ba95fb9bbb1ff21761c29b034c1b380aecb922464dd' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[184.630ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x15f351bf1637b43d70631ba95fb9bbb1ff21761c29b034c1b380aecb922464dd' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x15f351bf1637b43d70631ba95fb9bbb1ff21761c29b034c1b380aecb922464dd, asks=0, bids=0
+
+2026/04/19 04:59:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.767ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb47afe51524ba76d9e2108558e04220d51b2c179' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.927ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb47afe51524ba76d9e2108558e04220d51b2c179' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xb47afe51524ba76d9e2108558e04220d51b2c179, asks=0, bids=0
+
+2026/04/19 04:59:55 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.120ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x933477eba23726ca95a957cb85dbb1957267ef85' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.043ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x933477eba23726ca95a957cb85dbb1957267ef85' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x933477eba23726ca95a957cb85dbb1957267ef85, asks=0, bids=0
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.114ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2ad2651a07b4949c0f892cfa27c3c73fb3b020f6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[182.693ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2ad2651a07b4949c0f892cfa27c3c73fb3b020f6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x2ad2651a07b4949c0f892cfa27c3c73fb3b020f6, asks=0, bids=0
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[182.683ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe85bc115847d7106b6335d067c6d2cf9b837ce50626a1df3f01d0012681a5db4' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.858ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xe85bc115847d7106b6335d067c6d2cf9b837ce50626a1df3f01d0012681a5db4' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xe85bc115847d7106b6335d067c6d2cf9b837ce50626a1df3f01d0012681a5db4, asks=0, bids=0
+
+2026/04/19 04:59:56 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.416ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x7d90deedb9f15c1f8fdaccc3b6bc52dc208e9c9a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[168.103ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x7d90deedb9f15c1f8fdaccc3b6bc52dc208e9c9a' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x7d90deedb9f15c1f8fdaccc3b6bc52dc208e9c9a, asks=0, bids=0
+
+2026/04/19 04:59:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.156ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xf79501dc9a6b78279a5b723fbf2d62234fa0fca6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[187.958ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xf79501dc9a6b78279a5b723fbf2d62234fa0fca6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xf79501dc9a6b78279a5b723fbf2d62234fa0fca6, asks=0, bids=0
+
+2026/04/19 04:59:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[189.665ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb433ae7e7011a2fb9a4bbb86140e0f653dcfcfba' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:57 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78 [33mSLOW SQL >= 200ms
+[0m[31;1m[211.301ms] [33m[rows:0][35m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb433ae7e7011a2fb9a4bbb86140e0f653dcfcfba' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000[0m
+[Matching] Loaded pair=bsc_0xb433ae7e7011a2fb9a4bbb86140e0f653dcfcfba, asks=0, bids=0
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.021ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xf0750c373ebbb3baeef7e03d8300caad1983d67c' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.959ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xf0750c373ebbb3baeef7e03d8300caad1983d67c' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xf0750c373ebbb3baeef7e03d8300caad1983d67c, asks=0, bids=0
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.558ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xe2444faa67022125a059c19d5737d8e4dad251fa' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.846ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xe2444faa67022125a059c19d5737d8e4dad251fa' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xe2444faa67022125a059c19d5737d8e4dad251fa, asks=0, bids=0
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[194.230ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x26a8e4591b7a0efcd45a577ad0d54aa64a99efaf2546ad4d5b0454c99eb70eab' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:58 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.811ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x26a8e4591b7a0efcd45a577ad0d54aa64a99efaf2546ad4d5b0454c99eb70eab' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x26a8e4591b7a0efcd45a577ad0d54aa64a99efaf2546ad4d5b0454c99eb70eab, asks=0, bids=0
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.024ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x50203df8efcddba9755c886f086b9b2d537a15f9' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[183.721ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x50203df8efcddba9755c886f086b9b2d537a15f9' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x50203df8efcddba9755c886f086b9b2d537a15f9, asks=0, bids=0
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.550ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x038f1cdc67a5836f00806b273e5cbf2636716bf5' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.984ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x038f1cdc67a5836f00806b273e5cbf2636716bf5' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x038f1cdc67a5836f00806b273e5cbf2636716bf5, asks=0, bids=0
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.553ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xee99d2ccc718c58087ad2a5da6143e0aad073c5301cc8f51df186a53dcb6e439' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 04:59:59 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73
+[0m[33m[195.485ms] [34;1m[rows:0][0m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.951ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xee99d2ccc718c58087ad2a5da6143e0aad073c5301cc8f51df186a53dcb6e439' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xee99d2ccc718c58087ad2a5da6143e0aad073c5301cc8f51df186a53dcb6e439, asks=0, bids=0
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[185.292ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x73de8b8d37fac1afe156f6533788a0eff197d636' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[194.692ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x73de8b8d37fac1afe156f6533788a0eff197d636' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x73de8b8d37fac1afe156f6533788a0eff197d636, asks=0, bids=0
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[183.419ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xdbc6998296caa1652a810dc8d3baf4a8294330f1' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.481ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xdbc6998296caa1652a810dc8d3baf4a8294330f1' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xdbc6998296caa1652a810dc8d3baf4a8294330f1, asks=0, bids=0
+
+2026/04/19 05:00:00 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.893ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf0125d06b76cebc2ab3831a938e07ab6988b00c9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.673ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf0125d06b76cebc2ab3831a938e07ab6988b00c9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xf0125d06b76cebc2ab3831a938e07ab6988b00c9, asks=0, bids=0
+
+2026/04/19 05:00:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.423ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xada0861fe7af31d338f7292df25683a6741a3b11fa42ce9e7fbdd530cb988f6c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.675ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xada0861fe7af31d338f7292df25683a6741a3b11fa42ce9e7fbdd530cb988f6c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xada0861fe7af31d338f7292df25683a6741a3b11fa42ce9e7fbdd530cb988f6c, asks=0, bids=0
+
+2026/04/19 05:00:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[188.759ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd9edc75a3a797ec92ca370f19051babebfb2edee' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:01 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78 [33mSLOW SQL >= 200ms
+[0m[31;1m[202.611ms] [33m[rows:0][35m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd9edc75a3a797ec92ca370f19051babebfb2edee' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000[0m
+[Matching] Loaded pair=base_0xd9edc75a3a797ec92ca370f19051babebfb2edee, asks=0, bids=0
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[190.122ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x955ed3d0e1d2615a1d7bebb10ffab37f150bbb21' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[189.054ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x955ed3d0e1d2615a1d7bebb10ffab37f150bbb21' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x955ed3d0e1d2615a1d7bebb10ffab37f150bbb21, asks=0, bids=0
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[167.797ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf363de8ab7b39cf52510c7af0c31d1af8e570feada6817fdf148194776784115' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.061ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xf363de8ab7b39cf52510c7af0c31d1af8e570feada6817fdf148194776784115' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xf363de8ab7b39cf52510c7af0c31d1af8e570feada6817fdf148194776784115, asks=0, bids=0
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.109ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:02 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[199.683ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae, asks=0, bids=0
+
+2026/04/19 05:00:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.114ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x01e1dd31be98b874ee414e5cacfc2b15a624b8968f55f849539d423f36d09b75' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.335ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x01e1dd31be98b874ee414e5cacfc2b15a624b8968f55f849539d423f36d09b75' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x01e1dd31be98b874ee414e5cacfc2b15a624b8968f55f849539d423f36d09b75, asks=0, bids=0
+
+2026/04/19 05:00:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.055ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x6c561b446416e1a00e8e93e221854d6ea4171372' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.710ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x6c561b446416e1a00e8e93e221854d6ea4171372' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x6c561b446416e1a00e8e93e221854d6ea4171372, asks=0, bids=0
+
+2026/04/19 05:00:03 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.084ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xbffec96e8f3b5058b1817c14e4380758fada01ef' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.394ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xbffec96e8f3b5058b1817c14e4380758fada01ef' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xbffec96e8f3b5058b1817c14e4380758fada01ef, asks=0, bids=0
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.386ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.463ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d, asks=0, bids=0
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.809ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd7e5522c9cc3682c960afada6adde0f8116580f2ad2cef08c197faf625e53842' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.901ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd7e5522c9cc3682c960afada6adde0f8116580f2ad2cef08c197faf625e53842' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xd7e5522c9cc3682c960afada6adde0f8116580f2ad2cef08c197faf625e53842, asks=0, bids=0
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73
+[0m[33m[193.738ms] [34;1m[rows:0][0m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50
+
+2026/04/19 05:00:04 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.561ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x8f889728c2a879b15936eecc38a61f03fcdc6818' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[182.384ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x8f889728c2a879b15936eecc38a61f03fcdc6818' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x8f889728c2a879b15936eecc38a61f03fcdc6818, asks=0, bids=0
+
+2026/04/19 05:00:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.453ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb2842060d68177ff202e81b3bd8588630fe7ede60e1a19f4d327125f73ae92be' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.865ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb2842060d68177ff202e81b3bd8588630fe7ede60e1a19f4d327125f73ae92be' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xb2842060d68177ff202e81b3bd8588630fe7ede60e1a19f4d327125f73ae92be, asks=0, bids=0
+
+2026/04/19 05:00:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[168.433ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb7b05fb5396314519b5bca83ed64a0813f8b75b2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:05 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[197.924ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xb7b05fb5396314519b5bca83ed64a0813f8b75b2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xb7b05fb5396314519b5bca83ed64a0813f8b75b2, asks=0, bids=0
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.083ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x72ab388e2e2f6facef59e3c3fa2c4e29011c2d38' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[166.631ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x72ab388e2e2f6facef59e3c3fa2c4e29011c2d38' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x72ab388e2e2f6facef59e3c3fa2c4e29011c2d38, asks=0, bids=0
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[177.410ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xebe171fcaa290227f3e466d637bab9e8f3c472b3a013fb2315c5c9a222feb65a' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.600ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xebe171fcaa290227f3e466d637bab9e8f3c472b3a013fb2315c5c9a222feb65a' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xebe171fcaa290227f3e466d637bab9e8f3c472b3a013fb2315c5c9a222feb65a, asks=0, bids=0
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78 [33mSLOW SQL >= 200ms
+[0m[31;1m[204.143ms] [33m[rows:0][35m SELECT * FROM "orders" WHERE (pair_id = 'base_0x5116773e18a9c7bb03ebb961b38678e45e238923' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000[0m
+
+2026/04/19 05:00:06 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.191ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x5116773e18a9c7bb03ebb961b38678e45e238923' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x5116773e18a9c7bb03ebb961b38678e45e238923, asks=0, bids=0
+
+2026/04/19 05:00:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.111ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x32a805e65a3219a79707ab3e75443d75160d798de46613fc960d39cd4a96bb22' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.570ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x32a805e65a3219a79707ab3e75443d75160d798de46613fc960d39cd4a96bb22' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x32a805e65a3219a79707ab3e75443d75160d798de46613fc960d39cd4a96bb22, asks=0, bids=0
+
+2026/04/19 05:00:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.295ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xb4cb800910b228ed3d0834cf79d697127bbb00e5' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[175.426ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xb4cb800910b228ed3d0834cf79d697127bbb00e5' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xb4cb800910b228ed3d0834cf79d697127bbb00e5, asks=0, bids=0
+
+2026/04/19 05:00:07 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.114ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xdbe9722f44b984fba6cc608da9f726c347515fb8' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[185.441ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xdbe9722f44b984fba6cc608da9f726c347515fb8' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xdbe9722f44b984fba6cc608da9f726c347515fb8, asks=0, bids=0
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[184.254ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x0c3b466104545efa096b8f944c1e524e1d0d4888' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.373ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x0c3b466104545efa096b8f944c1e524e1d0d4888' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x0c3b466104545efa096b8f944c1e524e1d0d4888, asks=0, bids=0
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.091ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xe8f16fbf4eafec04bcf0c06d768e7ba325f9d6de' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[181.674ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xe8f16fbf4eafec04bcf0c06d768e7ba325f9d6de' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xe8f16fbf4eafec04bcf0c06d768e7ba325f9d6de, asks=0, bids=0
+
+2026/04/19 05:00:08 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.448ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x103601b710d3af17c837615eaf571179464c8c47' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[187.175ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x103601b710d3af17c837615eaf571179464c8c47' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x103601b710d3af17c837615eaf571179464c8c47, asks=0, bids=0
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[168.830ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x0c789a81c03f0f1871e54f9613f16ab0a460fe64' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.972ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x0c789a81c03f0f1871e54f9613f16ab0a460fe64' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x0c789a81c03f0f1871e54f9613f16ab0a460fe64, asks=0, bids=0
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[189.463ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x687d99f092f601193087bee4ceacc304673e5ef5a0df4e36f549f261cf08e24c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+[Executor Stats] Settled: 0, Failed: 0, Pending: 0, LastSettle: 0001-01-01 00:00:00 +0000 UTC
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.008ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x687d99f092f601193087bee4ceacc304673e5ef5a0df4e36f549f261cf08e24c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x687d99f092f601193087bee4ceacc304673e5ef5a0df4e36f549f261cf08e24c, asks=0, bids=0
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73
+[0m[33m[191.504ms] [34;1m[rows:0][0m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50
+
+2026/04/19 05:00:09 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[189.567ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xc5c497f6aa41934e3f35307262429041bee78cb6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:10 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.393ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xc5c497f6aa41934e3f35307262429041bee78cb6' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xc5c497f6aa41934e3f35307262429041bee78cb6, asks=0, bids=0
+
+2026/04/19 05:00:10 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[187.008ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xcece56fd6eb8fcbc6c45af8181bfe71ea6057770630490cac36dbbc4aa27a4a6' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:10 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.901ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xcece56fd6eb8fcbc6c45af8181bfe71ea6057770630490cac36dbbc4aa27a4a6' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xcece56fd6eb8fcbc6c45af8181bfe71ea6057770630490cac36dbbc4aa27a4a6, asks=0, bids=0
+
+2026/04/19 05:00:10 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.130ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x12a67c47baf61c0d8d43870a1115ac683f1e5907c2653f08c69bd5ef794a23aa' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:10 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.776ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x12a67c47baf61c0d8d43870a1115ac683f1e5907c2653f08c69bd5ef794a23aa' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x12a67c47baf61c0d8d43870a1115ac683f1e5907c2653f08c69bd5ef794a23aa, asks=0, bids=0
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.384ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xec33256bf1ded407a57fd3c1965e7556e42ac14db09bc4e6fef57d5e2eb0b0b9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[188.749ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xec33256bf1ded407a57fd3c1965e7556e42ac14db09bc4e6fef57d5e2eb0b0b9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xec33256bf1ded407a57fd3c1965e7556e42ac14db09bc4e6fef57d5e2eb0b0b9, asks=0, bids=0
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.004ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x1df65d3a75aecd000a9c17c97e99993af01dbcd1' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[185.950ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x1df65d3a75aecd000a9c17c97e99993af01dbcd1' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x1df65d3a75aecd000a9c17c97e99993af01dbcd1, asks=0, bids=0
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.359ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd3ee0a3b349237d68517df30bfb66be971f46ad9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:11 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.560ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xd3ee0a3b349237d68517df30bfb66be971f46ad9' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xd3ee0a3b349237d68517df30bfb66be971f46ad9, asks=0, bids=0
+
+2026/04/19 05:00:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[183.983ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xfcd3f5ca230e7c1bd5b415eb85d5186346de0fec' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.854ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xfcd3f5ca230e7c1bd5b415eb85d5186346de0fec' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xfcd3f5ca230e7c1bd5b415eb85d5186346de0fec, asks=0, bids=0
+
+2026/04/19 05:00:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.575ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc787ff6f332ee11b2c24fd8c112ac155f95b14ab' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[198.576ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xc787ff6f332ee11b2c24fd8c112ac155f95b14ab' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xc787ff6f332ee11b2c24fd8c112ac155f95b14ab, asks=0, bids=0
+
+2026/04/19 05:00:12 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[187.173ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x70acdf2ad0bf2402c957154f944c19ef4e1cbae1' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.720ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x70acdf2ad0bf2402c957154f944c19ef4e1cbae1' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x70acdf2ad0bf2402c957154f944c19ef4e1cbae1, asks=0, bids=0
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.838ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xc0023e813a40f0ed4730832b8a1cfb5f80951fc2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[184.191ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0xc0023e813a40f0ed4730832b8a1cfb5f80951fc2' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0xc0023e813a40f0ed4730832b8a1cfb5f80951fc2, asks=0, bids=0
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.685ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x5fd12bbb709a59c9f3bf9c690bff75edc6c4dcfd' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[169.696ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x5fd12bbb709a59c9f3bf9c690bff75edc6c4dcfd' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x5fd12bbb709a59c9f3bf9c690bff75edc6c4dcfd, asks=0, bids=0
+
+2026/04/19 05:00:13 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.323ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x47006dcfc5aa14b577d3d2a0e39f72046bf4c054' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.833ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x47006dcfc5aa14b577d3d2a0e39f72046bf4c054' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x47006dcfc5aa14b577d3d2a0e39f72046bf4c054, asks=0, bids=0
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.045ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x594b83709464a83f37ac77e69ddd447a8a33c0ee' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[178.388ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x594b83709464a83f37ac77e69ddd447a8a33c0ee' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x594b83709464a83f37ac77e69ddd447a8a33c0ee, asks=0, bids=0
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[174.885ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x7ec6c9d993d9832aa654593f2dbc21303650bc6c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/fill.go:73
+[0m[33m[192.087ms] [34;1m[rows:0][0m SELECT * FROM "fills" WHERE status != 'settled' ORDER BY created_at asc LIMIT 50
+
+2026/04/19 05:00:14 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[173.999ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x7ec6c9d993d9832aa654593f2dbc21303650bc6c' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x7ec6c9d993d9832aa654593f2dbc21303650bc6c, asks=0, bids=0
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[172.665ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x377feeed4820b3b28d1ab429509e7a0789824fca' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[170.975ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0x377feeed4820b3b28d1ab429509e7a0789824fca' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0x377feeed4820b3b28d1ab429509e7a0789824fca, asks=0, bids=0
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[180.130ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xecab64627a68ecbdb95da1fecde706c34ee4bec33843326f9f9689dde87d392d' AND network = 'base' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[176.744ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'base_0xecab64627a68ecbdb95da1fecde706c34ee4bec33843326f9f9689dde87d392d' AND network = 'base' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=base_0xecab64627a68ecbdb95da1fecde706c34ee4bec33843326f9f9689dde87d392d, asks=0, bids=0
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[168.913ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2724358279dc913bef672771cd7b96c4c26a9bf5' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:15 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[186.487ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x2724358279dc913bef672771cd7b96c4c26a9bf5' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x2724358279dc913bef672771cd7b96c4c26a9bf5, asks=0, bids=0
+
+2026/04/19 05:00:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[171.877ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x32a3b2cd918524119a74bc0e3da391e40c3b7dc3' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'sell' ORDER BY price desc LIMIT 1000
+
+2026/04/19 05:00:16 [32mC:/Users/HAMMAD/Music/CexDex 2 vvf/backend/internal/repository/order.go:78
+[0m[33m[179.057ms] [34;1m[rows:0][0m SELECT * FROM "orders" WHERE (pair_id = 'bsc_0x32a3b2cd918524119a74bc0e3da391e40c3b7dc3' AND network = 'bsc' AND status IN ('pending','partial')) AND side = 'buy' ORDER BY price desc LIMIT 1000
+[Matching] Loaded pair=bsc_0x32a3b2cd918524119a74bc0e3da391e40c3b7dc3, asks=0, bids=0
+Loaded 100 order books
+Matching engine started
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /health                   --> github.com/cexdex/backend/internal/handlers.(*Handler).Health-fm (4 handlers)
+[GIN-debug] GET    /api/v1/pairs             --> github.com/cexdex/backend/internal/handlers.(*Handler).GetPairs-fm (4 handlers)
+[GIN-debug] GET    /api/v1/pairs/:id         --> github.com/cexdex/backend/internal/handlers.(*Handler).GetPair-fm (4 handlers)
+[GIN-debug] GET    /api/v1/pairs/:id/orderbook --> github.com/cexdex/backend/internal/handlers.(*Handler).GetOrderBook-fm (4 handlers)
+[GIN-debug] GET    /api/v1/pairs/:id/trades  --> github.com/cexdex/backend/internal/handlers.(*Handler).GetTrades-fm (4 handlers)
+[GIN-debug] GET    /api/v1/pairs/:id/ticker  --> github.com/cexdex/backend/internal/handlers.(*Handler).GetTicker-fm (4 handlers)
+[GIN-debug] GET    /api/v1/tokens/:address   --> github.com/cexdex/backend/internal/handlers.(*Handler).GetToken-fm (4 handlers)
+[GIN-debug] GET    /api/v1/search            --> github.com/cexdex/backend/internal/handlers.(*Handler).Search-fm (4 handlers)
+[GIN-debug] GET    /api/v1/orders            --> github.com/cexdex/backend/internal/handlers.(*Handler).GetOrders-fm (4 handlers)
+[GIN-debug] GET    /api/v1/orders/open       --> github.com/cexdex/backend/internal/handlers.(*Handler).GetOpenOrders-fm (4 handlers)
+[GIN-debug] GET    /api/v1/orders/history    --> github.com/cexdex/backend/internal/handlers.(*Handler).GetHistoryOrders-fm (4 handlers)
+[GIN-debug] GET    /api/v1/orders/:id        --> github.com/cexdex/backend/internal/handlers.(*Handler).GetOrder-fm (4 handlers)
+[GIN-debug] POST   /api/v1/orders            --> github.com/cexdex/backend/internal/handlers.(*Handler).CreateOrder-fm (4 handlers)
+[GIN-debug] POST   /api/v1/auth/login        --> github.com/cexdex/backend/internal/handlers.(*Handler).Login-fm (4 handlers)
+[GIN-debug] GET    /ws                       --> github.com/cexdex/backend/internal/handlers.(*Handler).HandleWebSocket-fm (4 handlers)
+[GIN-debug] DELETE /api/v1/orders/:id        --> github.com/cexdex/backend/internal/handlers.(*Handler).CancelOrder-fm (4 handlers)
+[GIN-debug] GET    /api/v1/user/profile      --> github.com/cexdex/backend/internal/handlers.(*Handler).GetProfile-fm (5 handlers)
+[GIN-debug] PUT    /api/v1/user/profile      --> github.com/cexdex/backend/internal/handlers.(*Handler).UpdateProfile-fm (5 handlers)
+[GIN-debug] GET    /api/v1/user/balances     --> github.com/cexdex/backend/internal/handlers.(*Handler).GetBalances-fm (5 handlers)
+[GIN-debug] DELETE /api/v1/orders            --> github.com/cexdex/backend/internal/handlers.(*Handler).BatchCancelOrders-fm (5 handlers)
+[GIN-debug] GET    /api/v1/fills             --> github.com/cexdex/backend/internal/handlers.(*Handler).GetFills-fm (5 handlers)
+[GIN-debug] GET    /api/v1/fills/:id         --> github.com/cexdex/backend/internal/handlers.(*Handler).GetFill-fm (5 handlers)
+[GIN-debug] POST   /api/v1/orders/commit     --> github.com/cexdex/backend/internal/handlers.(*Handler).CommitOrder-fm (5 handlers)
+[GIN-debug] POST   /api/v1/orders/reveal     --> github.com/cexdex/backend/internal/handlers.(*Handler).RevealOrder-fm (5 handlers)
