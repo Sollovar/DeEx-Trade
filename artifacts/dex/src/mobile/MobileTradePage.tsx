@@ -12,8 +12,9 @@ import { MobileBottomNav, NavTab } from "./components/MobileBottomNav";
 import { MobileTradeView } from "./components/MobileTradeView";
 import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
-import { MobileAccountPage } from "./components/MobileAccountPage";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
+import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
+import { Wallet } from "lucide-react";
 
 type MainTab = "Chart" | "Order Book" | "Trades";
 
@@ -73,7 +74,41 @@ function MobileTradePageInner() {
         </div>
 
       ) : navTab === "Account" ? (
-        <MobileAccountPage />
+        /* Wallet connected → Dynamic profile modal covers this; show minimal bg.
+           No wallet → show connect prompt. */
+        primaryWallet ? (
+          <div className="flex-1 flex items-center justify-center" style={{ paddingBottom: 72 }}>
+            <p className="text-[13px]" style={{ color: "var(--m-fg-5)" }}>Loading profile…</p>
+          </div>
+        ) : (
+          <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6" style={{ paddingBottom: 80 }}>
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(245,197,24,0.10)", border: "2px solid rgba(245,197,24,0.25)" }}
+            >
+              <Wallet className="w-9 h-9" style={{ color: "#f5c518" }} />
+            </div>
+            <div className="text-center">
+              <p className="text-[17px] font-bold mb-1.5" style={{ color: "var(--m-fg)" }}>No wallet connected</p>
+              <p className="text-[13px]" style={{ color: "var(--m-fg-4)" }}>
+                Connect your wallet to view your profile and manage your account.
+              </p>
+            </div>
+            <DynamicConnectButton buttonContainerClassName="nexus-connect-wrap">
+              <button
+                style={{
+                  backgroundColor: "#f5c518", color: "#000", fontWeight: 700,
+                  fontSize: 14, paddingLeft: 28, paddingRight: 28, height: 44,
+                  borderRadius: 12, display: "flex", alignItems: "center",
+                  border: "none", cursor: "pointer", gap: 8,
+                }}
+              >
+                <Wallet className="w-4 h-4" />
+                Connect Wallet
+              </button>
+            </DynamicConnectButton>
+          </div>
+        )
 
       ) : navTab === "Markets" ? (
         <MobileMarketsPage
