@@ -5,10 +5,13 @@ const router = Router();
 const COINSTATS_BASE = "https://openapiv1.coinstats.app";
 
 const NETWORK_MAP: Record<string, string> = {
-  bsc: "bsc",
-  base: "base",
+  bsc: "binancesmartchain",
+  base: "base-wallet",
   solana: "solana",
   ethereum: "ethereum",
+  arbitrum: "arbitrum-wallet",
+  avalanche: "avalanche-wallet",
+  polygon: "polygon-wallet",
 };
 
 function getApiKey(): string {
