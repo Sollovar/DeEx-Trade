@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Menu, Globe, Settings, Check, Bell } from "lucide-react";
+import { Menu, Globe, Settings, Check, Bell, ChevronDown } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { useConnectedNetwork, useSetNetwork, type Network } from "@/hooks/useConnectedNetwork";
 
+/* ── Wallet button ─────────────────────────────────────────────── */
 function WalletButton() {
   const { primaryWallet, setShowDynamicUserProfile } = useDynamicContext();
 
@@ -62,6 +64,188 @@ function WalletButton() {
   );
 }
 
+/* ── Network config ────────────────────────────────────────────── */
+type SupportedNetwork = Extract<Network, "bsc" | "base" | "solana">;
+
+const NETWORKS: { id: SupportedNetwork; label: string; abbr: string; color: string; bg: string }[] = [
+  { id: "bsc",    label: "BNB Chain", abbr: "BSC",  color: "#F3BA2F", bg: "rgba(243,186,47,0.15)"  },
+  { id: "base",   label: "Base",      abbr: "BASE", color: "#0052FF", bg: "rgba(0,82,255,0.15)"    },
+  { id: "solana", label: "Solana",    abbr: "SOL",  color: "#9945FF", bg: "rgba(153,69,255,0.15)"  },
+];
+
+function NetworkIcon({ id, size = 16 }: { id: SupportedNetwork; size?: number }) {
+  const net = NETWORKS.find((n) => n.id === id) ?? NETWORKS[0];
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        backgroundColor: net.color,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        fontSize: size * 0.48,
+        fontWeight: 900,
+        color: "#fff",
+        letterSpacing: "-0.5px",
+      }}
+    >
+      {net.abbr[0]}
+    </div>
+  );
+}
+
+/* ── Network pill + bottom sheet ───────────────────────────────── */
+function NetworkPill() {
+  const network = useConnectedNetwork() as SupportedNetwork;
+  const setNetwork = useSetNetwork();
+  const [open, setOpen] = useState(false);
+
+  const active = NETWORKS.find((n) => n.id === network) ?? NETWORKS[0];
+
+  const pick = (id: SupportedNetwork) => {
+    setNetwork(id);
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        style={{
+          backgroundColor: "var(--m-bg-3)",
+          border: "1px solid var(--m-bdr)",
+          color: "var(--m-fg-2)",
+          fontSize: 11,
+          fontWeight: 700,
+          paddingLeft: 8,
+          paddingRight: 6,
+          height: 28,
+          borderRadius: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: 4,
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <NetworkIcon id={active.id} size={14} />
+        <span style={{ color: active.color }}>{active.abbr}</span>
+        <ChevronDown style={{ width: 10, height: 10, color: "var(--m-fg-4)" }} />
+      </button>
+
+      {open && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40"
+            style={{ backgroundColor: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
+            onClick={() => setOpen(false)}
+          />
+
+          {/* Sheet */}
+          <div
+            className="fixed bottom-0 left-0 right-0 z-50 flex flex-col"
+            style={{
+              backgroundColor: "var(--m-bg-1)",
+              borderRadius: "20px 20px 0 0",
+              border: "1px solid var(--m-bdr)",
+              borderBottom: "none",
+              paddingBottom: "env(safe-area-inset-bottom, 16px)",
+            }}
+          >
+            {/* Handle + title */}
+            <div className="flex flex-col items-center pt-3 pb-2 shrink-0">
+              <div className="w-10 h-1 rounded-full mb-4" style={{ backgroundColor: "var(--m-bg-4)" }} />
+              <div className="flex items-center gap-2 w-full px-5">
+                <div
+                  style={{
+                    width: 18, height: 18, borderRadius: "50%",
+                    background: "linear-gradient(135deg,#F3BA2F,#9945FF)",
+                    flexShrink: 0,
+                  }}
+                />
+                <span className="text-[14px] font-semibold" style={{ color: "var(--m-fg)" }}>
+                  Select Network
+                </span>
+              </div>
+            </div>
+
+            <div style={{ height: 1, backgroundColor: "var(--m-bdr)", margin: "0 0 4px" }} />
+
+            {/* Options */}
+            <div className="px-3 py-2 flex flex-col gap-2">
+              {NETWORKS.map((net) => {
+                const isActive = network === net.id;
+                return (
+                  <button
+                    key={net.id}
+                    onClick={() => pick(net.id)}
+                    className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all active:scale-[0.97]"
+                    style={{
+                      backgroundColor: isActive ? net.bg : "var(--m-bg-2)",
+                      border: isActive ? `1px solid ${net.color}40` : "1px solid var(--m-bg-4)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 36, height: 36, borderRadius: 10,
+                        backgroundColor: isActive ? net.bg : "var(--m-bg-3)",
+                        border: isActive ? `1px solid ${net.color}50` : "1px solid transparent",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <NetworkIcon id={net.id} size={20} />
+                    </div>
+                    <div className="flex flex-col leading-none gap-1 min-w-0 flex-1">
+                      <span
+                        className="text-[14px] font-bold"
+                        style={{ color: isActive ? net.color : "var(--m-fg)" }}
+                      >
+                        {net.label}
+                      </span>
+                      <span className="text-[11px]" style={{ color: "var(--m-fg-5)" }}>
+                        {net.abbr}
+                      </span>
+                    </div>
+                    {isActive && (
+                      <div
+                        style={{
+                          width: 18, height: 18, borderRadius: "50%",
+                          backgroundColor: net.color,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Check style={{ width: 10, height: 10, color: "#fff" }} />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Close */}
+            <div className="px-4 pt-2 pb-4 shrink-0">
+              <button
+                onClick={() => setOpen(false)}
+                className="w-full h-11 rounded-xl text-[14px] font-semibold transition-all active:scale-[0.98]"
+                style={{ backgroundColor: "var(--m-bg-3)", color: "var(--m-fg-3)" }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+/* ── Main component ────────────────────────────────────────────── */
 interface Props {
   onMenuClick?: () => void;
 }
@@ -116,6 +300,7 @@ export function MobileTopBar({ onMenuClick }: Props) {
         </div>
 
         <div className="flex items-center gap-1">
+          <NetworkPill />
           <WalletButton />
 
           {/* Language button */}
