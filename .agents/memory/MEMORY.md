@@ -1,0 +1,1 @@
+- [CoinStats connection IDs](coinstats-connection-ids.md) — BSC is "binancesmartchain" not "bsc", Base is "base-wallet" not "base"; always verify from /wallet/blockchains

@@ -2,6 +2,7 @@ import { TrendingUp, TrendingDown, Wallet, RefreshCw } from "lucide-react";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio, type PortfolioHolding } from "@/hooks/useCoinStatsPortfolio";
+import { PortfolioChart } from "@/components/PortfolioChart";
 
 function Skeleton({ w, h }: { w: number | string; h: number }) {
   return (
@@ -228,6 +229,16 @@ export function MobilePortfolioPage() {
           )}
         </div>
       </div>
+
+      {/* ── Portfolio chart ── */}
+      {!loading && !syncing && !error && (
+        <div
+          className="mx-3 mt-3 rounded-2xl overflow-hidden"
+          style={{ backgroundColor: "var(--m-bg-1)", border: "1px solid var(--m-bdr)" }}
+        >
+          <PortfolioChart address={addr} network={network} compact />
+        </div>
+      )}
 
       {/* ── Holdings list ── */}
       <p className="text-[10px] font-bold tracking-widest uppercase px-4 pt-5 pb-2" style={{ color: "var(--m-fg-5)" }}>

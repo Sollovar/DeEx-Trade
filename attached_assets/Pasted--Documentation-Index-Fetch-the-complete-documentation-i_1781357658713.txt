@@ -1,0 +1,251 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://coinstats.app/docs/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Wallet Chart
+
+> Get wallet chart data for specific time ranges
+
+<Note>**40** credits per request</Note><Accordion title="Multipliers" icon="rectangle-history-circle-plus"><Note>In **Query** field **"connectionId"**: credits are multiplied by the number of values.</Note><Note>If the value of **"connectionId"** in **Query** is **"all"**, multiplier is **400** credits.</Note><Note>In **Query** field **"blockchain"**: credits are multiplied by the number of values.</Note><Note>If the value of **"blockchain"** in **Query** is **"all"**, multiplier is **400** credits.</Note><Warning>Multipliers can be applied multiple times.</Warning><Info>[**Detailed multipliers explanation**](/multipliers)</Info></Accordion><hr />
+
+<AccordionGroup>
+  <Accordion title="Required">
+    * address: Wallet address.
+    * connectionId: Identifier of the connection (chain) for the address.
+    * type: Time range for the chart.
+  </Accordion>
+
+  <Accordion title="Optional">
+    * currency: Display currency (defaults to USD).
+  </Accordion>
+</AccordionGroup>
+
+
+## OpenAPI
+
+````yaml /api-reference/openapi.json get /wallet/chart
+openapi: 3.0.0
+info:
+  title: CoinStats Public API
+  description: >-
+    CoinStats Public API — programmatic access to market data, news, NFTs,
+    wallets, exchange connections, and user portfolios. Authenticate every
+    request with the `X-API-KEY` header (or an OAuth Bearer token in the
+    `Authorization` header). Generate keys at https://openapi.coinstats.app.
+  version: '1.0'
+  contact: {}
+servers:
+  - url: https://openapiv1.coinstats.app
+security: []
+tags:
+  - name: CoinStats
+    description: ''
+  - name: Market Data
+    description: >-
+      The Market Data section of the API provides endpoints to access a wide
+      range of market-related information, including cryptocurrency coins,
+      ticker data, and fiat currency rates. This category offers comprehensive
+      data to help users monitor and analyze the cryptocurrency market, track
+      prices, and gain insights into market trends
+  - name: News
+    description: >-
+      The News section of the API allows you to access news articles and updates
+      related to cryptocurrencies and the blockchain industry. It provides
+      valuable information from various sources to keep you informed about the
+      latest developments
+  - name: NFTs
+    description: >-
+      The NFT section of the API provides endpoints to interact with
+      Non-Fungible Tokens (NFTs), which are unique digital assets stored on a
+      blockchain. These endpoints allow you to retrieve information about NFTs,
+      including collections, assets, trending NFTs, and specific assets
+      associated with wallet addresses.
+  - name: Wallet Data
+    description: >-
+      The Wallet section of the API provides a comprehensive set of endpoints to
+      manage and interact with wallets. It enables users to retrieve wallet
+      balances, monitor syncing status, fetch transaction data, and synchronize
+      wallet information with the blockchain. By integrating these endpoints
+      into your application, you can offer robust wallet functionality to your
+      users.
+  - name: Exchange Connection
+    description: >-
+      The Exchange Connection section of the API provides a comprehensive set of
+      endpoints to manage and interact with exchanges. It enables users to
+      retrieve exchange balances, monitor syncing status, fetch transaction
+      data. By integrating these endpoints into your application, you can offer
+      robust exchange portfolio tracking functionality to your users.
+  - name: User Portfolio
+    description: >-
+      The Portfolio section of the API provides a comprehensive set of endpoints
+      to manage and interact with Share Portfolios. It enables users to retrieve
+      current Portfolio Coins and Transactions.
+  - name: Usage
+    description: The Usage section provides account-level API usage data.
+  - name: Status
+    description: The Status section provides API availability checks.
+paths:
+  /wallet/chart:
+    get:
+      tags:
+        - Wallet Data
+      summary: Get wallet chart data for specific time ranges
+      operationId: wallet-chart
+      parameters:
+        - name: type
+          required: true
+          in: query
+          description: One of time periods.
+          schema:
+            type: string
+            enum:
+              - 24h
+              - 1w
+              - 1m
+              - 3m
+              - 6m
+              - 1y
+              - all
+        - name: address
+          required: true
+          in: query
+          description: The wallet address for which the chart is being queried.
+          schema:
+            example: '0x1234567890abcdef1234567890abcdef12345678'
+            type: string
+        - name: connectionId
+          required: false
+          in: query
+          description: >-
+            The identifier of connection from
+            [/wallet/blockchains](/openapi/get-blockchains) call response.  Can
+            be a single network (e.g., "ethereum") or a comma-separated list of
+            networks or "all" for all connections. 
+          schema:
+            example: base-wallet
+            type: string
+        - name: blockchain
+          required: false
+          in: query
+          description: >-
+            The blockchain network identifier from
+            [/wallet/blockchains](/openapi/get-blockchains) call response.
+            Either connectionId or blockchain must be provided. If both are
+            provided, connectionId will be used.
+          schema:
+            example: base
+            type: string
+      responses:
+        '200':
+          description: Get Chart of Wallet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletChartDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                statusCode: 400
+                message: Bad Request
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                statusCode: 401
+                message: Unauthorized
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              example:
+                statusCode: 403
+                message: Forbidden
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                statusCode: 404
+                message: Not Found
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '409':
+          description: Conflict (for some endpoints)
+          content:
+            application/json:
+              example:
+                statusCode: 409
+                message: Transactions not synced
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                statusCode: 429
+                message: Rate limit exceeded
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              example:
+                statusCode: 503
+                message: Service Unavailable. Please Contact Support
+      security:
+        - X-API-KEY: []
+components:
+  schemas:
+    WalletChartDto:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+          description: >-
+            Array of historical price data points. Each data point is an array
+            containing:
+
+            1. TIMESTAMP - Unix timestamp in seconds
+
+            2. USD - Price in USD
+
+            3. BTC - Price in Bitcoin
+
+            4. ETH - Price in Ethereum
+          example:
+            - - 1735038000000
+              - 8.3034
+              - 0.00008833
+              - 0.00244788
+            - - 1735041600000
+              - 8.3345
+              - 0.0000883
+              - 0.00244324
+      required:
+        - result
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: >-
+        API key required to access the endpoints. Generate one from your
+        dashboard at https://openapi.coinstats.app and pass it in the
+        `X-API-KEY` request header. Never expose your key in client-side code.
+
+````
