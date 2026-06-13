@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Globe, Settings, Check, Bell, ChevronDown } from "lucide-react";
+import { Menu, Globe, Settings, Check, Bell, ChevronDown, Loader2 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
@@ -74,18 +74,48 @@ const NETWORKS: { id: SupportedNetwork; label: string; abbr: string; color: stri
   { id: "solana", label: "Solana",    abbr: "SOL",  color: "#9945FF", bg: "rgba(153,69,255,0.15)"  },
 ];
 
+/** EVM chain IDs for each supported network. Solana has no EVM chain ID. */
+const EVM_CHAIN_IDS: Partial<Record<SupportedNetwork, number>> = {
+  bsc:  56,
+  base: 8453,
+};
 
 /* ── Network pill + bottom sheet ───────────────────────────────── */
 function NetworkPill() {
   const network = useConnectedNetwork() as SupportedNetwork;
   const setNetwork = useSetNetwork();
+  const { primaryWallet } = useDynamicContext();
   const [open, setOpen] = useState(false);
+  const [switching, setSwitching] = useState<SupportedNetwork | null>(null);
 
   const active = NETWORKS.find((n) => n.id === network) ?? NETWORKS[0];
 
-  const pick = (id: SupportedNetwork) => {
-    setNetwork(id);
+  const pick = async (id: SupportedNetwork) => {
+    if (id === network) { setOpen(false); return; }
+
+    // Close sheet + optimistically update stored network immediately
     setOpen(false);
+    setNetwork(id);
+
+    const chainId = EVM_CHAIN_IDS[id];
+
+    // Solana or no wallet connected → stored network update is enough
+    if (!primaryWallet || !chainId) return;
+
+    // Only EVM wallets support switchNetwork
+    if ((primaryWallet as any).chain !== "EVM") return;
+
+    setSwitching(id);
+    try {
+      await primaryWallet.connector.switchNetwork({ networkChainId: chainId });
+      // useConnectedNetwork's chainChanged listener will confirm the actual switch
+    } catch (err) {
+      console.warn("[NetworkPill] switchNetwork failed:", err);
+      // Leave the optimistic stored-network update in place;
+      // useConnectedNetwork will self-correct on the next wallet event.
+    } finally {
+      setSwitching(null);
+    }
   };
 
   return (
@@ -157,11 +187,13 @@ function NetworkPill() {
             <div className="px-3 py-2 flex flex-col gap-2">
               {NETWORKS.map((net) => {
                 const isActive = network === net.id;
+                const isSwitchingThis = switching === net.id;
                 return (
                   <button
                     key={net.id}
                     onClick={() => pick(net.id)}
-                    className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all active:scale-[0.97]"
+                    disabled={switching !== null}
+                    className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed"
                     style={{
                       backgroundColor: isActive ? net.bg : "var(--m-bg-2)",
                       border: isActive ? `1px solid ${net.color}40` : "1px solid var(--m-bg-4)",
@@ -186,10 +218,15 @@ function NetworkPill() {
                         {net.label}
                       </span>
                       <span className="text-[11px]" style={{ color: "var(--m-fg-5)" }}>
-                        {net.abbr}
+                        {isSwitchingThis ? "Switching…" : net.abbr}
                       </span>
                     </div>
-                    {isActive && (
+                    {isSwitchingThis ? (
+                      <Loader2
+                        style={{ width: 18, height: 18, color: net.color, flexShrink: 0 }}
+                        className="animate-spin"
+                      />
+                    ) : isActive ? (
                       <div
                         style={{
                           width: 18, height: 18, borderRadius: "50%",
@@ -200,7 +237,7 @@ function NetworkPill() {
                       >
                         <Check style={{ width: 10, height: 10, color: "#fff" }} />
                       </div>
-                    )}
+                    ) : null}
                   </button>
                 );
               })}
