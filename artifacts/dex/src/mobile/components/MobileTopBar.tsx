@@ -61,7 +61,23 @@ export function MobileTopBar({ onMenuClick }: Props) {
         <div className="flex items-center gap-1">
           <DynamicWidget
             innerButtonComponent={
-              <button className="bg-[#f5c518] text-black font-bold text-[12px] px-3.5 h-7 rounded-lg flex items-center">
+              <button
+                style={{
+                  backgroundColor: "#f5c518",
+                  color: "#000",
+                  fontWeight: 700,
+                  fontSize: 12,
+                  paddingLeft: 14,
+                  paddingRight: 14,
+                  height: 28,
+                  borderRadius: 8,
+                  display: "flex",
+                  alignItems: "center",
+                  border: "none",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Connect
               </button>
             }
