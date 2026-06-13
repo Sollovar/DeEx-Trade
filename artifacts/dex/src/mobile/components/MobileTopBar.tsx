@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Menu, Globe, Settings, Check, Bell, Loader2, Flame, Blocks } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -68,42 +68,140 @@ function WalletButton() {
   );
 }
 
-/* ── Floating gas + block badge (fixed, above bottom nav) ──────── */
+/* ── Draggable floating gas + block badge ──────────────────────── */
+const STORAGE_KEY = "nexus-stats-pill-pos";
+const DEFAULT_POS = () => ({
+  x: window.innerWidth - 90,
+  y: window.innerHeight - 82,
+});
+
 export function FloatingChainStats() {
   const network = useConnectedNetwork();
   const { showGas, showBlock } = useSettings();
   const { gasGwei, blockNumber } = useChainStats(network);
 
+  const [pos, setPos]     = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const posRef   = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const dragRef  = useRef<{ tx: number; ty: number; px: number; py: number } | null>(null);
+  const elRef    = useRef<HTMLDivElement>(null);
+
+  /* Init from localStorage or default bottom-right */
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const p = JSON.parse(saved) as { x: number; y: number };
+        posRef.current = p;
+        setPos(p);
+        return;
+      }
+    } catch {}
+    const d = DEFAULT_POS();
+    posRef.current = d;
+    setPos(d);
+  }, []);
+
+  /* Keep posRef in sync */
+  useEffect(() => {
+    if (pos) posRef.current = pos;
+  }, [pos]);
+
+  /* Attach passive:false touchmove so we can preventDefault (stops page scroll) */
+  useEffect(() => {
+    const el = elRef.current;
+    if (!el) return;
+
+    const onMove = (e: TouchEvent) => {
+      if (!dragRef.current) return;
+      e.preventDefault();
+      const t = e.touches[0];
+      const dx = t.clientX - dragRef.current.tx;
+      const dy = t.clientY - dragRef.current.ty;
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+      const nx = Math.max(4, Math.min(W - 88, dragRef.current.px + dx));
+      const ny = Math.max(4, Math.min(H - 32, dragRef.current.py + dy));
+      posRef.current = { x: nx, y: ny };
+      setPos({ x: nx, y: ny });
+    };
+
+    el.addEventListener("touchmove", onMove, { passive: false });
+    return () => el.removeEventListener("touchmove", onMove);
+  }, []);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    dragRef.current = {
+      tx: t.clientX,
+      ty: t.clientY,
+      px: posRef.current.x,
+      py: posRef.current.y,
+    };
+    setDragging(true);
+  };
+
+  const onTouchEnd = () => {
+    dragRef.current = null;
+    setDragging(false);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(posRef.current)); } catch {}
+  };
+
   const hasGas   = showGas   && gasGwei     !== null;
   const hasBlock = showBlock && blockNumber !== null;
 
-  if (!hasGas && !hasBlock) return null;
+  if (!pos || (!hasGas && !hasBlock)) return null;
 
   return (
     <div
+      ref={elRef}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       style={{
         position: "fixed",
-        bottom: 70,
-        right: 10,
+        left: pos.x,
+        top: pos.y,
         zIndex: 30,
         display: "flex",
         alignItems: "center",
-        gap: 5,
-        backgroundColor: "rgba(10,10,10,0.72)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
+        gap: 4,
+        backgroundColor: dragging
+          ? "rgba(10,10,10,0.90)"
+          : "rgba(10,10,10,0.72)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         borderRadius: 20,
-        padding: "4px 9px",
-        border: "1px solid rgba(255,255,255,0.07)",
-        pointerEvents: "none",
+        padding: "4px 8px 4px 6px",
+        border: dragging
+          ? "1px solid rgba(245,197,24,0.35)"
+          : "1px solid rgba(255,255,255,0.07)",
         userSelect: "none",
+        touchAction: "none",
+        cursor: "grab",
+        transition: dragging ? "none" : "border-color 0.2s, background-color 0.2s",
+        boxShadow: dragging ? "0 4px 20px rgba(0,0,0,0.5)" : "none",
       }}
     >
+      {/* Grip dots */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 3px)",
+          gap: "2px",
+          marginRight: 2,
+          opacity: 0.3,
+        }}
+      >
+        {[0,1,2,3,4,5].map((i) => (
+          <div key={i} style={{ width: 2, height: 2, borderRadius: "50%", backgroundColor: "#fff" }} />
+        ))}
+      </div>
+
       {hasGas && (
         <div
           style={{
             display: "flex", alignItems: "center", gap: 3,
-            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
+            color: "rgba(255,255,255,0.60)", fontSize: 9, fontWeight: 600,
             fontVariantNumeric: "tabular-nums",
           }}
         >
@@ -118,7 +216,7 @@ export function FloatingChainStats() {
         <div
           style={{
             display: "flex", alignItems: "center", gap: 3,
-            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
+            color: "rgba(255,255,255,0.60)", fontSize: 9, fontWeight: 600,
             fontVariantNumeric: "tabular-nums",
           }}
         >
