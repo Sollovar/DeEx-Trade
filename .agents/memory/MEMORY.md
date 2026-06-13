@@ -1,3 +1,0 @@
-- [CoinStats connection IDs](coinstats-connection-ids.md) — BSC is "binancesmartchain" not "bsc", Base is "base-wallet" not "base"; always verify from /wallet/blockchains
-- [Backend matching engine](backend-matching-engine.md) — in-memory orderbook per pair, rebuilt from DB every 5s, broadcast via WsHub on every change.
-- [GeckoTerminal rate limits](gecko-rate-limits.md) — public API rate-limits hard; candle worker uses 60s initial delay + 5s between pairs; trending sync uses 2-min chain delay.

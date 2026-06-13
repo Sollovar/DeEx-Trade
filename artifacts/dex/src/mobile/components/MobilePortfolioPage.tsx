@@ -2,8 +2,6 @@ import { TrendingUp, TrendingDown, Wallet, RefreshCw } from "lucide-react";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio, type PortfolioHolding } from "@/hooks/useCoinStatsPortfolio";
-import { PortfolioChart } from "@/components/PortfolioChart";
-import { PortfolioLoader } from "@/components/PortfolioLoader";
 
 function Skeleton({ w, h }: { w: number | string; h: number }) {
   return (
@@ -124,14 +122,6 @@ export function MobilePortfolioPage() {
 
   if (!primaryWallet) return <NoWalletState />;
 
-  if (loading || syncing) {
-    return (
-      <div className="flex-1 flex flex-col" style={{ paddingBottom: 76 }}>
-        <PortfolioLoader message={syncing ? "Syncing wallet…" : "Loading portfolio…"} />
-      </div>
-    );
-  }
-
   const addr = address ?? "";
   const shortAddr = addr.slice(0, 6) + "…" + addr.slice(-4);
 
@@ -238,16 +228,6 @@ export function MobilePortfolioPage() {
           )}
         </div>
       </div>
-
-      {/* ── Portfolio chart ── */}
-      {!loading && !syncing && !error && (
-        <div
-          className="mx-3 mt-3 rounded-2xl overflow-hidden"
-          style={{ backgroundColor: "var(--m-bg-1)", border: "1px solid var(--m-bdr)" }}
-        >
-          <PortfolioChart address={addr} network={network} compact />
-        </div>
-      )}
 
       {/* ── Holdings list ── */}
       <p className="text-[10px] font-bold tracking-widest uppercase px-4 pt-5 pb-2" style={{ color: "var(--m-fg-5)" }}>

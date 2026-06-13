@@ -85,35 +85,4 @@ router.get("/portfolio/pl", async (req, res) => {
   }
 });
 
-router.get("/portfolio/chart", async (req, res) => {
-  const { address, network, type = "1m" } = req.query as {
-    address?: string;
-    network?: string;
-    type?: string;
-  };
-
-  if (!address || !network) {
-    res.status(400).json({ error: "address and network are required" });
-    return;
-  }
-
-  const connectionId = NETWORK_MAP[network] ?? network;
-
-  try {
-    const apiKey = getApiKey();
-    const params = new URLSearchParams({ address, connectionId, type });
-    const response = await fetch(`${COINSTATS_BASE}/wallet/chart?${params}`, {
-      headers: { "X-API-KEY": apiKey },
-      signal: AbortSignal.timeout(15000),
-    });
-
-    const data = await response.json().catch(() => ({}));
-    logger.info({ address, network, type, status: response.status }, "Portfolio chart fetch");
-    res.status(response.status).json(data);
-  } catch (err) {
-    logger.error({ err }, "Portfolio chart error");
-    res.status(500).json({ error: "Failed to fetch portfolio chart" });
-  }
-});
-
 export default router;

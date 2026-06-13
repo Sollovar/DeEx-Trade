@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Filter, Download, RefreshCw, TrendingUp, TrendingDown } from "lucide-react";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useConnectedNetwork, type Network } from "@/hooks/useConnectedNetwork";
+import { useConnectedNetwork } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio } from "@/hooks/useCoinStatsPortfolio";
-import { PortfolioChart } from "@/components/PortfolioChart";
-import { PortfolioLoader } from "@/components/PortfolioLoader";
 
 type BottomTab = "Open Orders" | "Positions" | "Predictions" | "Assets" | "Order History" | "Trade History" | "Transaction History";
 const TABS: BottomTab[] = ["Open Orders", "Positions", "Predictions", "Assets", "Order History", "Trade History", "Transaction History"];
@@ -230,11 +228,9 @@ interface AssetsViewProps {
   error: string | null;
   refetch: () => void;
   hasWallet: boolean;
-  address: string | null;
-  network: Network;
 }
 
-function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWallet, address, network }: AssetsViewProps) {
+function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWallet }: AssetsViewProps) {
   const fmt = (n: number) =>
     n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -250,7 +246,12 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
   }
 
   if (loading || syncing) {
-    return <PortfolioLoader message={syncing ? "Syncing wallet…" : "Loading portfolio…"} size="sm" />;
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center gap-2">
+        <RefreshCw className="w-4 h-4 text-[#444] animate-spin" />
+        <p className="text-[#444] text-[12px]">{syncing ? "Syncing wallet…" : "Loading assets…"}</p>
+      </div>
+    );
   }
 
   if (error) {
@@ -272,9 +273,8 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Stats header */}
-      <div className="flex items-center gap-6 px-3 py-2 border-b border-[#141414] shrink-0">
+    <div className="flex-1 overflow-auto">
+      <div className="flex items-center gap-6 px-3 py-2 border-b border-[#141414]">
         <span className="text-[#555] text-[12px]">
           Total Value: <span className="text-white font-mono font-medium">${fmt(summary.totalValueUsd)}</span>
         </span>
@@ -294,16 +294,6 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
           <RefreshCw className="w-3 h-3" />
         </button>
       </div>
-
-      {/* Portfolio chart */}
-      {address && (
-        <div className="border-b border-[#141414] shrink-0 bg-[#0a0a0a]">
-          <PortfolioChart address={address} network={network} />
-        </div>
-      )}
-
-      {/* Scrollable holdings table */}
-      <div className="flex-1 overflow-auto">
       <table className="w-full min-w-[600px]">
         <thead className="sticky top-0 bg-[#0a0a0a]">
           <tr className="border-b border-[#141414]">
@@ -360,7 +350,6 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
           })}
         </tbody>
       </table>
-      </div>
     </div>
   );
 }
@@ -421,8 +410,6 @@ export function BottomPanel() {
           error={portfolio.error}
           refetch={portfolio.refetch}
           hasWallet={!!primaryWallet}
-          address={address}
-          network={network}
         />
       );
       case "Order History":       return <OrderHistoryView />;

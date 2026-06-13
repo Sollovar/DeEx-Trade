@@ -166,9 +166,6 @@ importers:
 
   artifacts/api-server:
     dependencies:
-      '@types/ws':
-        specifier: ^8.18.1
-        version: 8.18.1
       '@workspace/api-zod':
         specifier: workspace:*
         version: link:../../lib/api-zod
@@ -193,9 +190,6 @@ importers:
       pino-http:
         specifier: ^10.5.0
         version: 10.5.0
-      ws:
-        specifier: ^8.21.0
-        version: 8.21.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     devDependencies:
       '@types/cookie-parser':
         specifier: ^1.4.10
