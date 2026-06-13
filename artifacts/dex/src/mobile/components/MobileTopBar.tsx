@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Menu, Globe, Settings, Check, Bell, Loader2, Flame, Blocks } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -68,85 +68,11 @@ function WalletButton() {
   );
 }
 
-/* ── Draggable floating gas + block badge ──────────────────────── */
-const STORAGE_KEY = "nexus-stats-pill-pos";
-
-function getInitialPos(): { x: number; y: number } {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const p = JSON.parse(saved) as { x: number; y: number };
-      /* Clamp in case screen size changed since last save */
-      return {
-        x: Math.max(4, Math.min(window.innerWidth  - 88, p.x)),
-        y: Math.max(4, Math.min(window.innerHeight - 32, p.y)),
-      };
-    }
-  } catch {}
-  /* Default: bottom-right, above the nav bar (~70px) */
-  return {
-    x: window.innerWidth  - 90,
-    y: window.innerHeight - 82,
-  };
-}
-
+/* ── Floating gas + block badge (fixed, above bottom nav) ──────── */
 export function FloatingChainStats() {
   const network = useConnectedNetwork();
   const { showGas, showBlock } = useSettings();
   const { gasGwei, blockNumber } = useChainStats(network);
-
-  /* Lazy initialiser — runs synchronously on first render so the element
-     always mounts with a real position, making elRef.current available
-     for the touchmove useEffect that runs right after. */
-  const [pos, setPos]     = useState<{ x: number; y: number }>(getInitialPos);
-  const [dragging, setDragging] = useState(false);
-
-  /* posRef lets the touchmove handler always read the latest pos without
-     stale closure issues */
-  const posRef  = useRef(pos);
-  const dragRef = useRef<{ tx: number; ty: number; px: number; py: number } | null>(null);
-  const elRef   = useRef<HTMLDivElement>(null);
-
-  useEffect(() => { posRef.current = pos; }, [pos]);
-
-  /* Attach passive:false listener after mount — element is guaranteed
-     to be in the DOM because pos is always initialised. */
-  useEffect(() => {
-    const el = elRef.current;
-    if (!el) return;
-
-    const onMove = (e: TouchEvent) => {
-      if (!dragRef.current) return;
-      e.preventDefault();
-      const t  = e.touches[0];
-      const W  = window.innerWidth;
-      const H  = window.innerHeight;
-      const nx = Math.max(4, Math.min(W - 88, dragRef.current.px + (t.clientX - dragRef.current.tx)));
-      const ny = Math.max(4, Math.min(H - 32, dragRef.current.py + (t.clientY - dragRef.current.ty)));
-      posRef.current = { x: nx, y: ny };
-      setPos({ x: nx, y: ny });
-    };
-
-    el.addEventListener("touchmove", onMove, { passive: false });
-    return () => el.removeEventListener("touchmove", onMove);
-  }, []);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    const t = e.touches[0];
-    dragRef.current = {
-      tx: t.clientX,
-      ty: t.clientY,
-      px: posRef.current.x,
-      py: posRef.current.y,
-    };
-    setDragging(true);
-  };
-
-  const onTouchEnd = () => {
-    dragRef.current = null;
-    setDragging(false);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(posRef.current)); } catch {}
-  };
 
   const hasGas   = showGas   && gasGwei     !== null;
   const hasBlock = showBlock && blockNumber !== null;
@@ -155,54 +81,29 @@ export function FloatingChainStats() {
 
   return (
     <div
-      ref={elRef}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
       style={{
         position: "fixed",
-        left: pos.x,
-        top: pos.y,
+        bottom: 70,
+        right: 10,
         zIndex: 30,
         display: "flex",
         alignItems: "center",
-        gap: 4,
-        backgroundColor: dragging
-          ? "rgba(10,10,10,0.90)"
-          : "rgba(10,10,10,0.72)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        gap: 5,
+        backgroundColor: "rgba(10,10,10,0.72)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
         borderRadius: 20,
-        padding: "4px 8px 4px 6px",
-        border: dragging
-          ? "1px solid rgba(245,197,24,0.35)"
-          : "1px solid rgba(255,255,255,0.07)",
+        padding: "4px 9px",
+        border: "1px solid rgba(255,255,255,0.07)",
+        pointerEvents: "none",
         userSelect: "none",
-        touchAction: "none",
-        cursor: "grab",
-        transition: dragging ? "none" : "border-color 0.2s, background-color 0.2s",
-        boxShadow: dragging ? "0 4px 20px rgba(0,0,0,0.5)" : "none",
       }}
     >
-      {/* Grip dots */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 3px)",
-          gap: "2px",
-          marginRight: 2,
-          opacity: 0.3,
-        }}
-      >
-        {[0,1,2,3,4,5].map((i) => (
-          <div key={i} style={{ width: 2, height: 2, borderRadius: "50%", backgroundColor: "#fff" }} />
-        ))}
-      </div>
-
       {hasGas && (
         <div
           style={{
             display: "flex", alignItems: "center", gap: 3,
-            color: "rgba(255,255,255,0.60)", fontSize: 9, fontWeight: 600,
+            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
             fontVariantNumeric: "tabular-nums",
           }}
         >
@@ -217,7 +118,7 @@ export function FloatingChainStats() {
         <div
           style={{
             display: "flex", alignItems: "center", gap: 3,
-            color: "rgba(255,255,255,0.60)", fontSize: 9, fontWeight: 600,
+            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
             fontVariantNumeric: "tabular-nums",
           }}
         >
