@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { TrendingUp, TrendingDown, Wallet, RefreshCw } from "lucide-react";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { getStoredNetwork, type Network } from "@/hooks/useConnectedNetwork";
+import { useConnectedNetwork } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio, type PortfolioHolding } from "@/hooks/useCoinStatsPortfolio";
 import { PortfolioChart } from "@/components/PortfolioChart";
 
@@ -114,23 +113,13 @@ function HoldingRow({ h, isLast }: { h: PortfolioHolding; isLast: boolean }) {
   );
 }
 
-const MOBILE_NETWORKS: { id: Network; label: string }[] = [
-  { id: "bsc",       label: "BNB"  },
-  { id: "ethereum",  label: "ETH"  },
-  { id: "base",      label: "Base" },
-  { id: "arbitrum",  label: "ARB"  },
-  { id: "polygon",   label: "POL"  },
-  { id: "avalanche", label: "AVAX" },
-  { id: "solana",    label: "SOL"  },
-];
-
 export function MobilePortfolioPage() {
   const { primaryWallet } = useDynamicContext();
+  const network = useConnectedNetwork();
   const address = primaryWallet?.address ?? null;
-  const [selectedNetwork, setSelectedNetwork] = useState<Network>(() => getStoredNetwork());
 
   const { holdings, summary, loading, syncing, error, refetch } =
-    useCoinStatsPortfolio(address, selectedNetwork);
+    useCoinStatsPortfolio(address, network);
 
   if (!primaryWallet) return <NoWalletState />;
 
@@ -165,31 +154,6 @@ export function MobilePortfolioPage() {
           >
             <RefreshCw className={`w-3.5 h-3.5 ${(loading || syncing) ? "animate-spin" : ""}`} />
           </button>
-        </div>
-
-        {/* Network selector */}
-        <div className="flex items-center gap-1.5 px-5 pb-3 overflow-x-auto">
-          {MOBILE_NETWORKS.map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => setSelectedNetwork(id)}
-              style={{
-                padding: "3px 10px",
-                borderRadius: 20,
-                border: "none",
-                cursor: "pointer",
-                fontSize: 12,
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                backgroundColor: selectedNetwork === id ? "#f5c518" : "var(--m-bg-3)",
-                color: selectedNetwork === id ? "#000" : "var(--m-fg-4)",
-                transition: "all 0.15s",
-              }}
-            >
-              {label}
-            </button>
-          ))}
         </div>
 
         <div className="px-5 pt-3 pb-5">
@@ -272,7 +236,7 @@ export function MobilePortfolioPage() {
           className="mx-3 mt-3 rounded-2xl overflow-hidden"
           style={{ backgroundColor: "var(--m-bg-1)", border: "1px solid var(--m-bdr)" }}
         >
-          <PortfolioChart address={addr} network={selectedNetwork} compact />
+          <PortfolioChart address={addr} network={network} compact />
         </div>
       )}
 
