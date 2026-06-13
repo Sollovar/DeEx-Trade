@@ -3,6 +3,7 @@ import { Menu, Globe, Settings, Check, Bell } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 interface Props {
   onMenuClick?: () => void;
@@ -58,9 +59,13 @@ export function MobileTopBar({ onMenuClick }: Props) {
         </div>
 
         <div className="flex items-center gap-1">
-          <button className="bg-[#f5c518] text-black font-bold text-[12px] px-3.5 h-7 rounded-lg flex items-center">
-            Connect
-          </button>
+          <DynamicWidget
+            innerButtonComponent={
+              <button className="bg-[#f5c518] text-black font-bold text-[12px] px-3.5 h-7 rounded-lg flex items-center">
+                Connect
+              </button>
+            }
+          />
 
           {/* Language button */}
           <button

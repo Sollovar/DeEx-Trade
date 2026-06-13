@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown } from "lucide-react";
 import { LiveMarketState, OrderBookRow } from "@/hooks/useLiveMarket";
+import { useDynamicContext, DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
 
 /* ── Mini sparkline (shared shape with MobilePairHeader) ── */
 function Sparkline({ prices, color, w = 64, h = 22 }: { prices: number[]; color: string; w?: number; h?: number }) {
@@ -426,6 +427,8 @@ function MiniPriceChart({
 }
 
 export function MobileTradeView({ market, currentSymbol, onOpenMarketPanel }: Props) {
+  const { primaryWallet } = useDynamicContext();
+  const isConnected = !!primaryWallet;
   const [side, setSide] = useState<"buy" | "sell">("buy");
   const [orderType, setOrderType] = useState<"Limit" | "Market" | "Ladder">("Limit");
   const [limitPrice, setLimitPrice] = useState(() => market.price.toFixed(2));
@@ -935,16 +938,29 @@ export function MobileTradeView({ market, currentSymbol, onOpenMarketPanel }: Pr
             })()}
 
             {/* Connect / Place button */}
-            <button
-              className="w-full py-2.5 text-[14px] font-bold transition-all active:scale-[0.97]"
-              style={{
-                backgroundColor: orderType === "Ladder" ? "#a78bfa" : "#f5c518",
-                color: orderType === "Ladder" ? "#fff" : "#000",
-                borderRadius: 8,
-              }}
-            >
-              {orderType === "Ladder" ? "Place Ladder Order" : "Connect Wallet"}
-            </button>
+            {isConnected ? (
+              <button
+                className="w-full py-2.5 text-[14px] font-bold transition-all active:scale-[0.97]"
+                style={{
+                  backgroundColor: orderType === "Ladder" ? "#a78bfa" : side === "buy" ? "#f5c518" : "#ef4444",
+                  color: orderType === "Ladder" ? "#fff" : side === "buy" ? "#000" : "#fff",
+                  borderRadius: 8,
+                }}
+              >
+                {orderType === "Ladder"
+                  ? "Place Ladder Order"
+                  : `Place ${side === "buy" ? "Buy" : "Sell"} Order`}
+              </button>
+            ) : (
+              <DynamicConnectButton buttonClassName="w-full">
+                <button
+                  className="w-full py-2.5 text-[14px] font-bold transition-all active:scale-[0.97]"
+                  style={{ backgroundColor: "#f5c518", color: "#000", borderRadius: 8 }}
+                >
+                  Connect Wallet
+                </button>
+              </DynamicConnectButton>
+            )}
           </div>
         </div>
 

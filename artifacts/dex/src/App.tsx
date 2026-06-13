@@ -7,6 +7,8 @@ import { DesktopTradePage } from "@/desktop/DesktopTradePage";
 import { MobileTradePage } from "@/mobile/MobileTradePage";
 import { LandingPage } from "@/pages/LandingPage";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { MobileThemeProvider } from "@/contexts/ThemeContext";
+import { WalletProvider } from "@/contexts/WalletProvider";
 
 const queryClient = new QueryClient();
 
@@ -32,16 +34,19 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <MobileThemeProvider>
+      <WalletProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </WalletProvider>
+    </MobileThemeProvider>
   );
 }
 
 export default App;
-

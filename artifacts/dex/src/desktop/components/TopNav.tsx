@@ -1,5 +1,6 @@
 import { Search, Globe, Settings, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 export function TopNav() {
   return (
@@ -33,9 +34,13 @@ export function TopNav() {
           <span className="font-medium text-foreground">BNB</span>
           <span className="text-[10px] text-muted-foreground">▼</span>
         </button>
-        <Button variant="outline" className="h-7 text-xs border-primary text-primary hover:bg-primary/10 rounded">
-          Connect Wallet
-        </Button>
+        <DynamicWidget
+          innerButtonComponent={
+            <Button variant="outline" className="h-7 text-xs border-primary text-primary hover:bg-primary/10 rounded">
+              Connect Wallet
+            </Button>
+          }
+        />
         <div className="w-[1px] h-4 bg-border mx-1" />
         <button className="text-muted-foreground hover:text-foreground transition-colors">
           <Globe className="w-4 h-4" />

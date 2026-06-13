@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLiveMarket } from "@/hooks/useLiveMarket";
-import { MobileThemeProvider, useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { MobileTopBar } from "./components/MobileTopBar";
 import { MobilePairHeader } from "./components/MobilePairHeader";
 import { MobileChartView } from "./components/MobileChartView";
@@ -132,9 +132,5 @@ function MobileTradePageInner() {
 }
 
 export function MobileTradePage() {
-  return (
-    <MobileThemeProvider>
-      <MobileTradePageInner />
-    </MobileThemeProvider>
-  );
+  return <MobileTradePageInner />;
 }
