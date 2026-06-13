@@ -14,6 +14,7 @@ import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
 import { FloatingChainStats } from "./components/MobileTopBar";
+import { MobilePortfolioWidget } from "./components/MobilePortfolioWidget";
 import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { Wallet, X } from "lucide-react";
 
@@ -233,6 +234,7 @@ function MobileTradePageInner() {
       >
         {navTab === "Trade" ? (
           <div className="flex-1 min-h-0 overflow-y-auto" style={{ paddingBottom: 60 }}>
+            <MobilePortfolioWidget />
             <MobileTradeView
               market={market}
               currentSymbol={currentSymbol}
