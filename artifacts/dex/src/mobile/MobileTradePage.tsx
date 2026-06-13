@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLiveMarket } from "@/hooks/useLiveMarket";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { MobileTopBar } from "./components/MobileTopBar";
 import { MobilePairHeader } from "./components/MobilePairHeader";
 import { MobileChartView } from "./components/MobileChartView";
@@ -19,6 +20,7 @@ type MainTab = "Chart" | "Order Book" | "Trades";
 function MobileTradePageInner() {
   const market = useLiveMarket();
   const { isDark } = useTheme();
+  const { primaryWallet, setShowDynamicUserProfile } = useDynamicContext();
   const [mainTab, setMainTab] = useState<MainTab>("Chart");
   const [navTab, setNavTab] = useState<NavTab>("Trade");
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -26,6 +28,12 @@ function MobileTradePageInner() {
   function handleNavChange(tab: NavTab) {
     if (tab === "Home") {
       window.location.href = BASE + "/";
+      return;
+    }
+    // If wallet connected and user taps Account → pop Dynamic profile immediately
+    if (tab === "Account" && primaryWallet) {
+      setNavTab("Account");
+      setShowDynamicUserProfile(true);
       return;
     }
     setNavTab(tab);
