@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Filter, Download, RefreshCw, TrendingUp, TrendingDown } from "lucide-react";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useConnectedNetwork, type Network } from "@/hooks/useConnectedNetwork";
+import { getStoredNetwork, type Network } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio } from "@/hooks/useCoinStatsPortfolio";
 import { PortfolioChart } from "@/components/PortfolioChart";
 
@@ -221,6 +221,16 @@ function TradeHistoryView() {
   );
 }
 
+const PORTFOLIO_NETWORKS: { id: Network; label: string }[] = [
+  { id: "bsc",       label: "BNB"  },
+  { id: "ethereum",  label: "ETH"  },
+  { id: "base",      label: "Base" },
+  { id: "arbitrum",  label: "ARB"  },
+  { id: "polygon",   label: "POL"  },
+  { id: "avalanche", label: "AVAX" },
+  { id: "solana",    label: "SOL"  },
+];
+
 interface AssetsViewProps {
   holdings: import("@/hooks/useCoinStatsPortfolio").PortfolioHolding[];
   summary: import("@/hooks/useCoinStatsPortfolio").PortfolioSummary;
@@ -231,9 +241,10 @@ interface AssetsViewProps {
   hasWallet: boolean;
   address: string | null;
   network: Network;
+  onNetworkChange: (n: Network) => void;
 }
 
-function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWallet, address, network }: AssetsViewProps) {
+function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWallet, address, network, onNetworkChange }: AssetsViewProps) {
   const fmt = (n: number) =>
     n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -277,26 +288,41 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Stats header */}
-      <div className="flex items-center gap-6 px-3 py-2 border-b border-[#141414] shrink-0">
-        <span className="text-[#555] text-[12px]">
-          Total Value: <span className="text-white font-mono font-medium">${fmt(summary.totalValueUsd)}</span>
-        </span>
-        <span className="text-[#555] text-[12px]">
-          Unrealized PnL:{" "}
-          <span className={`font-mono font-medium ${summary.unrealizedPnlUsd >= 0 ? "text-[#00c853]" : "text-[#ff1744]"}`}>
-            {summary.unrealizedPnlUsd >= 0 ? "+" : ""}${fmt(summary.unrealizedPnlUsd)}
+      {/* Network selector + Stats header */}
+      <div className="flex items-center gap-2 px-3 py-1.5 border-b border-[#141414] shrink-0">
+        {PORTFOLIO_NETWORKS.map(({ id, label }) => (
+          <button
+            key={id}
+            onClick={() => onNetworkChange(id)}
+            className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+              network === id
+                ? "bg-[#f5c518]/15 text-[#f5c518]"
+                : "text-[#444] hover:text-[#888]"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+        <div className="ml-auto flex items-center gap-4">
+          <span className="text-[#555] text-[11px]">
+            Value: <span className="text-white font-mono font-medium">${fmt(summary.totalValueUsd)}</span>
           </span>
-        </span>
-        <span className="text-[#555] text-[12px]">
-          24h PnL:{" "}
-          <span className={`font-mono font-medium ${summary.pnl24hUsd >= 0 ? "text-[#00c853]" : "text-[#ff1744]"}`}>
-            {summary.pnl24hUsd >= 0 ? "+" : ""}${fmt(summary.pnl24hUsd)}
+          <span className="text-[11px]">
+            PnL:{" "}
+            <span className={`font-mono font-medium ${summary.unrealizedPnlUsd >= 0 ? "text-[#00c853]" : "text-[#ff1744]"}`}>
+              {summary.unrealizedPnlUsd >= 0 ? "+" : ""}${fmt(summary.unrealizedPnlUsd)}
+            </span>
           </span>
-        </span>
-        <button onClick={refetch} className="ml-auto text-[#555] hover:text-white transition-colors">
-          <RefreshCw className="w-3 h-3" />
-        </button>
+          <span className="text-[11px]">
+            24h:{" "}
+            <span className={`font-mono font-medium ${summary.pnl24hUsd >= 0 ? "text-[#00c853]" : "text-[#ff1744]"}`}>
+              {summary.pnl24hUsd >= 0 ? "+" : ""}${fmt(summary.pnl24hUsd)}
+            </span>
+          </span>
+          <button onClick={refetch} className="text-[#555] hover:text-white transition-colors">
+            <RefreshCw className="w-3 h-3" />
+          </button>
+        </div>
       </div>
 
       {/* Portfolio chart */}
@@ -407,9 +433,9 @@ export function BottomPanel() {
   const totalPnl = MOCK_POSITIONS.reduce((s, p) => s + p.unrealizedPnl, 0);
 
   const { primaryWallet } = useDynamicContext();
-  const network = useConnectedNetwork();
   const address = primaryWallet?.address ?? null;
-  const portfolio = useCoinStatsPortfolio(address, network);
+  const [portfolioNetwork, setPortfolioNetwork] = useState<Network>(() => getStoredNetwork());
+  const portfolio = useCoinStatsPortfolio(address, portfolioNetwork);
 
   function renderContent() {
     switch (activeTab) {
@@ -426,7 +452,8 @@ export function BottomPanel() {
           refetch={portfolio.refetch}
           hasWallet={!!primaryWallet}
           address={address}
-          network={network}
+          network={portfolioNetwork}
+          onNetworkChange={setPortfolioNetwork}
         />
       );
       case "Order History":       return <OrderHistoryView />;
