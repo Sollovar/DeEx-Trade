@@ -4,6 +4,7 @@ import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork, type Network } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio } from "@/hooks/useCoinStatsPortfolio";
 import { PortfolioChart } from "@/components/PortfolioChart";
+import { PortfolioLoader } from "@/components/PortfolioLoader";
 
 type BottomTab = "Open Orders" | "Positions" | "Predictions" | "Assets" | "Order History" | "Trade History" | "Transaction History";
 const TABS: BottomTab[] = ["Open Orders", "Positions", "Predictions", "Assets", "Order History", "Trade History", "Transaction History"];
@@ -249,12 +250,7 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
   }
 
   if (loading || syncing) {
-    return (
-      <div className="flex-1 flex flex-col items-center justify-center gap-2">
-        <RefreshCw className="w-4 h-4 text-[#444] animate-spin" />
-        <p className="text-[#444] text-[12px]">{syncing ? "Syncing wallet…" : "Loading assets…"}</p>
-      </div>
-    );
+    return <PortfolioLoader message={syncing ? "Syncing wallet…" : "Loading portfolio…"} size="sm" />;
   }
 
   if (error) {

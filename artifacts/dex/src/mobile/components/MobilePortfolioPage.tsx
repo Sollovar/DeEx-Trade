@@ -3,6 +3,7 @@ import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react
 import { useConnectedNetwork } from "@/hooks/useConnectedNetwork";
 import { useCoinStatsPortfolio, type PortfolioHolding } from "@/hooks/useCoinStatsPortfolio";
 import { PortfolioChart } from "@/components/PortfolioChart";
+import { PortfolioLoader } from "@/components/PortfolioLoader";
 
 function Skeleton({ w, h }: { w: number | string; h: number }) {
   return (
@@ -122,6 +123,14 @@ export function MobilePortfolioPage() {
     useCoinStatsPortfolio(address, network);
 
   if (!primaryWallet) return <NoWalletState />;
+
+  if (loading || syncing) {
+    return (
+      <div className="flex-1 flex flex-col" style={{ paddingBottom: 76 }}>
+        <PortfolioLoader message={syncing ? "Syncing wallet…" : "Loading portfolio…"} />
+      </div>
+    );
+  }
 
   const addr = address ?? "";
   const shortAddr = addr.slice(0, 6) + "…" + addr.slice(-4);
