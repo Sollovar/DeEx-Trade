@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Globe, Settings, ArrowRight, ChevronDown, Check, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork, useSetNetwork, type Network } from "@/hooks/useConnectedNetwork";
@@ -40,18 +41,28 @@ function NetworkDropdown() {
   const pick = async (id: SupportedNetwork) => {
     if (id === network) { setOpen(false); return; }
 
+    const net = NETWORKS.find((n) => n.id === id)!;
     setOpen(false);
     setNetwork(id);
 
     const chainId = EVM_CHAIN_IDS[id];
-    if (!primaryWallet || !chainId) return;
-    if ((primaryWallet as any).chain !== "EVM") return;
+    if (!primaryWallet || !chainId) {
+      toast.success(`Switched to ${net.label}`);
+      return;
+    }
+    if ((primaryWallet as any).chain !== "EVM") {
+      toast.success(`Switched to ${net.label}`);
+      return;
+    }
 
     setSwitching(id);
+    const tid = toast.loading(`Switching to ${net.label}…`);
     try {
       await primaryWallet.connector.switchNetwork({ networkChainId: chainId });
+      toast.success(`Switched to ${net.label}`, { id: tid });
     } catch (err) {
       console.warn("[TopNav] switchNetwork failed:", err);
+      toast.error(`Failed to switch to ${net.label}`, { id: tid });
     } finally {
       setSwitching(null);
     }
@@ -61,7 +72,7 @@ function NetworkDropdown() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded bg-[#1a1a1a] hover:bg-[#222] transition-colors border border-border"
+        className="flex items-center gap-2 px-1 py-1 transition-colors"
       >
         <ChainIcon id={active.id} size={14} />
         <span className="font-medium text-foreground" style={{ color: active.color }}>

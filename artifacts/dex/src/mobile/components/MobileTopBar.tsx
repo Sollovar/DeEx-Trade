@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, Globe, Settings, Check, Bell, ChevronDown, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
@@ -93,26 +94,34 @@ function NetworkPill() {
   const pick = async (id: SupportedNetwork) => {
     if (id === network) { setOpen(false); return; }
 
+    const net = NETWORKS.find((n) => n.id === id)!;
+
     // Close sheet + optimistically update stored network immediately
     setOpen(false);
     setNetwork(id);
 
     const chainId = EVM_CHAIN_IDS[id];
 
-    // Solana or no wallet connected → stored network update is enough
-    if (!primaryWallet || !chainId) return;
+    // Solana or no wallet connected → just show a success toast
+    if (!primaryWallet || !chainId) {
+      toast.success(`Switched to ${net.label}`);
+      return;
+    }
 
     // Only EVM wallets support switchNetwork
-    if ((primaryWallet as any).chain !== "EVM") return;
+    if ((primaryWallet as any).chain !== "EVM") {
+      toast.success(`Switched to ${net.label}`);
+      return;
+    }
 
     setSwitching(id);
+    const tid = toast.loading(`Switching to ${net.label}…`);
     try {
       await primaryWallet.connector.switchNetwork({ networkChainId: chainId });
-      // useConnectedNetwork's chainChanged listener will confirm the actual switch
+      toast.success(`Switched to ${net.label}`, { id: tid });
     } catch (err) {
       console.warn("[NetworkPill] switchNetwork failed:", err);
-      // Leave the optimistic stored-network update in place;
-      // useConnectedNetwork will self-correct on the next wallet event.
+      toast.error(`Failed to switch to ${net.label}`, { id: tid });
     } finally {
       setSwitching(null);
     }
@@ -123,15 +132,10 @@ function NetworkPill() {
       <button
         onClick={() => setOpen(true)}
         style={{
-          backgroundColor: "var(--m-bg-3)",
-          border: "1px solid var(--m-bdr)",
-          color: "var(--m-fg-2)",
-          fontSize: 11,
-          fontWeight: 700,
-          paddingLeft: 8,
-          paddingRight: 6,
+          background: "none",
+          border: "none",
+          padding: "0 4px",
           height: 28,
-          borderRadius: 8,
           display: "flex",
           alignItems: "center",
           gap: 4,
@@ -140,7 +144,7 @@ function NetworkPill() {
         }}
       >
         <ChainIcon id={active.id} size={14} />
-        <span style={{ color: active.color }}>{active.abbr}</span>
+        <span style={{ color: active.color, fontSize: 11, fontWeight: 700 }}>{active.abbr}</span>
         <ChevronDown style={{ width: 10, height: 10, color: "var(--m-fg-4)" }} />
       </button>
 
