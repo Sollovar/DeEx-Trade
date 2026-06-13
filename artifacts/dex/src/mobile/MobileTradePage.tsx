@@ -13,7 +13,7 @@ import { MobileTradeView } from "./components/MobileTradeView";
 import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
-import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
+import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { Wallet } from "lucide-react";
 
 type MainTab = "Chart" | "Order Book" | "Trades";
@@ -49,6 +49,11 @@ function MobileTradePageInner() {
       className="w-full flex flex-col select-none overflow-hidden"
       style={{ height: "100dvh", backgroundColor: "var(--m-bg)", color: "var(--m-fg)" }}
     >
+      {/* Hidden DynamicWidget — needed so setShowDynamicUserProfile modal renders on mobile */}
+      <div style={{ display: "none" }}>
+        <DynamicWidget />
+      </div>
+
       <MobileHamburgerMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       {showMarketPanel && (
