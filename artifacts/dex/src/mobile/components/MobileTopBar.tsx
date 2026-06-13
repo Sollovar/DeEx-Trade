@@ -5,6 +5,7 @@ import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork, useSetNetwork, type Network } from "@/hooks/useConnectedNetwork";
+import { ChainIcon } from "@/components/ChainIcons";
 
 /* ── Wallet button ─────────────────────────────────────────────── */
 function WalletButton() {
@@ -73,29 +74,6 @@ const NETWORKS: { id: SupportedNetwork; label: string; abbr: string; color: stri
   { id: "solana", label: "Solana",    abbr: "SOL",  color: "#9945FF", bg: "rgba(153,69,255,0.15)"  },
 ];
 
-function NetworkIcon({ id, size = 16 }: { id: SupportedNetwork; size?: number }) {
-  const net = NETWORKS.find((n) => n.id === id) ?? NETWORKS[0];
-  return (
-    <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        backgroundColor: net.color,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-        fontSize: size * 0.48,
-        fontWeight: 900,
-        color: "#fff",
-        letterSpacing: "-0.5px",
-      }}
-    >
-      {net.abbr[0]}
-    </div>
-  );
-}
 
 /* ── Network pill + bottom sheet ───────────────────────────────── */
 function NetworkPill() {
@@ -131,7 +109,7 @@ function NetworkPill() {
           whiteSpace: "nowrap",
         }}
       >
-        <NetworkIcon id={active.id} size={14} />
+        <ChainIcon id={active.id} size={14} />
         <span style={{ color: active.color }}>{active.abbr}</span>
         <ChevronDown style={{ width: 10, height: 10, color: "var(--m-fg-4)" }} />
       </button>
@@ -198,7 +176,7 @@ function NetworkPill() {
                         flexShrink: 0,
                       }}
                     >
-                      <NetworkIcon id={net.id} size={20} />
+                      <ChainIcon id={net.id} size={20} />
                     </div>
                     <div className="flex flex-col leading-none gap-1 min-w-0 flex-1">
                       <span
