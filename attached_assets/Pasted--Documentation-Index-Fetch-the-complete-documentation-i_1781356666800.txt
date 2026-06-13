@@ -1,0 +1,643 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://coinstats.app/docs/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# get wallet profit & loss
+
+> get wallet profit & loss
+
+<Note>**25** credits per request</Note><Accordion title="Multipliers" icon="rectangle-history-circle-plus"><Note>In **Query** field **"connectionId"**: credits are multiplied by the number of values.</Note><Note>If the value of **"connectionId"** in **Query** is **"all"**, multiplier is **250** credits.</Note><Note>In **Query** field **"blockchain"**: credits are multiplied by the number of values.</Note><Note>If the value of **"blockchain"** in **Query** is **"all"**, multiplier is **250** credits.</Note><Warning>Multipliers can be applied multiple times.</Warning><Info>[**Detailed multipliers explanation**](/multipliers)</Info></Accordion><hr />
+
+<AccordionGroup>
+  <Accordion title="You will get">
+    * Wallet holdings with coin details, quantities, current prices, and total cost basis.
+    * Profit and loss breakdowns for each holding, including realized, unrealized, all-time, 24-hour, and last-trade values.
+    * Average buy and sell prices, plus profit percentages, so you can understand how each position is performing.
+    * A summary object with total value, total cost, profit, and profit percentage for the filtered result set.
+  </Accordion>
+
+  <Accordion title="Required">
+    * address plus connectionId/blockchain
+    * Raw wallet requests require transactions to be synced first with PATCH /wallet/transactions
+  </Accordion>
+
+  <Accordion title="Optional">
+    * coinId: Filter the result and summary by coin ID
+    * page & limit: Control pagination
+  </Accordion>
+</AccordionGroup>
+
+
+## OpenAPI
+
+````yaml /api-reference/openapi.json get /wallet/pl
+openapi: 3.0.0
+info:
+  title: CoinStats Public API
+  description: >-
+    CoinStats Public API — programmatic access to market data, news, NFTs,
+    wallets, exchange connections, and user portfolios. Authenticate every
+    request with the `X-API-KEY` header (or an OAuth Bearer token in the
+    `Authorization` header). Generate keys at https://openapi.coinstats.app.
+  version: '1.0'
+  contact: {}
+servers:
+  - url: https://openapiv1.coinstats.app
+security: []
+tags:
+  - name: CoinStats
+    description: ''
+  - name: Market Data
+    description: >-
+      The Market Data section of the API provides endpoints to access a wide
+      range of market-related information, including cryptocurrency coins,
+      ticker data, and fiat currency rates. This category offers comprehensive
+      data to help users monitor and analyze the cryptocurrency market, track
+      prices, and gain insights into market trends
+  - name: News
+    description: >-
+      The News section of the API allows you to access news articles and updates
+      related to cryptocurrencies and the blockchain industry. It provides
+      valuable information from various sources to keep you informed about the
+      latest developments
+  - name: NFTs
+    description: >-
+      The NFT section of the API provides endpoints to interact with
+      Non-Fungible Tokens (NFTs), which are unique digital assets stored on a
+      blockchain. These endpoints allow you to retrieve information about NFTs,
+      including collections, assets, trending NFTs, and specific assets
+      associated with wallet addresses.
+  - name: Wallet Data
+    description: >-
+      The Wallet section of the API provides a comprehensive set of endpoints to
+      manage and interact with wallets. It enables users to retrieve wallet
+      balances, monitor syncing status, fetch transaction data, and synchronize
+      wallet information with the blockchain. By integrating these endpoints
+      into your application, you can offer robust wallet functionality to your
+      users.
+  - name: Exchange Connection
+    description: >-
+      The Exchange Connection section of the API provides a comprehensive set of
+      endpoints to manage and interact with exchanges. It enables users to
+      retrieve exchange balances, monitor syncing status, fetch transaction
+      data. By integrating these endpoints into your application, you can offer
+      robust exchange portfolio tracking functionality to your users.
+  - name: User Portfolio
+    description: >-
+      The Portfolio section of the API provides a comprehensive set of endpoints
+      to manage and interact with Share Portfolios. It enables users to retrieve
+      current Portfolio Coins and Transactions.
+  - name: Usage
+    description: The Usage section provides account-level API usage data.
+  - name: Status
+    description: The Status section provides API availability checks.
+paths:
+  /wallet/pl:
+    get:
+      tags:
+        - Wallet Data
+      summary: get wallet profit & loss
+      operationId: get-wallet-pl
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: Page number to retrieve (1-based indexing)
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          description: Number of P/L items to return per page.
+          schema:
+            default: 1000
+            example: 1000
+            type: number
+        - name: address
+          required: false
+          in: query
+          description: Wallet address for raw wallet PnL data.
+          schema:
+            example: '0x1234567890abcdef1234567890abcdef12345678'
+            type: string
+        - name: connectionId
+          required: false
+          in: query
+          description: >-
+            Single wallet connection identifier from GET /wallet/blockchains.
+            Required with address.
+          schema:
+            example: ethereum
+            type: string
+        - name: blockchain
+          required: false
+          in: query
+          description: >-
+            Blockchain identifier from GET /wallet/blockchains. Used when
+            connectionId is not provided.
+          schema:
+            example: ethereum
+            type: string
+        - name: coinId
+          required: false
+          in: query
+          description: Filter PnL data by coin ID.
+          schema:
+            example: bitcoin
+            type: string
+      responses:
+        '200':
+          description: get wallet profit & loss
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioPLResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                statusCode: 400
+                message: Bad Request
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                statusCode: 401
+                message: Unauthorized
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              example:
+                statusCode: 403
+                message: Forbidden
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                statusCode: 404
+                message: Not Found
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '409':
+          description: |-
+            Transactions not synced. Please call PATCH /transactions
+
+            Conflict (for some endpoints)
+          content:
+            application/json:
+              example:
+                statusCode: 409
+                message: Transactions not synced
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                statusCode: 429
+                message: Rate limit exceeded
+                requestId: 11111111-2222-3333-4444-555555555555
+                path: <requested-endpoint>
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              example:
+                statusCode: 503
+                message: Service Unavailable. Please Contact Support
+      security:
+        - X-API-KEY: []
+components:
+  schemas:
+    PortfolioPLResponseDto:
+      type: object
+      properties:
+        result:
+          description: Portfolio holdings with prices, PnL fields, averages, and totalCost
+          type: array
+          items:
+            $ref: '#/components/schemas/PortfolioItemDto'
+        summary:
+          description: Totals calculated from the filtered result set
+          allOf:
+            - $ref: '#/components/schemas/PortfolioPLSummaryDto'
+      required:
+        - result
+        - summary
+    PortfolioItemDto:
+      type: object
+      properties:
+        count:
+          type: number
+          example: 44.4987
+          description: Quantity of coins held in the portfolio
+        coin:
+          description: Coin information including symbol, name, rank, and market data
+          allOf:
+            - $ref: '#/components/schemas/CoinDto'
+        price:
+          description: Current market prices in multiple currencies (USD, BTC, ETH)
+          allOf:
+            - $ref: '#/components/schemas/PriceDto'
+        profit:
+          description: Profit and loss data across different time periods and categories
+          allOf:
+            - $ref: '#/components/schemas/ProfitDto'
+        averageBuy:
+          description: Average purchase prices across different time periods
+          allOf:
+            - $ref: '#/components/schemas/AverageDto'
+        averageSell:
+          description: Average sale prices across different time periods
+          allOf:
+            - $ref: '#/components/schemas/AverageDto'
+        profitPercent:
+          description: Profit/loss percentages across different time periods and categories
+          allOf:
+            - $ref: '#/components/schemas/ProfitPercentDto'
+        liquidityScore:
+          type: number
+          example: 94.44676177373067
+          description: >-
+            Liquidity score indicating how easily the asset can be traded
+            (0-100)
+        volatilityScore:
+          type: number
+          example: 6.823477152064536
+          description: Volatility score indicating price stability (lower = more stable)
+        marketCapScore:
+          type: number
+          example: 90.15554879029162
+          description: Market capitalization score relative to other assets (0-100)
+        riskScore:
+          type: number
+          example: 7.407055529347417
+          description: Risk score indicating investment risk level (lower = less risky)
+        avgChange:
+          type: number
+          example: 2.631321607022045
+          description: Average price change percentage across multiple time periods
+        totalCost:
+          type: object
+          example:
+            USD: 160
+            BTC: 0.0016
+            ETH: 0.032
+          description: Current open-holdings cost basis in multiple currencies
+      required:
+        - count
+        - coin
+        - price
+        - profitPercent
+    PortfolioPLSummaryDto:
+      type: object
+      properties:
+        totalValue:
+          description: Current market value of the returned holdings
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        totalCost:
+          description: Current open-holdings cost basis
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        profit:
+          description: PnL totals calculated from the filtered result set
+          allOf:
+            - $ref: '#/components/schemas/ProfitPeriodMapDto'
+        profitPercent:
+          description: PnL percentage totals calculated from the filtered result set
+          allOf:
+            - $ref: '#/components/schemas/ProfitPeriodMapDto'
+      required:
+        - totalValue
+        - totalCost
+        - profit
+        - profitPercent
+    CoinDto:
+      type: object
+      properties:
+        rank:
+          type: number
+          example: 2
+          description: Market rank of the coin
+        identifier:
+          type: string
+          example: ethereum
+          description: Unique identifier for the coin
+        symbol:
+          type: string
+          example: ETH
+          description: Trading symbol of the coin
+        name:
+          type: string
+          description: Full name of the coin
+          example: Ethereum
+        icon:
+          type: string
+          example: https://static.coinstats.app/coins/1650455629727.png
+          description: URL to the coin icon image
+        isFake:
+          type: boolean
+          example: false
+          description: Whether the coin is identified as fake
+        isFiat:
+          type: boolean
+          example: false
+          description: Whether the coin is a fiat currency
+        priceChange24h:
+          type: number
+          example: -5.74
+          description: Price change percentage in the last 24 hours
+        priceChange1h:
+          type: number
+          example: 0.1
+          description: Price change percentage in the last 1 hour
+        priceChange7d:
+          type: number
+          example: 1.12
+          description: Price change percentage in the last 7 days
+        priceChange1m:
+          type: number
+          example: 8.42
+          description: Price change percentage in the last 1 month
+        volume:
+          type: number
+          example: 61315198931.43572
+          description: Trading volume in the last 24 hours (USD)
+      required:
+        - rank
+        - identifier
+        - symbol
+        - name
+        - icon
+        - priceChange24h
+        - priceChange1h
+        - priceChange7d
+        - priceChange1m
+        - volume
+    PriceDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: 4343.564311034
+          description: Current price in USD
+        BTC:
+          type: number
+          example: 0.039479708
+          description: Current price in BTC
+        ETH:
+          type: number
+          example: 1
+          description: Current price in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    ProfitDto:
+      type: object
+      properties:
+        allTime:
+          description: All-time profit/loss amounts in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/AllTimeDto'
+        hour24:
+          description: 24-hour profit/loss amounts in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/Hour24Dto'
+        lastTrade:
+          description: Last trade profit/loss amounts in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/LastTradeDto'
+        unrealized:
+          description: Unrealized profit/loss amounts in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/UnrealizedDto'
+        realized:
+          description: Realized profit/loss amounts in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/RealizedDto'
+      required:
+        - allTime
+        - hour24
+        - lastTrade
+        - unrealized
+        - realized
+    AverageDto:
+      type: object
+      properties:
+        allTime:
+          description: All-time average buy/sell price across all transactions
+          allOf:
+            - $ref: '#/components/schemas/AllTimeDto'
+        hour24:
+          description: 24-hour average buy/sell price
+          allOf:
+            - $ref: '#/components/schemas/Hour24Dto'
+        lastTrade:
+          description: Average price of the most recent trade
+          allOf:
+            - $ref: '#/components/schemas/LastTradeDto'
+        unrealized:
+          description: Average price for unrealized positions
+          allOf:
+            - $ref: '#/components/schemas/UnrealizedDto'
+        realized:
+          description: Average price for realized positions
+          allOf:
+            - $ref: '#/components/schemas/RealizedDto'
+    ProfitPercentDto:
+      type: object
+      properties:
+        allTime:
+          description: All-time profit/loss percentages in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/AllTimeDto'
+        hour24:
+          description: 24-hour profit/loss percentages in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/Hour24Dto'
+        lastTrade:
+          description: Last trade profit/loss percentages in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/LastTradeDto'
+        unrealized:
+          description: Unrealized profit/loss percentages in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/UnrealizedDto'
+        realized:
+          description: Realized profit/loss percentages in multiple currencies
+          allOf:
+            - $ref: '#/components/schemas/RealizedDto'
+      required:
+        - allTime
+        - hour24
+        - lastTrade
+        - unrealized
+        - realized
+    CurrencyMapDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: 160
+          description: Value in USD
+        BTC:
+          type: number
+          example: 0.0016
+          description: Value in BTC
+        ETH:
+          type: number
+          example: 0.032
+          description: Value in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    ProfitPeriodMapDto:
+      type: object
+      properties:
+        allTime:
+          description: All-time PnL values
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        hour24:
+          description: 24 hour PnL values
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        lastTrade:
+          description: PnL values since last trade
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        unrealized:
+          description: Unrealized PnL values for current holdings
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+        realized:
+          description: Realized PnL values
+          allOf:
+            - $ref: '#/components/schemas/CurrencyMapDto'
+      required:
+        - allTime
+        - hour24
+        - lastTrade
+        - unrealized
+        - realized
+    AllTimeDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: 83720.75297372
+          description: All-time value in USD
+        BTC:
+          type: number
+          example: 0.054246576
+          description: All-time value in BTC
+        ETH:
+          type: number
+          example: -0.0008427712028833412
+          description: All-time value in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    Hour24Dto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: -11770.04265107636
+          description: 24-hour period value in USD
+        BTC:
+          type: number
+          example: -0.055726915608058335
+          description: 24-hour period value in BTC
+        ETH:
+          type: number
+          example: 0
+          description: 24-hour period value in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    LastTradeDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: -0.0011652685976688212
+          description: Last trade value in USD
+        BTC:
+          type: number
+          example: -8.325768295004658e-9
+          description: Last trade value in BTC
+        ETH:
+          type: number
+          example: 8.470329472543003e-22
+          description: Last trade value in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    UnrealizedDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: 64875.375139922
+          description: Unrealized gains/losses in USD
+        BTC:
+          type: number
+          example: 0.516615331
+          description: Unrealized gains/losses in BTC
+        ETH:
+          type: number
+          example: -0.000013421973257266018
+          description: Unrealized gains/losses in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+    RealizedDto:
+      type: object
+      properties:
+        USD:
+          type: number
+          example: 18844.785945298
+          description: Realized gains/losses in USD
+        BTC:
+          type: number
+          example: -0.46237401135664413
+          description: Realized gains/losses in BTC
+        ETH:
+          type: number
+          example: -0.0008426785167330308
+          description: Realized gains/losses in ETH
+      required:
+        - USD
+        - BTC
+        - ETH
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: >-
+        API key required to access the endpoints. Generate one from your
+        dashboard at https://openapi.coinstats.app and pass it in the
+        `X-API-KEY` request header. Never expose your key in client-side code.
+
+````
