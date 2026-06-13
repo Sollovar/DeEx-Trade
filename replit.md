@@ -1,36 +1,50 @@
-# [Project name]
+# DEX Trade
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A decentralized exchange (DEX) frontend supporting Ethereum and Solana wallet connections, token swapping, portfolio tracking, and real-time chain statistics.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/dex run dev` — run the DEX frontend (port 23444, set via PORT env var)
+- `pnpm --filter @workspace/api-server run dev` — run the API server
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `DATABASE_URL` — Postgres connection string (for API server / DB layer)
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
+- pnpm workspaces, Node.js 20, TypeScript 5.9
+- Frontend: React 19, Vite, Tailwind CSS v4, TanStack Query, Wouter, Radix UI / Shadcn
+- Auth/Wallets: Dynamic.xyz (`@dynamic-labs/sdk-react-core`) — Web3 wallet connectors for Ethereum + Solana
 - API: Express 5
 - DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
+- Validation: Zod, `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Build: esbuild (ESM bundle for server), Vite (frontend)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/dex/` — main React frontend (desktop + mobile views)
+- `artifacts/api-server/` — Express backend
+- `artifacts/mockup-sandbox/` — UI component prototyping environment
+- `lib/db/` — Drizzle ORM schema + PostgreSQL client
+- `lib/api-spec/` — OpenAPI spec (`openapi.yaml`) + codegen config
+- `lib/api-client-react/` — generated TanStack Query hooks
+- `lib/api-zod/` — generated Zod schemas
+- `artifacts/dex/src/contexts/WalletProvider.tsx` — Dynamic.xyz wallet auth setup
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Monorepo with pnpm workspaces; shared packages in `lib/`, apps in `artifacts/`
+- Web3 wallet auth via Dynamic.xyz — environment ID is a public client-side config, not a secret
+- Public blockchain RPCs (BSC, Base, Solana mainnet) used directly from the frontend — no API keys required
+- CoinGecko public API used for pricing data — no key required for basic usage
+- API server and frontend run as separate processes; frontend proxies API calls during dev
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+A DEX trading interface letting users connect Ethereum and Solana wallets, view portfolio balances, monitor chain stats, and perform token swaps across BSC, Base, and Solana networks.
 
 ## User preferences
 
@@ -38,7 +52,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `PORT` and `BASE_PATH` env vars are required for the DEX frontend (`vite.config.ts` will throw without them)
+- The workflow runs with `PORT=23444 BASE_PATH=/`
+- `pnpm install` must be run before any workflow starts; the lockfile is committed
 
 ## Pointers
 
