@@ -438,14 +438,14 @@ export function MobileTopBar({ onMenuClick }: Props) {
                   <button
                     key={lang.code}
                     onClick={() => pick(lang.code)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all active:scale-[0.97]"
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition-all active:scale-[0.97]"
                     style={{
                       backgroundColor: isActive ? "rgba(245,197,24,0.10)" : "var(--m-bg-2)",
                       border: isActive ? "1px solid rgba(245,197,24,0.35)" : "1px solid var(--m-bg-4)",
                     }}
                   >
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-[11px] font-bold"
+                      className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-[11px] font-bold"
                       style={{
                         backgroundColor: isActive ? "rgba(245,197,24,0.18)" : "var(--m-bg-3)",
                         color: isActive ? "#f5c518" : "var(--m-fg-3)",

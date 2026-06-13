@@ -185,7 +185,7 @@ export function MobileSettingsSheet({ open, onClose }: Props) {
                   <button
                     key={opt}
                     onClick={() => setSlippage(opt)}
-                    className="flex-1 h-8 rounded-xl text-[12px] font-bold transition-all active:scale-95"
+                    className="flex-1 h-8 rounded-2xl text-[12px] font-bold transition-all active:scale-95"
                     style={{
                       backgroundColor: slippage === opt ? "#f5c518" : "var(--m-bg-3)",
                       color: slippage === opt ? "#000" : "var(--m-fg-4)",
@@ -197,7 +197,7 @@ export function MobileSettingsSheet({ open, onClose }: Props) {
               </div>
               {slippage === "custom" && (
                 <div
-                  className="flex items-center gap-2 mt-2 px-3 h-9 rounded-xl"
+                  className="flex items-center gap-2 mt-2 px-3 h-9 rounded-2xl"
                   style={{ backgroundColor: "var(--m-bg-3)", border: "1px solid var(--m-bg-4)" }}
                 >
                   <input
@@ -227,7 +227,7 @@ export function MobileSettingsSheet({ open, onClose }: Props) {
                   <button
                     key={value}
                     onClick={() => setOrderConfirm(value)}
-                    className="flex items-center justify-between px-3 h-9 rounded-xl transition-all active:scale-[0.98]"
+                    className="flex items-center justify-between px-3 h-9 rounded-2xl transition-all active:scale-[0.98]"
                     style={{
                       backgroundColor: orderConfirm === value ? "rgba(245,197,24,0.1)" : "var(--m-bg-3)",
                       border: orderConfirm === value ? "1px solid rgba(245,197,24,0.3)" : "1px solid transparent",
