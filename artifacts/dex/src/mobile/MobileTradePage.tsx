@@ -14,7 +14,7 @@ import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
 import { FloatingChainStats } from "./components/MobileTopBar";
-import { MobilePortfolioWidget } from "./components/MobilePortfolioWidget";
+import { MobilePortfolioPage } from "./components/MobilePortfolioPage";
 import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { Wallet, X } from "lucide-react";
 
@@ -22,7 +22,7 @@ type MainTab = "Chart" | "Order Book" | "Trades";
 
 /* ── Swipeable tabs config ──────────────────────────────────────── */
 // Pages in left-to-right order. Swipe left = go right, swipe right = go left.
-const SWIPE_TABS: NavTab[] = ["Markets", "Trade"];
+const SWIPE_TABS: NavTab[] = ["Markets", "Trade", "Portfolio"];
 const SWIPE_THRESHOLD = 55; // px of horizontal movement to trigger switch
 
 /* ── Page dots indicator ────────────────────────────────────────── */
@@ -234,7 +234,6 @@ function MobileTradePageInner() {
       >
         {navTab === "Trade" ? (
           <div className="flex-1 min-h-0 overflow-y-auto" style={{ paddingBottom: 60 }}>
-            <MobilePortfolioWidget />
             <MobileTradeView
               market={market}
               currentSymbol={currentSymbol}
@@ -244,6 +243,9 @@ function MobileTradePageInner() {
               <MobileBottomSection />
             </div>
           </div>
+
+        ) : navTab === "Portfolio" ? (
+          <MobilePortfolioPage />
 
         ) : navTab === "Markets" ? (
           <MobileMarketsPage

@@ -1,6 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
 
-export type NavTab = "Home" | "Markets" | "Trade" | "Account";
+export type NavTab = "Home" | "Markets" | "Trade" | "Portfolio" | "Account";
 
 const HomeIcon = ({ active, inactiveColor }: { active: boolean; inactiveColor: string }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -31,6 +31,20 @@ const TradeIcon = ({ active, inactiveColor }: { active: boolean; inactiveColor: 
   </svg>
 );
 
+const PortfolioIcon = ({ active, inactiveColor }: { active: boolean; inactiveColor: string }) => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <rect x="2" y="6" width="16" height="11" rx="2"
+      stroke={active ? "#f5c518" : inactiveColor} strokeWidth="1.5"
+      fill={active ? "rgba(245,197,24,0.12)" : "none"}
+    />
+    <path d="M6 6V5a2 2 0 012-2h4a2 2 0 012 2v1"
+      stroke={active ? "#f5c518" : inactiveColor} strokeWidth="1.5" strokeLinecap="round"
+    />
+    <path d="M2 10h16" stroke={active ? "#f5c518" : inactiveColor} strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="10" cy="10" r="1.5" fill={active ? "#f5c518" : inactiveColor}/>
+  </svg>
+);
+
 const AccountIcon = ({ active, inactiveColor }: { active: boolean; inactiveColor: string }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <circle cx="10" cy="7" r="3" stroke={active ? "#f5c518" : inactiveColor} strokeWidth="1.5"/>
@@ -47,7 +61,7 @@ interface Props {
 export function MobileBottomNav({ activeNav, accountActive = false, onNavChange }: Props) {
   const { isDark } = useTheme();
   const inactiveColor = isDark ? "#555555" : "#aaaaaa";
-  const tabs: NavTab[] = ["Home", "Markets", "Trade", "Account"];
+  const tabs: NavTab[] = ["Home", "Markets", "Trade", "Portfolio", "Account"];
 
   return (
     <div
@@ -67,17 +81,16 @@ export function MobileBottomNav({ activeNav, accountActive = false, onNavChange 
             className="flex flex-col items-center gap-1 flex-1 h-full justify-center transition-opacity active:opacity-60"
           >
             <div
-              className="flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all"
-              style={{
-                backgroundColor: active ? "rgba(245,197,24,0.1)" : "transparent",
-              }}
+              className="flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all"
+              style={{ backgroundColor: active ? "rgba(245,197,24,0.1)" : "transparent" }}
             >
-              {tab === "Home"    && <HomeIcon    active={active} inactiveColor={inactiveColor} />}
-              {tab === "Markets" && <MarketsIcon active={active} inactiveColor={inactiveColor} />}
-              {tab === "Trade"   && <TradeIcon   active={active} inactiveColor={inactiveColor} />}
-              {tab === "Account" && <AccountIcon active={active} inactiveColor={inactiveColor} />}
+              {tab === "Home"      && <HomeIcon      active={active} inactiveColor={inactiveColor} />}
+              {tab === "Markets"   && <MarketsIcon   active={active} inactiveColor={inactiveColor} />}
+              {tab === "Trade"     && <TradeIcon     active={active} inactiveColor={inactiveColor} />}
+              {tab === "Portfolio" && <PortfolioIcon active={active} inactiveColor={inactiveColor} />}
+              {tab === "Account"   && <AccountIcon   active={active} inactiveColor={inactiveColor} />}
               <span
-                className="text-[10px] font-semibold"
+                className="text-[9px] font-semibold"
                 style={{ color: active ? "#f5c518" : "var(--m-fg-4)" }}
               >
                 {tab}
