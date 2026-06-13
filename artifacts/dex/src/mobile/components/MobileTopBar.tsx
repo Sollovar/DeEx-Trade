@@ -3,7 +3,64 @@ import { Menu, Globe, Settings, Check, Bell } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
 import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
-import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+
+function WalletButton() {
+  const { primaryWallet, setShowDynamicUserProfile } = useDynamicContext();
+
+  if (primaryWallet) {
+    const addr = primaryWallet.address ?? "";
+    const short = addr.slice(0, 6) + "…" + addr.slice(-4);
+    return (
+      <button
+        onClick={() => setShowDynamicUserProfile(true)}
+        style={{
+          backgroundColor: "rgba(245,197,24,0.10)",
+          border: "1px solid rgba(245,197,24,0.35)",
+          color: "#f5c518",
+          fontWeight: 700,
+          fontSize: 11,
+          paddingLeft: 10,
+          paddingRight: 10,
+          height: 28,
+          borderRadius: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#22c55e", flexShrink: 0 }} />
+        {short}
+      </button>
+    );
+  }
+
+  return (
+    <DynamicConnectButton buttonContainerClassName="nexus-connect-wrap">
+      <button
+        style={{
+          backgroundColor: "#f5c518",
+          color: "#000",
+          fontWeight: 700,
+          fontSize: 12,
+          paddingLeft: 14,
+          paddingRight: 14,
+          height: 28,
+          borderRadius: 8,
+          display: "flex",
+          alignItems: "center",
+          border: "none",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Connect
+      </button>
+    </DynamicConnectButton>
+  );
+}
 
 interface Props {
   onMenuClick?: () => void;
@@ -59,29 +116,7 @@ export function MobileTopBar({ onMenuClick }: Props) {
         </div>
 
         <div className="flex items-center gap-1">
-          <DynamicWidget
-            innerButtonComponent={
-              <button
-                style={{
-                  backgroundColor: "#f5c518",
-                  color: "#000",
-                  fontWeight: 700,
-                  fontSize: 12,
-                  paddingLeft: 14,
-                  paddingRight: 14,
-                  height: 28,
-                  borderRadius: 8,
-                  display: "flex",
-                  alignItems: "center",
-                  border: "none",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Connect
-              </button>
-            }
-          />
+          <WalletButton />
 
           {/* Language button */}
           <button

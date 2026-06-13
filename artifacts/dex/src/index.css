@@ -397,3 +397,20 @@
   box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.25) !important;
 }
+
+/* Strip Dynamic Labs connect-button container dark background */
+.nexus-connect-wrap {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+.nexus-connect-wrap .connect-button {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  min-width: 0 !important;
+}
