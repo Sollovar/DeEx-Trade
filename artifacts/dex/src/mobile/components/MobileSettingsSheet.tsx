@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { X, Sun, Moon, Bell, Volume2, Shield, Sliders, ChevronRight, Check } from "lucide-react";
+import { X, Sun, Moon, Bell, Volume2, Shield, Sliders, ChevronRight, Check, Flame, Blocks } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface Props {
   open: boolean;
@@ -51,16 +52,17 @@ function Divider() {
 
 export function MobileSettingsSheet({ open, onClose }: Props) {
   const { isDark, toggleTheme } = useTheme();
+  const { showGas, showBlock, setShowGas, setShowBlock } = useSettings();
 
-  const [slippage, setSlippage]             = useState<Slippage>("0.5");
-  const [customSlip, setCustomSlip]         = useState("");
-  const [orderConfirm, setOrderConfirm]     = useState<OrderConfirm>("large");
-  const [soundAlerts, setSoundAlerts]       = useState(true);
-  const [pushNotifs, setPushNotifs]         = useState(true);
-  const [priceAlerts, setPriceAlerts]       = useState(true);
-  const [orderAlerts, setOrderAlerts]       = useState(true);
-  const [hideBalance, setHideBalance]       = useState(false);
-  const [advancedMode, setAdvancedMode]     = useState(false);
+  const [slippage, setSlippage]         = useState<Slippage>("0.5");
+  const [customSlip, setCustomSlip]     = useState("");
+  const [orderConfirm, setOrderConfirm] = useState<OrderConfirm>("large");
+  const [soundAlerts, setSoundAlerts]   = useState(true);
+  const [pushNotifs, setPushNotifs]     = useState(true);
+  const [priceAlerts, setPriceAlerts]   = useState(true);
+  const [orderAlerts, setOrderAlerts]   = useState(true);
+  const [hideBalance, setHideBalance]   = useState(false);
+  const [advancedMode, setAdvancedMode] = useState(false);
 
   const SLIPPAGE_OPTS: Slippage[] = ["0.1", "0.5", "1.0", "custom"];
   const CONFIRM_OPTS: { value: OrderConfirm; label: string }[] = [
@@ -140,6 +142,30 @@ export function MobileSettingsSheet({ open, onClose }: Props) {
             <Divider />
             <Row label="Hide Balances" sub="Mask portfolio values">
               <Toggle on={hideBalance} onToggle={() => setHideBalance(v => !v)} />
+            </Row>
+          </div>
+
+          {/* ── Header Display ── */}
+          <SectionLabel label="Header Display" />
+          <div className="mx-3 rounded-2xl overflow-hidden" style={{ backgroundColor: "var(--m-bg-2)" }}>
+            <Row
+              label="Live Gas Price"
+              sub="Show real-time gas in the header"
+            >
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4" style={{ color: showGas ? "#f97316" : "var(--m-fg-5)" }} />
+                <Toggle on={showGas} onToggle={() => setShowGas(!showGas)} />
+              </div>
+            </Row>
+            <Divider />
+            <Row
+              label="Live Block Number"
+              sub="Show current block in the header"
+            >
+              <div className="flex items-center gap-2">
+                <Blocks className="w-4 h-4" style={{ color: showBlock ? "#22c55e" : "var(--m-fg-5)" }} />
+                <Toggle on={showBlock} onToggle={() => setShowBlock(!showBlock)} />
+              </div>
             </Row>
           </div>
 

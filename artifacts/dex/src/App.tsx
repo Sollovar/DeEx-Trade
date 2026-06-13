@@ -10,6 +10,7 @@ import { LandingPage } from "@/pages/LandingPage";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { MobileThemeProvider } from "@/contexts/ThemeContext";
 import { WalletProvider } from "@/contexts/WalletProvider";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function Router() {
 function App() {
   return (
     <MobileThemeProvider>
+      <SettingsProvider>
       <WalletProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
@@ -47,6 +49,7 @@ function App() {
           </TooltipProvider>
         </QueryClientProvider>
       </WalletProvider>
+      </SettingsProvider>
     </MobileThemeProvider>
   );
 }

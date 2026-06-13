@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Globe, Settings, Check, Bell, ChevronDown, Loader2 } from "lucide-react";
+import { Menu, Globe, Settings, Check, Bell, ChevronDown, Loader2, Flame, Blocks } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
@@ -7,6 +7,8 @@ import { MobileNotificationsSheet } from "./MobileNotificationsSheet";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useConnectedNetwork, useSetNetwork, type Network } from "@/hooks/useConnectedNetwork";
 import { ChainIcon } from "@/components/ChainIcons";
+import { useChainStats } from "@/hooks/useChainStats";
+import { useSettings } from "@/contexts/SettingsContext";
 
 /* ── Wallet button ─────────────────────────────────────────────── */
 function WalletButton() {
@@ -75,11 +77,44 @@ const NETWORKS: { id: SupportedNetwork; label: string; abbr: string; color: stri
   { id: "solana", label: "Solana",    abbr: "SOL",  color: "#9945FF", bg: "rgba(153,69,255,0.15)"  },
 ];
 
-/** EVM chain IDs for each supported network. Solana has no EVM chain ID. */
 const EVM_CHAIN_IDS: Partial<Record<SupportedNetwork, number>> = {
   bsc:  56,
   base: 8453,
 };
+
+/* ── Live chain stats pills ────────────────────────────────────── */
+function ChainStatsPills({ network }: { network: Network }) {
+  const { showGas, showBlock } = useSettings();
+  const { gasGwei, blockNumber } = useChainStats(network);
+
+  if (!showGas && !showBlock) return null;
+
+  return (
+    <div className="flex items-center gap-1.5">
+      {showGas && gasGwei !== null && (
+        <div
+          className="flex items-center gap-1"
+          style={{ color: "var(--m-fg-4)", fontSize: 10, fontWeight: 600 }}
+        >
+          <Flame style={{ width: 9, height: 9, color: "#f97316", flexShrink: 0 }} />
+          <span style={{ fontVariantNumeric: "tabular-nums" }}>{gasGwei}G</span>
+        </div>
+      )}
+      {showGas && showBlock && gasGwei !== null && blockNumber !== null && (
+        <div style={{ width: 1, height: 10, backgroundColor: "var(--m-bdr)" }} />
+      )}
+      {showBlock && blockNumber !== null && (
+        <div
+          className="flex items-center gap-1"
+          style={{ color: "var(--m-fg-4)", fontSize: 10, fontWeight: 600 }}
+        >
+          <Blocks style={{ width: 9, height: 9, color: "#22c55e", flexShrink: 0 }} />
+          <span style={{ fontVariantNumeric: "tabular-nums" }}>{blockNumber}</span>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ── Network pill + bottom sheet ───────────────────────────────── */
 function NetworkPill() {
@@ -96,19 +131,16 @@ function NetworkPill() {
 
     const net = NETWORKS.find((n) => n.id === id)!;
 
-    // Close sheet + optimistically update stored network immediately
     setOpen(false);
     setNetwork(id);
 
     const chainId = EVM_CHAIN_IDS[id];
 
-    // Solana or no wallet connected → just show a success toast
     if (!primaryWallet || !chainId) {
       toast.success(`Switched to ${net.label}`);
       return;
     }
 
-    // Only EVM wallets support switchNetwork
     if ((primaryWallet as any).chain !== "EVM") {
       toast.success(`Switched to ${net.label}`);
       return;
@@ -282,6 +314,7 @@ const LANGUAGES = [
 
 export function MobileTopBar({ onMenuClick }: Props) {
   const { isDark, toggleTheme } = useTheme();
+  const network = useConnectedNetwork();
   const [langOpen,     setLangOpen]     = useState(false);
   const [activeLang,   setActiveLang]   = useState("EN");
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -296,10 +329,11 @@ export function MobileTopBar({ onMenuClick }: Props) {
   return (
     <>
       <div
-        className="flex items-center justify-between h-[52px] px-4 shrink-0"
+        className="flex items-center justify-between h-[52px] px-3 shrink-0"
         style={{ backgroundColor: "var(--m-bg-1)", borderBottom: "1px solid var(--m-bdr)" }}
       >
-        <div className="flex items-center gap-3">
+        {/* Left: menu + logo + chain stats */}
+        <div className="flex items-center gap-2">
           <button
             onClick={onMenuClick}
             className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
@@ -307,17 +341,18 @@ export function MobileTopBar({ onMenuClick }: Props) {
           >
             <Menu className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-1.5">
-            <div
-              className="w-5 h-5 bg-[#f5c518] shrink-0"
-              style={{ clipPath: "polygon(50% 0%,100% 50%,50% 100%,0% 50%)" }}
-            />
-            <span className="font-bold text-[15px] tracking-widest" style={{ color: "var(--m-fg)" }}>
-              NEXUS
-            </span>
-          </div>
+
+          {/* Diamond icon only — no text */}
+          <div
+            className="w-4 h-4 bg-[#f5c518] shrink-0"
+            style={{ clipPath: "polygon(50% 0%,100% 50%,50% 100%,0% 50%)" }}
+          />
+
+          {/* Live stats inline with logo */}
+          <ChainStatsPills network={network} />
         </div>
 
+        {/* Right: network + wallet + lang + bell + settings */}
         <div className="flex items-center gap-1">
           <NetworkPill />
           <WalletButton />
