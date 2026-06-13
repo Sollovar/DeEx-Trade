@@ -70,44 +70,47 @@ function WalletButton() {
 
 /* ── Draggable floating gas + block badge ──────────────────────── */
 const STORAGE_KEY = "nexus-stats-pill-pos";
-const DEFAULT_POS = () => ({
-  x: window.innerWidth - 90,
-  y: window.innerHeight - 82,
-});
+
+function getInitialPos(): { x: number; y: number } {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const p = JSON.parse(saved) as { x: number; y: number };
+      /* Clamp in case screen size changed since last save */
+      return {
+        x: Math.max(4, Math.min(window.innerWidth  - 88, p.x)),
+        y: Math.max(4, Math.min(window.innerHeight - 32, p.y)),
+      };
+    }
+  } catch {}
+  /* Default: bottom-right, above the nav bar (~70px) */
+  return {
+    x: window.innerWidth  - 90,
+    y: window.innerHeight - 82,
+  };
+}
 
 export function FloatingChainStats() {
   const network = useConnectedNetwork();
   const { showGas, showBlock } = useSettings();
   const { gasGwei, blockNumber } = useChainStats(network);
 
-  const [pos, setPos]     = useState<{ x: number; y: number } | null>(null);
+  /* Lazy initialiser — runs synchronously on first render so the element
+     always mounts with a real position, making elRef.current available
+     for the touchmove useEffect that runs right after. */
+  const [pos, setPos]     = useState<{ x: number; y: number }>(getInitialPos);
   const [dragging, setDragging] = useState(false);
-  const posRef   = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const dragRef  = useRef<{ tx: number; ty: number; px: number; py: number } | null>(null);
-  const elRef    = useRef<HTMLDivElement>(null);
 
-  /* Init from localStorage or default bottom-right */
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const p = JSON.parse(saved) as { x: number; y: number };
-        posRef.current = p;
-        setPos(p);
-        return;
-      }
-    } catch {}
-    const d = DEFAULT_POS();
-    posRef.current = d;
-    setPos(d);
-  }, []);
+  /* posRef lets the touchmove handler always read the latest pos without
+     stale closure issues */
+  const posRef  = useRef(pos);
+  const dragRef = useRef<{ tx: number; ty: number; px: number; py: number } | null>(null);
+  const elRef   = useRef<HTMLDivElement>(null);
 
-  /* Keep posRef in sync */
-  useEffect(() => {
-    if (pos) posRef.current = pos;
-  }, [pos]);
+  useEffect(() => { posRef.current = pos; }, [pos]);
 
-  /* Attach passive:false touchmove so we can preventDefault (stops page scroll) */
+  /* Attach passive:false listener after mount — element is guaranteed
+     to be in the DOM because pos is always initialised. */
   useEffect(() => {
     const el = elRef.current;
     if (!el) return;
@@ -115,13 +118,11 @@ export function FloatingChainStats() {
     const onMove = (e: TouchEvent) => {
       if (!dragRef.current) return;
       e.preventDefault();
-      const t = e.touches[0];
-      const dx = t.clientX - dragRef.current.tx;
-      const dy = t.clientY - dragRef.current.ty;
-      const W = window.innerWidth;
-      const H = window.innerHeight;
-      const nx = Math.max(4, Math.min(W - 88, dragRef.current.px + dx));
-      const ny = Math.max(4, Math.min(H - 32, dragRef.current.py + dy));
+      const t  = e.touches[0];
+      const W  = window.innerWidth;
+      const H  = window.innerHeight;
+      const nx = Math.max(4, Math.min(W - 88, dragRef.current.px + (t.clientX - dragRef.current.tx)));
+      const ny = Math.max(4, Math.min(H - 32, dragRef.current.py + (t.clientY - dragRef.current.ty)));
       posRef.current = { x: nx, y: ny };
       setPos({ x: nx, y: ny });
     };
@@ -150,7 +151,7 @@ export function FloatingChainStats() {
   const hasGas   = showGas   && gasGwei     !== null;
   const hasBlock = showBlock && blockNumber !== null;
 
-  if (!pos || (!hasGas && !hasBlock)) return null;
+  if (!hasGas && !hasBlock) return null;
 
   return (
     <div
