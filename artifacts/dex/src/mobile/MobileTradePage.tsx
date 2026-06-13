@@ -14,16 +14,106 @@ import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
 import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
-import { Wallet } from "lucide-react";
+import { Wallet, X } from "lucide-react";
 
 type MainTab = "Chart" | "Order Book" | "Trades";
 
+/* ── No-wallet bottom sheet ─────────────────────────────────────── */
+function NoWalletSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-40 transition-opacity duration-300"
+        style={{
+          backgroundColor: "rgba(0,0,0,0.65)",
+          backdropFilter: "blur(3px)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+        }}
+        onClick={onClose}
+      />
+
+      {/* Sheet */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-50 flex flex-col items-center"
+        style={{
+          backgroundColor: "var(--m-bg-1)",
+          borderRadius: "24px 24px 0 0",
+          border: "1px solid var(--m-bdr)",
+          borderBottom: "none",
+          paddingBottom: "env(safe-area-inset-bottom, 24px)",
+          transform: open ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      >
+        {/* Handle */}
+        <div className="w-10 h-1 rounded-full mt-3 mb-6" style={{ backgroundColor: "var(--m-bg-4)" }} />
+
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-xl"
+          style={{ backgroundColor: "var(--m-bg-3)", color: "var(--m-fg-4)" }}
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* Content */}
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
+          style={{ background: "rgba(245,197,24,0.10)", border: "2px solid rgba(245,197,24,0.25)" }}
+        >
+          <Wallet className="w-9 h-9" style={{ color: "#f5c518" }} />
+        </div>
+
+        <p className="text-[18px] font-bold mb-2" style={{ color: "var(--m-fg)" }}>
+          Connect your wallet
+        </p>
+        <p className="text-[13px] text-center px-8 mb-8" style={{ color: "var(--m-fg-4)" }}>
+          Connect to view your profile, balances and trade history.
+        </p>
+
+        <div className="w-full px-5 pb-2">
+          <DynamicConnectButton buttonContainerClassName="nexus-connect-wrap">
+            <button
+              style={{
+                width: "100%",
+                backgroundColor: "#f5c518",
+                color: "#000",
+                fontWeight: 700,
+                fontSize: 15,
+                height: 50,
+                borderRadius: 14,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "none",
+                cursor: "pointer",
+                gap: 8,
+              }}
+            >
+              <Wallet className="w-5 h-5" />
+              Connect Wallet
+            </button>
+          </DynamicConnectButton>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ── Main page ─────────────────────────────────────────────────── */
 function MobileTradePageInner() {
   const market = useLiveMarket();
   const { isDark } = useTheme();
   const { primaryWallet, setShowDynamicUserProfile } = useDynamicContext();
-  const [mainTab, setMainTab] = useState<MainTab>("Chart");
-  const [navTab, setNavTab] = useState<NavTab>("Trade");
+  const [mainTab, setMainTab]           = useState<MainTab>("Chart");
+  const [navTab, setNavTab]             = useState<NavTab>("Trade");
+  const [noWalletSheet, setNoWalletSheet] = useState(false);
+  const [currentSymbol, setCurrentSymbol] = useState("BTCUSDT");
+  const [showMarketPanel, setShowMarketPanel] = useState(false);
+  const [menuOpen, setMenuOpen]         = useState(false);
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   function handleNavChange(tab: NavTab) {
@@ -31,17 +121,17 @@ function MobileTradePageInner() {
       window.location.href = BASE + "/";
       return;
     }
-    // If wallet connected and user taps Account → pop Dynamic profile immediately
-    if (tab === "Account" && primaryWallet) {
-      setNavTab("Account");
-      setShowDynamicUserProfile(true);
+    if (tab === "Account") {
+      // Never navigate — Account is always an overlay
+      if (primaryWallet) {
+        setShowDynamicUserProfile(true);
+      } else {
+        setNoWalletSheet(true);
+      }
       return;
     }
     setNavTab(tab);
   }
-  const [currentSymbol, setCurrentSymbol] = useState("BTCUSDT");
-  const [showMarketPanel, setShowMarketPanel] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div
@@ -49,7 +139,7 @@ function MobileTradePageInner() {
       className="w-full flex flex-col select-none overflow-hidden"
       style={{ height: "100dvh", backgroundColor: "var(--m-bg)", color: "var(--m-fg)" }}
     >
-      {/* Hidden DynamicWidget — needed so setShowDynamicUserProfile modal renders on mobile */}
+      {/* Hidden DynamicWidget — its portal renders the profile modal */}
       <div style={{ display: "none" }}>
         <DynamicWidget />
       </div>
@@ -78,43 +168,6 @@ function MobileTradePageInner() {
           </div>
         </div>
 
-      ) : navTab === "Account" ? (
-        /* Wallet connected → Dynamic profile modal covers this; show minimal bg.
-           No wallet → show connect prompt. */
-        primaryWallet ? (
-          <div className="flex-1 flex items-center justify-center" style={{ paddingBottom: 72 }}>
-            <p className="text-[13px]" style={{ color: "var(--m-fg-5)" }}>Loading profile…</p>
-          </div>
-        ) : (
-          <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6" style={{ paddingBottom: 80 }}>
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(245,197,24,0.10)", border: "2px solid rgba(245,197,24,0.25)" }}
-            >
-              <Wallet className="w-9 h-9" style={{ color: "#f5c518" }} />
-            </div>
-            <div className="text-center">
-              <p className="text-[17px] font-bold mb-1.5" style={{ color: "var(--m-fg)" }}>No wallet connected</p>
-              <p className="text-[13px]" style={{ color: "var(--m-fg-4)" }}>
-                Connect your wallet to view your profile and manage your account.
-              </p>
-            </div>
-            <DynamicConnectButton buttonContainerClassName="nexus-connect-wrap">
-              <button
-                style={{
-                  backgroundColor: "#f5c518", color: "#000", fontWeight: 700,
-                  fontSize: 14, paddingLeft: 28, paddingRight: 28, height: 44,
-                  borderRadius: 12, display: "flex", alignItems: "center",
-                  border: "none", cursor: "pointer", gap: 8,
-                }}
-              >
-                <Wallet className="w-4 h-4" />
-                Connect Wallet
-              </button>
-            </DynamicConnectButton>
-          </div>
-        )
-
       ) : navTab === "Markets" ? (
         <MobileMarketsPage
           market={market}
@@ -134,7 +187,6 @@ function MobileTradePageInner() {
             onOpenMarketPanel={() => setShowMarketPanel(true)}
           />
 
-          {/* Chart/Orderbook/Trades tabs — evenly distributed */}
           <div
             className="flex items-center h-[40px] shrink-0"
             style={{ backgroundColor: "var(--m-bg-1)", borderBottom: "1px solid var(--m-bdr)" }}
@@ -163,7 +215,6 @@ function MobileTradePageInner() {
               {mainTab === "Order Book" && <MobileOrderBookView market={market} />}
               {mainTab === "Trades"     && <MobileTradesView market={market} />}
             </div>
-
             <div
               className="shrink-0 overflow-y-auto"
               style={{ height: 160, borderTop: "1px solid var(--m-bdr)" }}
@@ -174,7 +225,14 @@ function MobileTradePageInner() {
         </>
       )}
 
-      <MobileBottomNav activeNav={navTab} onNavChange={handleNavChange} />
+      {/* No-wallet sheet — slides up when Account tapped without a wallet */}
+      <NoWalletSheet open={noWalletSheet} onClose={() => setNoWalletSheet(false)} />
+
+      <MobileBottomNav
+        activeNav={navTab}
+        accountActive={noWalletSheet}
+        onNavChange={handleNavChange}
+      />
     </div>
   );
 }

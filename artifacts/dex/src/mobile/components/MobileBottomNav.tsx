@@ -40,10 +40,11 @@ const AccountIcon = ({ active, inactiveColor }: { active: boolean; inactiveColor
 
 interface Props {
   activeNav: NavTab;
+  accountActive?: boolean;
   onNavChange: (tab: NavTab) => void;
 }
 
-export function MobileBottomNav({ activeNav, onNavChange }: Props) {
+export function MobileBottomNav({ activeNav, accountActive = false, onNavChange }: Props) {
   const { isDark } = useTheme();
   const inactiveColor = isDark ? "#555555" : "#aaaaaa";
   const tabs: NavTab[] = ["Home", "Markets", "Trade", "Account"];
@@ -58,7 +59,7 @@ export function MobileBottomNav({ activeNav, onNavChange }: Props) {
       }}
     >
       {tabs.map((tab) => {
-        const active = activeNav === tab;
+        const active = tab === "Account" ? accountActive : activeNav === tab;
         return (
           <button
             key={tab}
