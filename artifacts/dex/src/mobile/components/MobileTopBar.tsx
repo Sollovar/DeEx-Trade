@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Globe, Settings, Check, Bell, Loader2, Flame, Blocks } from "lucide-react";
+import { Menu, Globe, Settings, Check, Bell, Loader2, Flame, Blocks, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
@@ -51,17 +51,19 @@ function WalletButton() {
           color: "#000",
           fontWeight: 700,
           fontSize: 12,
-          paddingLeft: 14,
+          paddingLeft: 12,
           paddingRight: 14,
           height: 28,
           borderRadius: 8,
           display: "flex",
           alignItems: "center",
+          gap: 5,
           border: "none",
           cursor: "pointer",
           whiteSpace: "nowrap",
         }}
       >
+        <Wallet style={{ width: 13, height: 13, flexShrink: 0 }} />
         Connect
       </button>
     </DynamicConnectButton>
