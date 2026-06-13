@@ -13,6 +13,7 @@ import { MobileTradeView } from "./components/MobileTradeView";
 import { MobileMarketSelectPanel } from "./components/MobileMarketSelectPanel";
 import { MobileHamburgerMenu } from "./components/MobileHamburgerMenu";
 import { MobileMarketsPage } from "./components/MobileMarketsPage";
+import { FloatingChainStats } from "./components/MobileTopBar";
 import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { Wallet, X } from "lucide-react";
 
@@ -224,6 +225,9 @@ function MobileTradePageInner() {
           </div>
         </>
       )}
+
+      {/* Floating gas + block badge — fixed bottom-right above nav */}
+      <FloatingChainStats />
 
       {/* No-wallet sheet — slides up when Account tapped without a wallet */}
       <NoWalletSheet open={noWalletSheet} onClose={() => setNoWalletSheet(false)} />

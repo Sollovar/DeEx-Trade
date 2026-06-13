@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Globe, Settings, Check, Bell, ChevronDown, Loader2, Flame, Blocks } from "lucide-react";
+import { Menu, Globe, Settings, Check, Bell, Loader2, Flame, Blocks } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MobileSettingsSheet } from "./MobileSettingsSheet";
@@ -68,6 +68,68 @@ function WalletButton() {
   );
 }
 
+/* ── Floating gas + block badge (fixed, above bottom nav) ──────── */
+export function FloatingChainStats() {
+  const network = useConnectedNetwork();
+  const { showGas, showBlock } = useSettings();
+  const { gasGwei, blockNumber } = useChainStats(network);
+
+  const hasGas   = showGas   && gasGwei     !== null;
+  const hasBlock = showBlock && blockNumber !== null;
+
+  if (!hasGas && !hasBlock) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 70,
+        right: 10,
+        zIndex: 30,
+        display: "flex",
+        alignItems: "center",
+        gap: 5,
+        backgroundColor: "rgba(10,10,10,0.72)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        borderRadius: 20,
+        padding: "4px 9px",
+        border: "1px solid rgba(255,255,255,0.07)",
+        pointerEvents: "none",
+        userSelect: "none",
+      }}
+    >
+      {hasGas && (
+        <div
+          style={{
+            display: "flex", alignItems: "center", gap: 3,
+            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          <Flame style={{ width: 8, height: 8, color: "#f97316", flexShrink: 0 }} />
+          {gasGwei}G
+        </div>
+      )}
+      {hasGas && hasBlock && (
+        <div style={{ width: 1, height: 8, backgroundColor: "rgba(255,255,255,0.12)" }} />
+      )}
+      {hasBlock && (
+        <div
+          style={{
+            display: "flex", alignItems: "center", gap: 3,
+            color: "rgba(255,255,255,0.55)", fontSize: 9, fontWeight: 600,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          <Blocks style={{ width: 8, height: 8, color: "#22c55e", flexShrink: 0 }} />
+          {blockNumber}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Network config ────────────────────────────────────────────── */
 type SupportedNetwork = Extract<Network, "bsc" | "base" | "solana">;
 
@@ -82,41 +144,7 @@ const EVM_CHAIN_IDS: Partial<Record<SupportedNetwork, number>> = {
   base: 8453,
 };
 
-/* ── Live chain stats pills ────────────────────────────────────── */
-function ChainStatsPills({ network }: { network: Network }) {
-  const { showGas, showBlock } = useSettings();
-  const { gasGwei, blockNumber } = useChainStats(network);
-
-  if (!showGas && !showBlock) return null;
-
-  return (
-    <div className="flex items-center gap-1.5">
-      {showGas && gasGwei !== null && (
-        <div
-          className="flex items-center gap-1"
-          style={{ color: "var(--m-fg-4)", fontSize: 10, fontWeight: 600 }}
-        >
-          <Flame style={{ width: 9, height: 9, color: "#f97316", flexShrink: 0 }} />
-          <span style={{ fontVariantNumeric: "tabular-nums" }}>{gasGwei}G</span>
-        </div>
-      )}
-      {showGas && showBlock && gasGwei !== null && blockNumber !== null && (
-        <div style={{ width: 1, height: 10, backgroundColor: "var(--m-bdr)" }} />
-      )}
-      {showBlock && blockNumber !== null && (
-        <div
-          className="flex items-center gap-1"
-          style={{ color: "var(--m-fg-4)", fontSize: 10, fontWeight: 600 }}
-        >
-          <Blocks style={{ width: 9, height: 9, color: "#22c55e", flexShrink: 0 }} />
-          <span style={{ fontVariantNumeric: "tabular-nums" }}>{blockNumber}</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ── Network pill + bottom sheet ───────────────────────────────── */
+/* ── Network pill + bottom sheet (kept for potential reuse) ────── */
 function NetworkPill() {
   const network = useConnectedNetwork() as SupportedNetwork;
   const setNetwork = useSetNetwork();
@@ -177,19 +205,15 @@ function NetworkPill() {
       >
         <ChainIcon id={active.id} size={14} />
         <span style={{ color: active.color, fontSize: 11, fontWeight: 700 }}>{active.abbr}</span>
-        <ChevronDown style={{ width: 10, height: 10, color: "var(--m-fg-4)" }} />
       </button>
 
       {open && (
         <>
-          {/* Backdrop */}
           <div
             className="fixed inset-0 z-40"
             style={{ backgroundColor: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
             onClick={() => setOpen(false)}
           />
-
-          {/* Sheet */}
           <div
             className="fixed bottom-0 left-0 right-0 z-50 flex flex-col"
             style={{
@@ -200,7 +224,6 @@ function NetworkPill() {
               paddingBottom: "env(safe-area-inset-bottom, 16px)",
             }}
           >
-            {/* Handle + title */}
             <div className="flex flex-col items-center pt-3 pb-2 shrink-0">
               <div className="w-10 h-1 rounded-full mb-4" style={{ backgroundColor: "var(--m-bg-4)" }} />
               <div className="flex items-center gap-2 w-full px-5">
@@ -219,7 +242,6 @@ function NetworkPill() {
 
             <div style={{ height: 1, backgroundColor: "var(--m-bdr)", margin: "0 0 4px" }} />
 
-            {/* Options */}
             <div className="px-3 py-2 flex flex-col gap-2">
               {NETWORKS.map((net) => {
                 const isActive = network === net.id;
@@ -247,10 +269,7 @@ function NetworkPill() {
                       <ChainIcon id={net.id} size={20} />
                     </div>
                     <div className="flex flex-col leading-none gap-1 min-w-0 flex-1">
-                      <span
-                        className="text-[14px] font-bold"
-                        style={{ color: isActive ? net.color : "var(--m-fg)" }}
-                      >
+                      <span className="text-[14px] font-bold" style={{ color: isActive ? net.color : "var(--m-fg)" }}>
                         {net.label}
                       </span>
                       <span className="text-[11px]" style={{ color: "var(--m-fg-5)" }}>
@@ -279,7 +298,6 @@ function NetworkPill() {
               })}
             </div>
 
-            {/* Close */}
             <div className="px-4 pt-2 pb-4 shrink-0">
               <button
                 onClick={() => setOpen(false)}
@@ -314,7 +332,6 @@ const LANGUAGES = [
 
 export function MobileTopBar({ onMenuClick }: Props) {
   const { isDark, toggleTheme } = useTheme();
-  const network = useConnectedNetwork();
   const [langOpen,     setLangOpen]     = useState(false);
   const [activeLang,   setActiveLang]   = useState("EN");
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -332,7 +349,7 @@ export function MobileTopBar({ onMenuClick }: Props) {
         className="flex items-center justify-between h-[52px] px-3 shrink-0"
         style={{ backgroundColor: "var(--m-bg-1)", borderBottom: "1px solid var(--m-bdr)" }}
       >
-        {/* Left: menu + logo + chain stats */}
+        {/* Left: menu + diamond logo */}
         <div className="flex items-center gap-2">
           <button
             onClick={onMenuClick}
@@ -342,22 +359,16 @@ export function MobileTopBar({ onMenuClick }: Props) {
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Diamond icon only — no text */}
           <div
             className="w-4 h-4 bg-[#f5c518] shrink-0"
             style={{ clipPath: "polygon(50% 0%,100% 50%,50% 100%,0% 50%)" }}
           />
-
-          {/* Live stats inline with logo */}
-          <ChainStatsPills network={network} />
         </div>
 
-        {/* Right: network + wallet + lang + bell + settings */}
+        {/* Right: wallet + lang + bell + settings */}
         <div className="flex items-center gap-1">
-          <NetworkPill />
           <WalletButton />
 
-          {/* Language button */}
           <button
             onClick={() => setLangOpen(true)}
             className="h-8 px-2 flex items-center gap-1 rounded-lg transition-colors"
@@ -367,7 +378,6 @@ export function MobileTopBar({ onMenuClick }: Props) {
             <span className="text-[11px] font-bold tracking-wide">{activeLang}</span>
           </button>
 
-          {/* Bell / notifications */}
           <button
             onClick={() => setNotifsOpen(true)}
             className="relative w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
@@ -384,7 +394,6 @@ export function MobileTopBar({ onMenuClick }: Props) {
             )}
           </button>
 
-          {/* Settings */}
           <button
             onClick={() => setSettingsOpen(true)}
             className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
@@ -468,10 +477,7 @@ export function MobileTopBar({ onMenuClick }: Props) {
         </>
       )}
 
-      {/* ── Settings sheet ── */}
       <MobileSettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-
-      {/* ── Notifications sheet ── */}
       <MobileNotificationsSheet
         open={notifsOpen}
         onClose={() => setNotifsOpen(false)}
