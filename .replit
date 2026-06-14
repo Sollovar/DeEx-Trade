@@ -37,7 +37,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "export PATH=\"$PATH:/home/runner/workspace/.config/npm/node_global/bin\" && PORT=5000 BASE_PATH=/ pnpm --filter @workspace/dex run dev"
+args = "pnpm install --prefer-offline --reporter=silent 2>/dev/null; PORT=5000 BASE_PATH=/ pnpm --filter @workspace/dex run dev"
 waitForPort = 5000
 
 [[workflows.workflow]]
@@ -56,13 +56,13 @@ outputType = "console"
 name = "Pair Indexer"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd server && node index.js"
-waitForPort = 3001
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm install 2>/dev/null; node index.js"
+waitForPort = 3001
 
 [agent]
 stack = "BEST_EFFORT_FALLBACK"
