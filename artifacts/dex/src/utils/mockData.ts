@@ -279,6 +279,7 @@ export function normalizeApiPair(p: any): Pair {
   if (baseTokenInfo) {
     baseToken = {
       ...baseToken,
+      logo: baseToken.logo || baseTokenInfo.image_url || baseTokenInfo.image_large || baseTokenInfo.image_small || baseTokenInfo.image_thumb || baseTokenInfo.logo || '',
       decimals: baseTokenInfo.decimals ?? baseToken.decimals,
       website: baseTokenInfo.websites?.[0] || baseToken.website,
       links: {
@@ -296,6 +297,7 @@ export function normalizeApiPair(p: any): Pair {
   if (quoteTokenInfo) {
     quoteToken = {
       ...quoteToken,
+      logo: quoteToken.logo || quoteTokenInfo.image_url || quoteTokenInfo.image_large || quoteTokenInfo.image_small || quoteTokenInfo.image_thumb || quoteTokenInfo.logo || '',
       decimals: quoteTokenInfo.decimals ?? quoteToken.decimals,
       website: quoteTokenInfo.websites?.[0] || quoteToken.website,
       links: {
@@ -352,7 +354,7 @@ export function normalizeApiPair(p: any): Pair {
     trendingScore: typeof p.trending_score === 'number'
       ? p.trending_score
       : parseFloat(p.trending_score) || calculatedScore,
-    logoUrl: p.logoUrl || p.logo_url || baseToken.logo || '',
+    logoUrl: p.logoUrl || p.logo_url || p.base_logo || baseToken.logo || '',
     createdAt: p.created_at || p.createdAt || new Date().toISOString(),
     updatedAt: p.updated_at || p.updatedAt || new Date().toISOString(),
     lastTradeAt: p.last_trade_at || p.lastTradeAt,
