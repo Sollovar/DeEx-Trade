@@ -1,60 +1,85 @@
-import { useState, useRef, useEffect } from "react";
-import { Star, Search, X } from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { Star, Search, X, Loader2 } from "lucide-react";
+import { usePairs } from "@/hooks/usePairs";
+import type { Pair as APIPair } from "@/types";
 
-interface Pair {
+interface DisplayPair {
+  id: string;
   symbol: string;
   base: string;
+  quote: string;
   chain: string;
   lastPrice: number;
   change24h: number;
   volume: number;
   marketCap: number;
   color: string;
-  letter: string;
+  logo: string;
   starred: boolean;
 }
 
-const INITIAL_PAIRS: Pair[] = [
-  { symbol: "BTC/USDT", base: "BTC", chain: "BSC",     lastPrice: 61206.2,   change24h: -0.77, volume: 1012394618, marketCap: 1210000000000, color: "#f7931a", letter: "₿", starred: true  },
-  { symbol: "ETH/USDT", base: "ETH", chain: "Base",    lastPrice: 1617.86,   change24h: -1.77, volume: 554611662,  marketCap: 388000000000,  color: "#627eea", letter: "Ξ", starred: false },
-  { symbol: "BNB/USDT", base: "BNB", chain: "BSC",     lastPrice: 585.45,    change24h: -1.61, volume: 22620158,   marketCap: 87000000000,   color: "#f3ba2f", letter: "B", starred: false },
-  { symbol: "SOL/USDT", base: "SOL", chain: "Solana",  lastPrice: 62.84,     change24h: -3.56, volume: 87236575,   marketCap: 92000000000,   color: "#9945ff", letter: "S", starred: true  },
-  { symbol: "XRP/USDT", base: "XRP", chain: "BSC",     lastPrice: 1.0954,    change24h: -3.79, volume: 17568366,   marketCap: 60000000000,   color: "#00aae4", letter: "X", starred: false },
-  { symbol: "DOGE/USDT",base: "DOGE",chain: "BSC",     lastPrice: 0.08242,   change24h: -3.01, volume: 13702600,   marketCap: 11800000000,   color: "#c2a633", letter: "D", starred: false },
-  { symbol: "AVAX/USDT",base: "AVAX",chain: "Base",    lastPrice: 17.64,     change24h: -4.12, volume: 8921043,    marketCap: 7200000000,    color: "#e84142", letter: "A", starred: false },
-  { symbol: "LINK/USDT",base: "LINK",chain: "BSC",     lastPrice: 10.42,     change24h: -2.44, volume: 5632100,    marketCap: 6400000000,    color: "#2a5ada", letter: "L", starred: false },
-  { symbol: "ARB/USDT", base: "ARB", chain: "Base",    lastPrice: 0.3812,    change24h: -5.21, volume: 3102455,    marketCap: 1500000000,    color: "#28a0f0", letter: "A", starred: false },
-  { symbol: "OP/USDT",  base: "OP",  chain: "Base",    lastPrice: 0.7141,    change24h: -4.98, volume: 2841230,    marketCap: 880000000,     color: "#ff0420", letter: "O", starred: false },
-  { symbol: "SUI/USDT", base: "SUI", chain: "Solana",  lastPrice: 2.814,     change24h: -2.11, volume: 6312000,    marketCap: 7100000000,    color: "#4da2ff", letter: "S", starred: false },
-  { symbol: "PEPE/USDT",base: "PEPE",chain: "BSC",     lastPrice: 0.0000089, change24h: -6.43, volume: 4512300,    marketCap: 3700000000,    color: "#4caf50", letter: "P", starred: false },
-  { symbol: "WIF/USDT", base: "WIF", chain: "Solana",  lastPrice: 0.8321,    change24h: -7.12, volume: 2310000,    marketCap: 830000000,     color: "#ff6b35", letter: "W", starred: false },
-  { symbol: "JUP/USDT", base: "JUP", chain: "Solana",  lastPrice: 0.4512,    change24h: -4.55, volume: 1980000,    marketCap: 620000000,     color: "#7b61ff", letter: "J", starred: false },
-  { symbol: "TIA/USDT", base: "TIA", chain: "Base",    lastPrice: 3.241,     change24h: -3.87, volume: 3210000,    marketCap: 1200000000,    color: "#8b5cf6", letter: "T", starred: false },
-];
+function symbolColor(symbol: string): string {
+  const palette = [
+    "#f7931a","#627eea","#9945ff","#f3ba2f","#00aae4",
+    "#4caf50","#ff6b35","#e84142","#2a5ada","#8b5cf6",
+    "#7b61ff","#ff0420","#28a0f0","#4da2ff","#c2a633",
+  ];
+  let h = 0;
+  for (let i = 0; i < symbol.length; i++) h = (h * 31 + symbol.charCodeAt(i)) & 0x7fffffff;
+  return palette[h % palette.length];
+}
 
-const CATEGORY_TABS = ["All markets", "Top", "New", "Meme", "AI", "Pre-launch", "Stocks", "Commodities", "ETF", "Semiconductor", "Listing Vote"];
+function chainLabel(network?: string): string {
+  if (!network) return "—";
+  if (network === "bsc") return "BSC";
+  if (network === "base") return "Base";
+  if (network === "solana") return "Solana";
+  return network.charAt(0).toUpperCase() + network.slice(1);
+}
 
-type MarketTab = "Favorites" | "Futures" | "Spot" | "Prediction";
+function apiPairToDisplay(p: APIPair, starred: boolean): DisplayPair {
+  const base = p.baseToken?.symbol || "?";
+  const quote = p.quoteToken?.symbol || "?";
+  return {
+    id: p.id,
+    symbol: `${base}/${quote}`,
+    base,
+    quote,
+    chain: chainLabel(p.network),
+    lastPrice: p.priceUSD ?? p.price ?? 0,
+    change24h: p.priceChange24h ?? 0,
+    volume: p.volume24hUSD ?? p.volume24h ?? 0,
+    marketCap: p.marketCapUSD ?? p.marketCap ?? 0,
+    color: symbolColor(base),
+    logo: p.baseToken?.logo || "",
+    starred,
+  };
+}
 
 function fmtNum(n: number) {
-  if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(3) + "B";
+  if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(2) + "B";
   if (n >= 1_000_000)     return "$" + (n / 1_000_000).toFixed(1) + "M";
   if (n >= 1_000)         return "$" + (n / 1_000).toFixed(1) + "K";
+  if (n === 0)            return "—";
   return "$" + n.toFixed(4);
 }
 
 function fmtPrice(p: number) {
-  if (p < 0.0001) return p.toFixed(7);
-  if (p < 1)      return p.toFixed(4);
-  if (p < 100)    return p.toFixed(2);
-  return p.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  if (p === 0)    return "—";
+  if (p < 0.0001) return p.toExponential(2);
+  if (p < 1)      return p.toFixed(6);
+  if (p < 100)    return p.toFixed(4);
+  return p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
+const CATEGORY_TABS = ["All markets", "Top", "New", "Meme", "AI", "Pre-launch"];
+type MarketTab = "Favorites" | "Futures" | "Spot" | "Prediction";
 
 interface Props {
   top: number;
   left: number;
   onClose: () => void;
-  onSelect: (symbol: string) => void;
+  onSelect: (symbol: string, pairId: string) => void;
   currentSymbol: string;
 }
 
@@ -62,9 +87,16 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
   const [query, setQuery]           = useState("");
   const [marketTab, setMarketTab]   = useState<MarketTab>("Futures");
   const [categoryTab, setCategoryTab] = useState("All markets");
-  const [pairs, setPairs]           = useState<Pair[]>(INITIAL_PAIRS);
+  const [starred, setStarred]       = useState<Set<string>>(new Set());
   const inputRef  = useRef<HTMLInputElement>(null);
   const panelRef  = useRef<HTMLDivElement>(null);
+
+  const { pairs: apiPairs, loading } = usePairs();
+
+  const displayPairs = useMemo<DisplayPair[]>(() =>
+    apiPairs.map((p) => apiPairToDisplay(p, starred.has(p.id))),
+    [apiPairs, starred],
+  );
 
   useEffect(() => { inputRef.current?.focus(); }, []);
 
@@ -76,29 +108,26 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
     return () => document.removeEventListener("mousedown", handle);
   }, [onClose]);
 
-  const filtered = pairs.filter((p) =>
+  const filtered = displayPairs.filter((p) =>
     p.symbol.toLowerCase().includes(query.toLowerCase()) ||
     p.base.toLowerCase().includes(query.toLowerCase())
   );
   const displayed = marketTab === "Favorites" ? filtered.filter((p) => p.starred) : filtered;
 
-  function toggleStar(e: React.MouseEvent, symbol: string) {
+  function toggleStar(e: React.MouseEvent, id: string) {
     e.stopPropagation();
-    setPairs((prev) => prev.map((p) => p.symbol === symbol ? { ...p, starred: !p.starred } : p));
+    setStarred((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
   }
 
   return (
     <div
       ref={panelRef}
       data-testid="pair-selector-panel"
-      style={{
-        position: "fixed",
-        top,
-        left,
-        width: 700,
-        maxHeight: 500,
-        zIndex: 9999,
-      }}
+      style={{ position: "fixed", top, left, width: 700, maxHeight: 500, zIndex: 9999 }}
       className="bg-[#0e0e0e] border border-[#252525] shadow-2xl shadow-black/90 flex flex-col"
     >
       {/* Search */}
@@ -107,7 +136,7 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search"
+          placeholder="Search pair or token"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="flex-1 bg-transparent outline-none text-[13px] text-white placeholder:text-[#333]"
@@ -168,15 +197,21 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
 
       {/* Rows */}
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "thin", scrollbarColor: "#222 transparent" }}>
-        {displayed.length === 0 && (
+        {loading && (
+          <div className="flex items-center justify-center gap-2 py-8 text-[#444] text-xs">
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            Loading pairs…
+          </div>
+        )}
+        {!loading && displayed.length === 0 && (
           <div className="flex items-center justify-center py-8 text-[#333] text-xs">No pairs found</div>
         )}
         {displayed.map((pair) => {
           const isSelected = pair.symbol === currentSymbol;
           return (
             <div
-              key={pair.symbol}
-              onClick={() => { onSelect(pair.symbol); onClose(); }}
+              key={pair.id}
+              onClick={() => { onSelect(pair.symbol, pair.id); onClose(); }}
               data-testid={`pair-row-${pair.base}`}
               className={`grid items-center px-3 cursor-pointer transition-colors hover:bg-[#151515] border-b border-[#111] ${
                 isSelected ? "bg-[#151515]" : ""
@@ -186,16 +221,22 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
               {/* Symbol */}
               <div className="flex items-center gap-2 min-w-0">
                 <button
-                  onClick={(e) => toggleStar(e, pair.symbol)}
+                  onClick={(e) => toggleStar(e, pair.id)}
                   className={`shrink-0 transition-colors ${pair.starred ? "text-[#f5c518]" : "text-[#2a2a2a] hover:text-[#555]"}`}
                 >
                   <Star className="w-3.5 h-3.5" fill={pair.starred ? "#f5c518" : "none"} />
                 </button>
                 <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0"
-                  style={{ backgroundColor: pair.color + "22", color: pair.color }}
+                  className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 overflow-hidden"
+                  style={{ backgroundColor: pair.color + "22" }}
                 >
-                  {pair.letter}
+                  {pair.logo ? (
+                    <img src={pair.logo} alt={pair.base} className="w-5 h-5 rounded-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                  ) : (
+                    <span className="text-[10px] font-bold" style={{ color: pair.color }}>
+                      {pair.base.charAt(0)}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col leading-none min-w-0">
                   <span className="text-white font-semibold text-[12px]">{pair.symbol.replace("/", "")}</span>
@@ -203,12 +244,10 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
                 </div>
               </div>
 
-              {/* Last price */}
               <div className="text-right font-mono tabular-nums text-[#ccc] text-[12px]">
                 {fmtPrice(pair.lastPrice)}
               </div>
 
-              {/* 24h change */}
               <div
                 className="text-right font-mono tabular-nums font-semibold text-[12px]"
                 style={{ color: pair.change24h >= 0 ? "#00c853" : "#ff1744" }}
@@ -216,12 +255,10 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
                 {pair.change24h >= 0 ? "+" : ""}{pair.change24h.toFixed(2)}%
               </div>
 
-              {/* Volume */}
               <div className="text-right font-mono tabular-nums text-[#555] text-[11px]">
                 {fmtNum(pair.volume)}
               </div>
 
-              {/* Market cap */}
               <div className="text-right font-mono tabular-nums text-[#555] text-[11px]">
                 {fmtNum(pair.marketCap)}
               </div>
