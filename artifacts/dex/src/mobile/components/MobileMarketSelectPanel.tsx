@@ -1,47 +1,43 @@
 import { useState, useMemo } from "react";
-import { X, Search, Star } from "lucide-react";
+import { X, Search, Star, Loader2 } from "lucide-react";
+import { usePairs } from "@/hooks/usePairs";
 
-interface Pair {
-  symbol: string; base: string; chain: string;
+interface DisplayPair {
+  symbol: string; base: string; quote: string; chain: string;
   price: number; change: number; volume: number;
-  color: string; initial: string;
+  color: string; initial: string; logo: string; id: string;
 }
 
-const PAIRS: Pair[] = [
-  { symbol: "BTCUSDT",   base: "BTC",   chain: "BSC",    price: 61200.0,  change:  2.88, volume: 1159216131, color: "#f7931a", initial: "B" },
-  { symbol: "ETHUSDT",   base: "ETH",   chain: "Base",   price: 1656.16,  change:  2.57, volume:  519235321, color: "#627eea", initial: "E" },
-  { symbol: "BNBUSDT",   base: "BNB",   chain: "BSC",    price:  599.30,  change:  2.69, volume:   23222781, color: "#f3ba2f", initial: "B" },
-  { symbol: "SOLUSDT",   base: "SOL",   chain: "Solana", price:   65.09,  change:  2.89, volume:   96143135, color: "#9945ff", initial: "S" },
-  { symbol: "XRPUSDT",   base: "XRP",   chain: "BSC",    price:    1.116, change:  1.10, volume:   17903004, color: "#346aa9", initial: "X" },
-  { symbol: "DOGEUSDT",  base: "DOGE",  chain: "BSC",    price:    0.0848,change:  2.00, volume:   14080979, color: "#c2a633", initial: "D" },
-  { symbol: "ADAUSDT",   base: "ADA",   chain: "Base",   price:    0.4821,change:  4.47, volume:     567968, color: "#3468d1", initial: "A" },
-  { symbol: "DOTUSDT",   base: "DOT",   chain: "BSC",    price:    4.230, change:  1.71, volume:     163897, color: "#e6007a", initial: "D" },
-  { symbol: "AVAXUSDT",  base: "AVAX",  chain: "Base",   price:   28.45,  change:  3.12, volume:   48234567, color: "#e84142", initial: "A" },
-  { symbol: "LINKUSDT",  base: "LINK",  chain: "BSC",    price:   14.23,  change:  1.55, volume:   31456789, color: "#375bd2", initial: "L" },
-  { symbol: "SUIUSDT",   base: "SUI",   chain: "Solana", price:    3.891, change:  4.67, volume:   78901234, color: "#4ca2f9", initial: "S" },
-  { symbol: "NEARUSDT",  base: "NEAR",  chain: "Solana", price:    3.456, change: -1.23, volume:   12345678, color: "#00d5bd", initial: "N" },
-  { symbol: "MATICUSDT", base: "MATIC", chain: "Base",   price:    0.482, change:  0.89, volume:    9876543, color: "#8247e5", initial: "M" },
-  { symbol: "UNIUSDT",   base: "UNI",   chain: "Base",   price:    7.234, change:  2.14, volume:    6543210, color: "#ff007a", initial: "U" },
-  { symbol: "SANDUSDT",  base: "SAND",  chain: "BSC",    price:    0.0516,change:  5.02, volume:        266, color: "#00adef", initial: "S" },
-  { symbol: "INJUSDT",   base: "INJ",   chain: "Solana", price:   22.84,  change: -0.73, volume:   19234567, color: "#00b5d8", initial: "I" },
-  { symbol: "APTUSDT",   base: "APT",   chain: "Solana", price:    8.120, change:  1.98, volume:   14567890, color: "#66d9e8", initial: "A" },
-  { symbol: "ARBUSDT",   base: "ARB",   chain: "Base",   price:    0.642, change: -2.31, volume:   11234567, color: "#2d374b", initial: "A" },
-  { symbol: "OPUSDT",    base: "OP",    chain: "Base",   price:    1.534, change:  0.44, volume:    8765432, color: "#ff0420", initial: "O" },
-  { symbol: "WIFUSDT",   base: "WIF",   chain: "Solana", price:    1.890, change:  6.12, volume:   34567890, color: "#9945ff", initial: "W" },
-];
+function symbolColor(s: string): string {
+  const p = ["#f7931a","#627eea","#9945ff","#f3ba2f","#00aae4","#4caf50","#ff6b35","#e84142","#2a5ada","#8b5cf6","#7b61ff","#ff0420","#28a0f0","#4da2ff","#c2a633"];
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0x7fffffff;
+  return p[h % p.length];
+}
+
+function chainLabel(n?: string): string {
+  if (!n) return "—";
+  if (n === "bsc") return "BSC";
+  if (n === "base") return "Base";
+  if (n === "solana") return "Solana";
+  return n.charAt(0).toUpperCase() + n.slice(1);
+}
 
 function fmtCompact(n: number): string {
   if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(2) + "B";
   if (n >= 1_000_000)     return "$" + (n / 1_000_000).toFixed(2) + "M";
   if (n >= 1_000)         return "$" + (n / 1_000).toFixed(0) + "K";
-  return "$" + n.toString();
+  if (n === 0)            return "—";
+  return "$" + n.toFixed(4);
 }
 
 function fmtPrice(n: number): string {
+  if (n === 0)    return "—";
   if (n >= 10000) return n.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   if (n >= 100)   return n.toFixed(2);
-  if (n >= 1)     return n.toFixed(3);
-  return n.toFixed(4);
+  if (n >= 1)     return n.toFixed(4);
+  if (n >= 0.0001) return n.toFixed(6);
+  return n.toExponential(2);
 }
 
 type CategoryTab = "Favorites" | "Futures" | "Spot" | "Prediction";
@@ -60,21 +56,44 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
   const [search, setSearch]   = useState("");
   const [catTab, setCatTab]   = useState<CategoryTab>("Futures");
   const [chip, setChip]       = useState<FilterChip>("All");
-  const [favorites, setFavorites] = useState<Set<string>>(new Set(["BTCUSDT", "ETHUSDT"]));
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  const { pairs: apiPairs, loading } = usePairs();
+
+  const pairs = useMemo<DisplayPair[]>(() =>
+    apiPairs.map(p => {
+      const base  = p.baseToken?.symbol  ?? "?";
+      const quote = p.quoteToken?.symbol ?? "?";
+      return {
+        id:     p.id,
+        symbol: `${base}${quote}`,
+        base,
+        quote,
+        chain:  chainLabel(p.network),
+        price:  p.priceUSD  ?? p.price  ?? 0,
+        change: p.priceChange24h ?? 0,
+        volume: p.volume24hUSD ?? p.volume24h ?? 0,
+        color:  symbolColor(base),
+        initial: base.charAt(0),
+        logo:   p.baseToken?.logo ?? "",
+      };
+    }),
+    [apiPairs],
+  );
 
   const filtered = useMemo(() => {
-    let list = PAIRS;
-    if (catTab === "Favorites") list = list.filter((p) => favorites.has(p.symbol));
+    let list = pairs;
+    if (catTab === "Favorites") list = list.filter(p => favorites.has(p.symbol));
     if (search.trim()) {
       const q = search.trim().toUpperCase();
-      list = list.filter((p) => p.symbol.includes(q) || p.base.includes(q));
+      list = list.filter(p => p.symbol.includes(q) || p.base.includes(q));
     }
     return list;
-  }, [search, catTab, chip, favorites]);
+  }, [pairs, search, catTab, favorites]);
 
   function toggleFav(sym: string, e: React.MouseEvent) {
     e.stopPropagation();
-    setFavorites((prev) => {
+    setFavorites(prev => {
       const next = new Set(prev);
       next.has(sym) ? next.delete(sym) : next.add(sym);
       return next;
@@ -84,16 +103,11 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col"
-      style={{
-        backgroundColor: "var(--m-bg)",
-        paddingBottom: "env(safe-area-inset-bottom, 0px)",
-      }}
+      style={{ backgroundColor: "var(--m-bg)", paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3 shrink-0">
-        <span className="text-[15px] font-bold" style={{ color: "var(--m-fg)" }}>
-          Markets
-        </span>
+        <span className="text-[15px] font-bold" style={{ color: "var(--m-fg)" }}>Markets</span>
         <button
           onClick={onClose}
           className="w-8 h-8 flex items-center justify-center rounded-full transition-colors"
@@ -114,7 +128,7 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
             type="text"
             placeholder="Search markets…"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={e => setSearch(e.target.value)}
             className="bg-transparent outline-none flex-1 text-[14px] placeholder:opacity-30"
             style={{ color: "var(--m-fg)" }}
             autoFocus
@@ -133,7 +147,7 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
 
       {/* Category tabs */}
       <div className="flex items-center px-4 gap-1 shrink-0 pb-1">
-        {CATEGORY_TABS.map((tab) => (
+        {CATEGORY_TABS.map(tab => (
           <button
             key={tab}
             onClick={() => setCatTab(tab)}
@@ -151,9 +165,9 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
         ))}
       </div>
 
-      {/* Filter chips — pill style */}
+      {/* Filter chips */}
       <div className="flex items-center gap-2 px-4 py-2 overflow-x-auto scrollbar-none shrink-0">
-        {FILTER_CHIPS.map((c) => (
+        {FILTER_CHIPS.map(c => (
           <button
             key={c}
             onClick={() => setChip(c)}
@@ -174,49 +188,42 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
         style={{ gridTemplateColumns: "1fr auto auto", color: "var(--m-fg-4)" }}
       >
         <div>Symbol</div>
-        <div className="text-right pr-5">
-          <div>Volume</div>
-        </div>
-        <div className="text-right" style={{ minWidth: 80 }}>
-          Price / 24h
-        </div>
+        <div className="text-right pr-5">Volume</div>
+        <div className="text-right" style={{ minWidth: 80 }}>Price / 24h</div>
       </div>
 
-      {/* thin separator */}
       <div className="mx-4 mb-1 rounded-full h-px" style={{ backgroundColor: "var(--m-bdr)" }} />
 
       {/* Pairs list */}
       <div className="flex-1 overflow-y-auto px-2">
-        {filtered.length === 0 && (
+        {loading && (
+          <div className="flex items-center justify-center gap-2 py-12" style={{ color: "var(--m-fg-4)" }}>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="text-[13px]">Loading markets…</span>
+          </div>
+        )}
+        {!loading && filtered.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 gap-2">
-            <div
-              className="w-12 h-12 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: "var(--m-bg-2)" }}
-            >
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "var(--m-bg-2)" }}>
               <Search className="w-5 h-5" style={{ color: "var(--m-fg-5)" }} />
             </div>
             <p className="text-[13px]" style={{ color: "var(--m-fg-4)" }}>No markets found</p>
           </div>
         )}
-        {filtered.map((pair) => {
-          const isFav = favorites.has(pair.symbol);
+        {filtered.map(pair => {
+          const isFav     = favorites.has(pair.symbol);
           const isCurrent = pair.symbol === currentSymbol;
           return (
             <button
-              key={pair.symbol}
+              key={pair.id}
               onClick={() => { onSelect(pair.symbol); onClose(); }}
               className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl mb-0.5 transition-all active:scale-[0.98]"
-              style={{
-                backgroundColor: isCurrent ? "var(--m-bg-3)" : "transparent",
-              }}
-              onMouseEnter={(e) => { if (!isCurrent) e.currentTarget.style.backgroundColor = "var(--m-bg-2)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = isCurrent ? "var(--m-bg-3)" : "transparent"; }}
+              style={{ backgroundColor: isCurrent ? "var(--m-bg-3)" : "transparent" }}
+              onMouseEnter={e => { if (!isCurrent) e.currentTarget.style.backgroundColor = "var(--m-bg-2)"; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = isCurrent ? "var(--m-bg-3)" : "transparent"; }}
             >
               {/* Star */}
-              <button
-                className="shrink-0 p-0.5 transition-transform active:scale-90"
-                onClick={(e) => toggleFav(pair.symbol, e)}
-              >
+              <button className="shrink-0 p-0.5 transition-transform active:scale-90" onClick={e => toggleFav(pair.symbol, e)}>
                 <Star
                   className="w-3.5 h-3.5 transition-colors"
                   style={{ color: isFav ? "#f5c518" : "var(--m-fg-5)" }}
@@ -226,15 +233,22 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
 
               {/* Icon */}
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 overflow-hidden"
                 style={{ backgroundColor: pair.color + "25", border: `1.5px solid ${pair.color}40` }}
               >
-                <span style={{ color: pair.color }}>{pair.initial}</span>
+                {pair.logo ? (
+                  <img src={pair.logo} alt={pair.base} className="w-6 h-6 rounded-full object-cover"
+                    onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                ) : (
+                  <span style={{ color: pair.color }}>{pair.initial}</span>
+                )}
               </div>
 
               {/* Name + chain */}
               <div className="flex flex-col leading-none gap-0.5 flex-1 text-left min-w-0">
-                <span className="font-bold text-[13px] truncate" style={{ color: "var(--m-fg)" }}>{pair.symbol}</span>
+                <span className="font-bold text-[13px] truncate" style={{ color: "var(--m-fg)" }}>
+                  {pair.base}<span style={{ color: "var(--m-fg-4)", fontWeight: 400 }}>/{pair.quote}</span>
+                </span>
                 <span className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{pair.chain}</span>
               </div>
 

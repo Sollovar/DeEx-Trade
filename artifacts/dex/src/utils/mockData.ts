@@ -243,37 +243,37 @@ function calculateTrendingScore(volume24h: number, liquidity: number, priceChang
   return Math.max(0, Math.min(100, totalScore));
 }
 
+function parseTokenField(val: any): Record<string, any> {
+  const empty = { address: '', name: '', symbol: '', logo: '' };
+  if (val == null) return empty;
+  if (typeof val === 'object') return val;
+  if (typeof val === 'string') {
+    try {
+      let parsed = JSON.parse(val);
+      // Handle double-encoding: Go reads JSONB as raw string, JSON response encodes it again.
+      // First parse may yield a string like '{"symbol":"..."}' — parse once more to get object.
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
+      if (parsed && typeof parsed === 'object') return parsed;
+    } catch {}
+  }
+  return empty;
+}
+
 export function normalizeApiPair(p: any): Pair {
-  let baseToken = { address: '', name: '', symbol: '', logo: '' };
-  let quoteToken = { address: '', name: '', symbol: '', logo: '' };
+  let baseToken  = parseTokenField(p.base_token);
+  let quoteToken = parseTokenField(p.quote_token);
 
-  if (typeof p.base_token === 'string') {
-    try { baseToken = JSON.parse(p.base_token); } catch {}
-  } else if (typeof p.base_token === 'object') {
-    baseToken = p.base_token;
-  }
-
-  if (typeof p.quote_token === 'string') {
-    try { quoteToken = JSON.parse(p.quote_token); } catch {}
-  } else if (typeof p.quote_token === 'object') {
-    quoteToken = p.quote_token;
-  }
+  // Top-level base_symbol / quote_symbol are plain strings — use as fallback
+  if (!baseToken.symbol  && p.base_symbol)  baseToken.symbol  = p.base_symbol;
+  if (!quoteToken.symbol && p.quote_symbol) quoteToken.symbol = p.quote_symbol;
 
   // Extract detailed token info from base_token_info and quote_token_info
-  let baseTokenInfo = null;
-  let quoteTokenInfo = null;
-
-  if (typeof p.base_token_info === 'string') {
-    try { baseTokenInfo = JSON.parse(p.base_token_info); } catch {}
-  } else if (typeof p.base_token_info === 'object') {
-    baseTokenInfo = p.base_token_info;
-  }
-
-  if (typeof p.quote_token_info === 'string') {
-    try { quoteTokenInfo = JSON.parse(p.quote_token_info); } catch {}
-  } else if (typeof p.quote_token_info === 'object') {
-    quoteTokenInfo = p.quote_token_info;
-  }
+  let baseTokenInfo  = parseTokenField(p.base_token_info);
+  let quoteTokenInfo = parseTokenField(p.quote_token_info);
+  if (!baseTokenInfo.symbol)  baseTokenInfo  = null as any;
+  if (!quoteTokenInfo.symbol) quoteTokenInfo = null as any;
 
   // Merge detailed info into baseToken
   if (baseTokenInfo) {
