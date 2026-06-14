@@ -74,7 +74,7 @@ func Load() *Config {
 		SettlementContractBase: getEnv("SETTLEMENT_CONTRACT_BASE", "0x723da0ef5eea8370015465e9Cf2513D7e48e1b61"),
 		ExecutorEnabled:        getEnvAsBool("EXECUTOR_ENABLED", false),
 		ExecutorRPCURL:         getEnv("EXECUTOR_RPC_URL", "https://bsc-dataseed.binance.org"),
-		ExecutorRPCURLBase:     getEnv("EXECUTOR_RPC_URL_BASE", "https://base-mainnet.infura.io/v3/f4c82c2334c043678a712a5e860c7edf"),
+		ExecutorRPCURLBase:     getEnv("EXECUTOR_RPC_URL_BASE", ""),
 		ExecutorPrivateKey:     getEnv("EXECUTOR_PRIVATE_KEY", ""),
 		ExecutorIntervalMs:     getEnvAsInt("EXECUTOR_INTERVAL_MS", 5000),
 		ChainID:                getEnvAsInt64("CHAIN_ID", 56),
@@ -84,9 +84,9 @@ func Load() *Config {
 		InfuraURL:              getEnv("INFURA_URL", ""),
 		AlchemyURL:             getEnv("ALCHEMY_URL", ""),
 		EtherscanKey:           getEnv("ETHERSCAN_KEY", ""),
-		SolanaRPCURL:           getEnv("SOLANA_RPC_URL", "https://mainnet.helius-rpc.com/?api-key=1bc62453-705c-40ea-81d7-37fea004e5fa"),
-		SolanaCustodyAddr:      getEnv("SOLANA_CUSTODY_ADDRESS", "5xayu3sbV3xD6fRUapYo5geZecnFzjRnqrHDdSXfbQLr"),
-		SolanaCustodyPrivateKey: getEnv("SOLANA_CUSTODY_PRIVATE_KEY", "51rWEunB7K9ZKVDr7gXq8R1Xh1mhvJztkU7q8DWLPg4mccVwUEs2gxKinYtW8fJyr35FEoj2MGMm8DgeWmHyTxMQ"),
+		SolanaRPCURL:           getEnv("SOLANA_RPC_URL", ""),
+		SolanaCustodyAddr:      getEnv("SOLANA_CUSTODY_ADDRESS", ""),
+		SolanaCustodyPrivateKey: getEnv("SOLANA_CUSTODY_PRIVATE_KEY", ""),
 	}
 }
 

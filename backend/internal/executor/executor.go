@@ -93,7 +93,7 @@ func NewExecutor(cfg *config.Config, orderRepo *repository.OrderRepository, fill
 
 	baseRPC := cfg.ExecutorRPCURLBase
 	if baseRPC == "" {
-		baseRPC = "https://base-mainnet.infura.io/v3/f4c82c2334c043678a712a5e860c7edf"
+		baseRPC = ""
 	}
 
 	baseClient, err := ethclient.Dial(baseRPC)
