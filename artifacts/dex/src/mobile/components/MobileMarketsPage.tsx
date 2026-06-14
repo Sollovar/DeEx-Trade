@@ -14,7 +14,7 @@ interface DisplayPair {
   id: string; symbol: string; base: string; quote: string; chain: string;
   price: number; change: number; volume: number; liquidity: number;
   high24h: number; low24h: number;
-  color: string; initial: string; logo: string;
+  color: string; initial: string; logo: string; quoteLogo: string;
   spark7d: number[];
 }
 
@@ -56,13 +56,25 @@ function fmtCompact(n: number) {
   return "$" + n.toFixed(4);
 }
 
-function fmtPrice(n: number) {
+const SUBSCRIPT_DIGITS = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"];
+function toSubscript(n: number): string {
+  return String(n).split("").map(c => SUBSCRIPT_DIGITS[parseInt(c)] ?? c).join("");
+}
+
+function fmtPrice(n: number): string {
   if (n === 0)     return "—";
   if (n >= 10000)  return n.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   if (n >= 100)    return n.toFixed(2);
   if (n >= 1)      return n.toFixed(4);
   if (n >= 0.0001) return n.toFixed(6);
-  return n.toExponential(2);
+  // Very small: count zeros after decimal → 0.0₆33 notation
+  const str = n.toFixed(20);
+  const afterDot = str.split(".")[1] ?? "";
+  let zeros = 0;
+  for (const c of afterDot) { if (c === "0") zeros++; else break; }
+  const sigRaw = afterDot.slice(zeros, zeros + 4).replace(/0+$/, "") || "0";
+  if (zeros < 4) return n.toFixed(6);
+  return `0.0${toSubscript(zeros - 1)}${sigRaw}`;
 }
 
 /* ─────────────────────────── sparkline ────────────────────── */
@@ -169,6 +181,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
         color:     symbolColor(base),
         initial:   base.charAt(0),
         logo:      p.baseToken?.logo ?? "",
+        quoteLogo: p.quoteToken?.logo ?? "",
         spark7d:   makeSpark(price || 1, change),
       };
     }),
@@ -458,15 +471,34 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                       >
                         <Star className="w-3.5 h-3.5" style={{ color: isFav ? "#f5c518" : "var(--m-fg-5)" }} fill={isFav ? "#f5c518" : "none"} />
                       </button>
-                      <div
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 overflow-hidden"
-                        style={{ backgroundColor: pair.color + "25", border:`1.5px solid ${pair.color}40` }}
-                      >
-                        {pair.logo ? (
-                          <img src={pair.logo} alt={pair.base} className="w-5 h-5 rounded-full object-cover"
-                            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      {/* Dual logo: base full + quote overlapping bottom-right */}
+                      <div className="relative shrink-0" style={{ width: 34, height: 28 }}>
+                        <div
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold overflow-hidden absolute top-0 left-0"
+                          style={{ backgroundColor: pair.color + "25", border:`1.5px solid ${pair.color}40` }}
+                        >
+                          {pair.logo ? (
+                            <img src={pair.logo} alt={pair.base} className="w-full h-full rounded-full object-cover"
+                              onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                          ) : (
+                            <span style={{ color: pair.color }}>{pair.initial}</span>
+                          )}
+                        </div>
+                        {pair.quoteLogo ? (
+                          <div
+                            className="absolute rounded-full overflow-hidden"
+                            style={{ width: 15, height: 15, bottom: 0, right: 0, border: "1.5px solid var(--m-bg)", backgroundColor: "var(--m-bg-2)" }}
+                          >
+                            <img src={pair.quoteLogo} alt={pair.quote} className="w-full h-full rounded-full object-cover"
+                              onError={e => { const p = (e.target as HTMLImageElement).parentElement; if (p) p.style.display = "none"; }} />
+                          </div>
                         ) : (
-                          <span style={{ color: pair.color }}>{pair.initial}</span>
+                          <div
+                            className="absolute rounded-full flex items-center justify-center text-[7px] font-bold"
+                            style={{ width: 15, height: 15, bottom: 0, right: 0, border: "1.5px solid var(--m-bg)", backgroundColor: symbolColor(pair.quote), color: "#fff" }}
+                          >
+                            {pair.quote.charAt(0)}
+                          </div>
                         )}
                       </div>
                       <div className="flex flex-col leading-none gap-0.5 min-w-0 flex-1">
@@ -483,7 +515,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                             </span>
                           )}
                         </div>
-                        <span className="text-[9px]" style={{ color:"var(--m-fg-5)" }}>{pair.chain}</span>
+                        <span className="text-[9px]" style={{ color:"var(--m-fg-5)" }}>{pair.base}</span>
                       </div>
                     </div>
 
