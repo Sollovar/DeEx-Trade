@@ -4,6 +4,7 @@ import { usePairs } from "@/hooks/usePairs";
 
 interface DisplayPair {
   symbol: string; base: string; quote: string; chain: string;
+  baseName: string;
   price: number; change: number; volume: number;
   color: string; initial: string; logo: string; id: string;
 }
@@ -31,13 +32,24 @@ function fmtCompact(n: number): string {
   return "$" + n.toFixed(4);
 }
 
+const SUBSCRIPT_DIGITS = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"];
+function toSubscript(n: number): string {
+  return String(n).split("").map(c => SUBSCRIPT_DIGITS[parseInt(c)] ?? c).join("");
+}
+
 function fmtPrice(n: number): string {
-  if (n === 0)    return "—";
-  if (n >= 10000) return n.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  if (n >= 100)   return n.toFixed(2);
-  if (n >= 1)     return n.toFixed(4);
+  if (n === 0)     return "—";
+  if (n >= 10000)  return n.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  if (n >= 100)    return n.toFixed(2);
+  if (n >= 1)      return n.toFixed(4);
   if (n >= 0.0001) return n.toFixed(6);
-  return n.toExponential(2);
+  const str = n.toFixed(20);
+  const afterDot = str.split(".")[1] ?? "";
+  let zeros = 0;
+  for (const c of afterDot) { if (c === "0") zeros++; else break; }
+  const sigRaw = afterDot.slice(zeros, zeros + 4).replace(/0+$/, "") || "0";
+  if (zeros < 4) return n.toFixed(6);
+  return `0.0${toSubscript(zeros - 1)}${sigRaw}`;
 }
 
 type CategoryTab = "Favorites" | "Futures" | "Spot" | "Prediction";
@@ -48,11 +60,11 @@ const FILTER_CHIPS: FilterChip[] = ["All", "Top", "New", "Meme", "AI", "Pre-laun
 
 interface Props {
   onClose: () => void;
-  onSelect: (symbol: string) => void;
-  currentSymbol: string;
+  onSelect: (pairId: string) => void;
+  currentPairId: string;
 }
 
-export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Props) {
+export function MobileMarketSelectPanel({ onClose, onSelect, currentPairId }: Props) {
   const [search, setSearch]   = useState("");
   const [catTab, setCatTab]   = useState<CategoryTab>("Futures");
   const [chip, setChip]       = useState<FilterChip>("All");
@@ -65,17 +77,18 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
       const base  = p.baseToken?.symbol  ?? "?";
       const quote = p.quoteToken?.symbol ?? "?";
       return {
-        id:     p.id,
-        symbol: `${base}${quote}`,
+        id:       p.id,
+        symbol:   `${base}${quote}`,
         base,
         quote,
-        chain:  chainLabel(p.network),
-        price:  p.priceUSD  ?? p.price  ?? 0,
-        change: p.priceChange24h ?? 0,
-        volume: p.volume24hUSD ?? p.volume24h ?? 0,
-        color:  symbolColor(base),
-        initial: base.charAt(0),
-        logo:   p.baseToken?.logo ?? "",
+        chain:    chainLabel(p.network),
+        baseName: p.baseToken?.name ?? base,
+        price:    p.priceUSD  ?? p.price  ?? 0,
+        change:   p.priceChange24h ?? 0,
+        volume:   p.volume24hUSD ?? p.volume24h ?? 0,
+        color:    symbolColor(base),
+        initial:  base.charAt(0),
+        logo:     p.baseToken?.logo ?? "",
       };
     }),
     [apiPairs],
@@ -212,11 +225,11 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
         )}
         {filtered.map(pair => {
           const isFav     = favorites.has(pair.symbol);
-          const isCurrent = pair.symbol === currentSymbol;
+          const isCurrent = pair.id === currentPairId;
           return (
             <button
               key={pair.id}
-              onClick={() => { onSelect(pair.symbol); onClose(); }}
+              onClick={() => { onSelect(pair.id); onClose(); }}
               className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl mb-0.5 transition-all active:scale-[0.98]"
               style={{ backgroundColor: isCurrent ? "var(--m-bg-3)" : "transparent" }}
               onMouseEnter={e => { if (!isCurrent) e.currentTarget.style.backgroundColor = "var(--m-bg-2)"; }}
@@ -244,12 +257,12 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentSymbol }: Pr
                 )}
               </div>
 
-              {/* Name + chain */}
+              {/* Name + base token name */}
               <div className="flex flex-col leading-none gap-0.5 flex-1 text-left min-w-0">
                 <span className="font-bold text-[13px] truncate" style={{ color: "var(--m-fg)" }}>
                   {pair.base}<span style={{ color: "var(--m-fg-4)", fontWeight: 400 }}>/{pair.quote}</span>
                 </span>
-                <span className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{pair.chain}</span>
+                <span className="text-[10px] truncate" style={{ color: "var(--m-fg-4)" }}>{pair.baseName}</span>
               </div>
 
               {/* Volume */}

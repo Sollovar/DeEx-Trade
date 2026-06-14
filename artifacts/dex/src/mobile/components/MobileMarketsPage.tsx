@@ -12,6 +12,7 @@ import { usePairs } from "@/hooks/usePairs";
 /* ─────────────────────────── data ─────────────────────────── */
 interface DisplayPair {
   id: string; symbol: string; base: string; quote: string; chain: string;
+  baseName: string;
   price: number; change: number; volume: number; liquidity: number;
   high24h: number; low24h: number;
   color: string; initial: string; logo: string; quoteLogo: string;
@@ -138,13 +139,13 @@ function MoverCard({ p, onSelect }: { p: DisplayPair; onSelect: () => void }) {
 /* ─────────────────────────── props ────────────────────────── */
 interface Props {
   market: LiveMarketState;
-  currentSymbol: string;
-  onSelectPair?: (symbol: string) => void;
+  currentPairId: string;
+  onSelectPair?: (pairId: string) => void;
   onOpenMarketPanel?: () => void;
 }
 
 /* ═══════════════════════════ component ════════════════════════ */
-export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenMarketPanel }: Props) {
+export function MobileMarketsPage({ market, currentPairId, onSelectPair, onOpenMarketPanel }: Props) {
   const [view,      setView]      = useState<"pairs" | "chart">("pairs");
   const [search,    setSearch]    = useState("");
   const [tab,       setTab]       = useState<FilterTab>("All");
@@ -172,6 +173,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
         base,
         quote,
         chain:     chainLabel(p.network),
+        baseName:  p.baseToken?.name ?? base,
         price,
         change,
         volume:    p.volume24hUSD    ?? p.volume24h    ?? 0,
@@ -312,7 +314,8 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
         {Header}
         <MobilePairHeader
           market={market}
-          currentSymbol={currentSymbol}
+          currentSymbol={apiPairs.find(p => p.id === currentPairId)?.baseToken?.symbol ?? ""}
+          pair={apiPairs.find(p => p.id === currentPairId) ?? apiPairs[0] ?? null}
           onOpenMarketPanel={() => onOpenMarketPanel?.()}
         />
         <div
@@ -373,7 +376,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                   <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color:"var(--m-fg-4)" }}>Top Gainers</span>
                 </div>
                 <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 mb-3">
-                  {topGainers.map(p => <MoverCard key={p.id} p={p} onSelect={() => onSelectPair?.(p.symbol)} />)}
+                  {topGainers.map(p => <MoverCard key={p.id} p={p} onSelect={() => onSelectPair?.(p.id)} />)}
                 </div>
               </>
             )}
@@ -384,7 +387,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                   <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color:"var(--m-fg-4)" }}>Top Losers</span>
                 </div>
                 <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 mb-2">
-                  {topLosers.map(p => <MoverCard key={p.id} p={p} onSelect={() => onSelectPair?.(p.symbol)} />)}
+                  {topLosers.map(p => <MoverCard key={p.id} p={p} onSelect={() => onSelectPair?.(p.id)} />)}
                 </div>
               </>
             )}
@@ -454,7 +457,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                     key={pair.id}
                     className="flex items-center transition-colors active:opacity-70 select-none"
                     style={{ height:52, borderBottom:"1px solid var(--m-bdr)" }}
-                    onClick={() => onSelectPair?.(pair.symbol)}
+                    onClick={() => onSelectPair?.(pair.id)}
                     onTouchStart={() => startPress(pair)}
                     onTouchMove={() => { pressMove.current = true; cancelPress(); }}
                     onTouchEnd={cancelPress}
@@ -515,7 +518,7 @@ export function MobileMarketsPage({ market, currentSymbol, onSelectPair, onOpenM
                             </span>
                           )}
                         </div>
-                        <span className="text-[9px]" style={{ color:"var(--m-fg-5)" }}>{pair.base}</span>
+                        <span className="text-[9px] truncate" style={{ color:"var(--m-fg-5)" }}>{pair.baseName}</span>
                       </div>
                     </div>
 

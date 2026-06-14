@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { ChevronDown } from "lucide-react";
 import { LiveMarketState, OrderBookRow } from "@/hooks/useLiveMarket";
 import { useDynamicContext, DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
+import type { Pair } from "@/types";
 
 /* ── Mini sparkline (shared shape with MobilePairHeader) ── */
 function Sparkline({ prices, color, w = 64, h = 22 }: { prices: number[]; color: string; w?: number; h?: number }) {
@@ -38,6 +39,7 @@ function Sparkline({ prices, color, w = 64, h = 22 }: { prices: number[]; color:
 interface Props {
   market: LiveMarketState;
   currentSymbol: string;
+  pair?: Pair | null;
   onOpenMarketPanel: () => void;
 }
 
@@ -426,7 +428,7 @@ function MiniPriceChart({
   );
 }
 
-export function MobileTradeView({ market, currentSymbol, onOpenMarketPanel }: Props) {
+export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel }: Props) {
   const { primaryWallet } = useDynamicContext();
   const isConnected = !!primaryWallet;
   const [side, setSide] = useState<"buy" | "sell">("buy");
@@ -491,8 +493,11 @@ export function MobileTradeView({ market, currentSymbol, onOpenMarketPanel }: Pr
     isDragging.current = false;
   }, []);
 
-  // Base token derived from symbol (e.g. "BTCUSDT" → "BTC")
-  const baseToken = currentSymbol.replace(/USDT.*/, "") || "BTC";
+  // Base token derived from pair data or symbol string
+  const baseToken  = pair?.baseToken.symbol  ?? currentSymbol.split("/")[0] ?? "BTC";
+  const quoteToken = pair?.quoteToken.symbol ?? currentSymbol.split("/")[1] ?? "USDT";
+  const baseName   = pair?.baseToken.name    ?? baseToken;
+  const baseLogo   = pair?.baseToken.logo    ?? "";
 
   // Live order value calculation
   const sizeNum   = parseFloat(size);
@@ -536,15 +541,21 @@ export function MobileTradeView({ market, currentSymbol, onOpenMarketPanel }: Pr
         style={{ backgroundColor: "var(--m-bg-1)", borderBottom: "1px solid var(--m-bdr)" }}
       >
         <button onClick={onOpenMarketPanel} className="flex items-center gap-2.5 active:opacity-70 transition-opacity">
-          <div className="w-7 h-7 rounded-full bg-[#f7931a]/20 flex items-center justify-center shrink-0">
-            <div className="w-5 h-5 rounded-full bg-[#f7931a] flex items-center justify-center text-white text-[10px] font-bold">B</div>
+          <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-bold overflow-hidden"
+            style={{ backgroundColor: "#f7931a28", border: "1.5px solid #f7931a45", color: "#f7931a" }}>
+            {baseLogo ? (
+              <img src={baseLogo} alt={baseToken} className="w-6 h-6 rounded-full object-cover"
+                onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            ) : baseToken.charAt(0)}
           </div>
           <div className="flex flex-col leading-none gap-0.5">
             <div className="flex items-center gap-1">
-              <span className="font-bold text-[15px]" style={{ color: "var(--m-fg)" }}>{currentSymbol}</span>
+              <span className="font-bold text-[15px]" style={{ color: "var(--m-fg)" }}>
+                {baseToken}<span style={{ color: "var(--m-fg-4)", fontWeight: 400 }}>/{quoteToken}</span>
+              </span>
               <ChevronDown className="w-3.5 h-3.5" style={{ color: "var(--m-fg-4)" }} />
             </div>
-            <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>BSC</span>
+            <span className="text-[11px] truncate max-w-[120px]" style={{ color: "var(--m-fg-4)" }}>{baseName}</span>
           </div>
         </button>
         <div className="flex items-center gap-2">

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useLiveMarket } from "@/hooks/useLiveMarket";
+import { usePairs } from "@/hooks/usePairs";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { MobileTopBar } from "./components/MobileTopBar";
@@ -139,8 +140,14 @@ function MobileTradePageInner() {
   const [mainTab, setMainTab]             = useState<MainTab>("Chart");
   const [navTab, setNavTab]               = useState<NavTab>("Trade");
   const [noWalletSheet, setNoWalletSheet] = useState(false);
-  const [currentSymbol, setCurrentSymbol] = useState("BTCUSDT");
+  const [currentPairId, setCurrentPairId] = useState("");
   const [showMarketPanel, setShowMarketPanel] = useState(false);
+
+  const { pairs } = usePairs();
+  const currentPair = pairs.find(p => p.id === currentPairId) ?? pairs[0] ?? null;
+  const currentSymbol = currentPair
+    ? `${currentPair.baseToken.symbol}/${currentPair.quoteToken.symbol}`
+    : "—/USDT";
   const [menuOpen, setMenuOpen]           = useState(false);
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -211,9 +218,9 @@ function MobileTradePageInner() {
 
       {showMarketPanel && (
         <MobileMarketSelectPanel
-          currentSymbol={currentSymbol}
+          currentPairId={currentPairId || (currentPair?.id ?? "")}
           onClose={() => setShowMarketPanel(false)}
-          onSelect={(sym) => { setCurrentSymbol(sym); setShowMarketPanel(false); }}
+          onSelect={(pairId) => { setCurrentPairId(pairId); setNavTab("Trade"); setShowMarketPanel(false); }}
         />
       )}
 
@@ -237,6 +244,7 @@ function MobileTradePageInner() {
             <MobileTradeView
               market={market}
               currentSymbol={currentSymbol}
+              pair={currentPair}
               onOpenMarketPanel={() => setShowMarketPanel(true)}
             />
             <div style={{ borderTop: "1px solid var(--m-bdr)" }}>
@@ -250,10 +258,10 @@ function MobileTradePageInner() {
         ) : navTab === "Markets" ? (
           <MobileMarketsPage
             market={market}
-            currentSymbol={currentSymbol}
+            currentPairId={currentPairId || (currentPair?.id ?? "")}
             onOpenMarketPanel={() => setShowMarketPanel(true)}
-            onSelectPair={(sym) => {
-              setCurrentSymbol(sym);
+            onSelectPair={(pairId) => {
+              setCurrentPairId(pairId);
               setNavTab("Trade");
             }}
           />
@@ -263,6 +271,7 @@ function MobileTradePageInner() {
             <MobilePairHeader
               market={market}
               currentSymbol={currentSymbol}
+              pair={currentPair}
               onOpenMarketPanel={() => setShowMarketPanel(true)}
             />
 
