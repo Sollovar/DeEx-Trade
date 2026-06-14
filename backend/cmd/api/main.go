@@ -55,11 +55,6 @@ func main() {
                 c.Next()
         })
 
-        // Health-check endpoint available immediately
-        r.GET("/health", func(c *gin.Context) {
-                c.JSON(http.StatusOK, gin.H{"status": "ok"})
-        })
-
         srv := &http.Server{
                 Addr:    ":" + cfg.Port,
                 Handler: r,
