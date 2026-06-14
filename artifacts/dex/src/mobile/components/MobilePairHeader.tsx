@@ -25,22 +25,6 @@ const COIN_COLORS: Record<string, { color: string; initial: string }> = {
   NEAR: { color: "#00d5bd", initial: "N" },
 };
 
-function fmtVolume(n: number) {
-  if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(2) + "B";
-  if (n >= 1_000_000)     return "$" + (n / 1_000_000).toFixed(2) + "M";
-  return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 2 });
-}
-
-function fmtOI(n: number) {
-  if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(3) + "B";
-  if (n >= 1_000_000)     return "$" + (n / 1_000_000).toFixed(3) + "M";
-  if (n >= 1_000)         return "$" + (n / 1_000).toFixed(2) + "K";
-  return "$" + n.toFixed(2);
-}
-
-function fmtFunding(r: number) {
-  return (r >= 0 ? "+" : "") + (r * 100).toFixed(4) + "%";
-}
 
 /* ── Mini sparkline ── */
 function Sparkline({ prices, color, w = 68, h = 24 }: { prices: number[]; color: string; w?: number; h?: number }) {
@@ -81,7 +65,6 @@ function Sparkline({ prices, color, w = 68, h = 24 }: { prices: number[]; color:
 }
 
 export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPanel }: Props) {
-  const [expanded, setExpanded] = useState(false);
   const [priceHistory, setPriceHistory] = useState<number[]>([market.price]);
 
   useEffect(() => {
@@ -93,13 +76,13 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
   const baseName    = pair?.baseToken.name ?? baseSymbol;
   const baseLogo    = pair?.baseToken.logo ?? "";
   const coin        = COIN_COLORS[baseSymbol] ?? { color: "#f5c518", initial: baseSymbol[0] ?? "?" };
-  const priceUp     = market.price >= market.prevPrice;
-  const priceColor  = priceUp ? "#00c853" : "#ff1744";
-  const changePct   = (market.change24h * 100).toFixed(2);
-  const changeDollar = Math.abs(market.price * market.change24h).toFixed(3);
-  const changeColor  = market.change24h >= 0 ? "#00c853" : "#ff1744";
-  const fundingColor = market.fundingRate >= 0 ? "#00c853" : "#ff4d6a";
-  const sparkColor   = priceHistory.length >= 2 && priceHistory[priceHistory.length - 1] >= priceHistory[0]
+
+  // Use real pair price and change — fall back to market only if pair not loaded yet
+  const realPrice   = pair?.priceUSD ?? pair?.price ?? 0;
+  const realChange  = pair?.priceChange24h ?? 0;
+  const priceColor  = realChange >= 0 ? "#00c853" : "#ff1744";
+  const changePct   = (realChange * 100).toFixed(2);
+  const sparkColor  = priceHistory.length >= 2 && priceHistory[priceHistory.length - 1] >= priceHistory[0]
     ? "#00c853" : "#ff1744";
 
   return (
@@ -133,70 +116,21 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
           </div>
         </button>
 
-        {/* Right: sparkline + price + expand toggle */}
+        {/* Right: sparkline + real price + real change */}
         <div className="flex items-center gap-2">
-
-          {/* Sparkline */}
           <Sparkline prices={priceHistory} color={sparkColor} w={68} h={24} />
-
-          {/* Price + change */}
           <div className="text-right">
             <div className="font-bold text-[18px] font-mono tabular-nums leading-none" style={{ color: priceColor }}>
-              {market.price.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+              {realPrice > 0
+                ? realPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+                : "—"}
             </div>
-            <div className="text-[12px] font-mono tabular-nums leading-none mt-0.5" style={{ color: changeColor }}>
-              {market.change24h >= 0 ? "+" : "-"}{changeDollar} / {market.change24h >= 0 ? "+" : ""}{changePct}%
+            <div className="text-[12px] font-mono tabular-nums leading-none mt-0.5" style={{ color: priceColor }}>
+              {realPrice > 0 ? `${realChange >= 0 ? "+" : ""}${changePct}%` : ""}
             </div>
           </div>
-
-          {/* Expand / collapse */}
-          <button
-            onClick={() => setExpanded((v) => !v)}
-            className="flex items-center justify-center active:opacity-60 transition-opacity"
-          >
-            {expanded
-              ? <ChevronUp   className="w-5 h-5" style={{ color: "var(--m-fg-4)" }} />
-              : <ChevronDown className="w-5 h-5" style={{ color: "var(--m-fg-4)" }} />
-            }
-          </button>
         </div>
       </div>
-
-      {/* ── Expanded stats panel ── */}
-      {expanded && (
-        <div
-          className="px-4 pb-3 grid grid-cols-2 gap-x-6 gap-y-3"
-          style={{ borderTop: "1px solid var(--m-bg-3)" }}
-        >
-          <div className="flex flex-col gap-0.5 pt-3">
-            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h High</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#00c853" }}>
-              {(market.price * 1.018).toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-0.5 pt-3">
-            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Low</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#ff4d6a" }}>
-              {(market.price * 0.983).toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Volume</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
-              {fmtVolume(market.volume24h)}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>Liquidity</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
-              $1.003B
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
