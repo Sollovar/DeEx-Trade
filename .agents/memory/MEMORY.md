@@ -1,0 +1,3 @@
+- [Go 1.25.5 for backend build](go-build.md) — use Go 1.25.5 binary path; pgx v5.10.0 zip is pre-cached; GOTOOLCHAIN=local required
+- [DB_HOST http prefix sanitization](db-host-sanitize.md) — Replit DB_HOST secret has "http://" prefix; sanitizeHost() needed in both Go config and server/index.js
+- [Port 8080 conflict](port-8080.md) — artifacts/api-server runs on 8080; must not conflict with Go Backend; it auto-stops when not needed
