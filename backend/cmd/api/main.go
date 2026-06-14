@@ -23,9 +23,23 @@ import (
 )
 
 func main() {
-        // Load .env file
+        // Load .env file — only sets vars NOT already present (Replit Secrets take priority)
         if err := godotenv.Load(); err != nil {
                 log.Println("No .env file found, using environment variables")
+        }
+
+        // ── Mandatory secrets check ───────────────────────────────────────────
+        // These must be configured as Replit Secrets. The app refuses to start
+        // if any are missing, so misconfiguration is caught immediately.
+        requiredSecrets := []string{"DB_HOST", "DB_USER", "DB_PASSWORD"}
+        var missingSecrets []string
+        for _, key := range requiredSecrets {
+                if os.Getenv(key) == "" {
+                        missingSecrets = append(missingSecrets, key)
+                }
+        }
+        if len(missingSecrets) > 0 {
+                log.Fatalf("[FATAL] Missing required Replit Secrets: %v\nGo to the Secrets tab in Replit and add the missing values.", missingSecrets)
         }
 
         // Load configuration

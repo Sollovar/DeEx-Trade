@@ -7,47 +7,38 @@ import pkg from 'pg';
 
 const { Pool } = pkg;
 
+// ── Mandatory secrets check ───────────────────────────────────────────────────
+// These must be set as Replit Secrets (DB_HOST, DB_USER, DB_PASSWORD, REDIS_URL).
+// The app will refuse to start if any are missing.
+const REQUIRED_SECRETS = ['DB_HOST', 'DB_USER', 'DB_PASSWORD'];
+const missing = REQUIRED_SECRETS.filter(k => !process.env[k]);
+if (missing.length > 0) {
+  console.error(`\n[FATAL] Missing required Replit Secrets: ${missing.join(', ')}`);
+  console.error('Go to the Secrets tab in Replit and add the missing values.\n');
+  process.exit(1);
+}
+
 // Strip protocol prefix and trailing slash from host (handles "http://host/" → "host")
 function sanitizeHost(raw) {
   if (!raw) return raw;
   return raw.trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
 }
 
-const dbHost = sanitizeHost(process.env.DB_HOST || process.env.SUPABASE_DB_HOST || '');
+const dbHost = sanitizeHost(process.env.DB_HOST);
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+const dbName = process.env.DB_NAME || 'postgres';
+const dbPort = parseInt(process.env.DB_PORT || '5432');
 
-// Supabase pooler requires username in the form "postgres.PROJECT_REF"
-// Extract the project ref from the host or from SUPABASE_URL
-function getSupabaseProjectRef() {
-  // From "db.PROJECT_REF.supabase.co"
-  const hostMatch = dbHost.match(/^db\.([^.]+)\.supabase\.co$/i);
-  if (hostMatch) return hostMatch[1];
-  // From "https://PROJECT_REF.supabase.co"
-  const urlMatch = (process.env.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\.supabase\.co/i);
-  if (urlMatch) return urlMatch[1];
-  return null;
-}
+console.log(`DB connecting → host=${dbHost} user=${dbUser} db=${dbName} password_length=${dbPassword.length}`);
 
-function getDbUser(host) {
-  const explicitUser = process.env.DB_USER;
-  if (explicitUser) return explicitUser;
-  const ref = getSupabaseProjectRef();
-  if (ref) return `postgres.${ref}`;
-  return 'postgres';
-}
-
-const dbUser = getDbUser(dbHost);
-const dbPassword = process.env.DB_PASSWORD || process.env.SUPABASE_DB_PASSWORD || '';
-console.log(`DB connecting → host=${dbHost} user=${dbUser} db=${process.env.DB_NAME || 'postgres'} password_length=${dbPassword.length}`);
-
-// Replit's built-in PostgreSQL (host: helium) does not support SSL
-const isReplitDb = (process.env.PGHOST || dbHost) === 'helium';
 const pool = new Pool({
-  host: dbHost || process.env.PGHOST,
-  port: parseInt(process.env.DB_PORT || process.env.PGPORT || '5432'),
-  user: dbUser || process.env.PGUSER,
-  password: dbPassword || process.env.PGPASSWORD,
-  database: process.env.DB_NAME || process.env.PGDATABASE || 'postgres',
-  ssl: isReplitDb ? false : { rejectUnauthorized: false },
+  host: dbHost,
+  port: dbPort,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
+  ssl: { rejectUnauthorized: false },
 });
 
 const app = express();
