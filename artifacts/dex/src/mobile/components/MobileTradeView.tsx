@@ -560,14 +560,6 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
         </button>
         <div className="flex items-center gap-2">
           <Sparkline prices={priceHistory} color={sparkColor} w={60} h={22} />
-          <div className="text-right">
-            <div className="font-bold text-[18px] font-mono tabular-nums leading-none" style={{ color: priceColor }}>
-              {market.price.toLocaleString("en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3 })}
-            </div>
-            <div className="text-[11px] font-mono tabular-nums mt-0.5" style={{ color: priceColor }}>
-              +{changeDollar} / +{changePct}%
-            </div>
-          </div>
           <Toggle on={toggleOn} onToggle={() => setToggleOn(!toggleOn)} />
         </div>
       </div>

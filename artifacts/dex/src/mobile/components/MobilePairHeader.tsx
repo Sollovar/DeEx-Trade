@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { LiveMarketState } from "@/hooks/useLiveMarket";
 import type { Pair } from "@/types";
 
