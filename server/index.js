@@ -13,12 +13,38 @@ function sanitizeHost(raw) {
   return raw.trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
 }
 
+const dbHost = sanitizeHost(process.env.DB_HOST || process.env.SUPABASE_DB_HOST || '');
+
+// Supabase pooler requires username in the form "postgres.PROJECT_REF"
+// Extract the project ref from the host or from SUPABASE_URL
+function getSupabaseProjectRef() {
+  // From "db.PROJECT_REF.supabase.co"
+  const hostMatch = dbHost.match(/^db\.([^.]+)\.supabase\.co$/i);
+  if (hostMatch) return hostMatch[1];
+  // From "https://PROJECT_REF.supabase.co"
+  const urlMatch = (process.env.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\.supabase\.co/i);
+  if (urlMatch) return urlMatch[1];
+  return null;
+}
+
+function getDbUser(host) {
+  const explicitUser = process.env.DB_USER;
+  if (explicitUser) return explicitUser;
+  const ref = getSupabaseProjectRef();
+  if (ref) return `postgres.${ref}`;
+  return 'postgres';
+}
+
+const dbUser = getDbUser(dbHost);
+const dbPassword = process.env.DB_PASSWORD || process.env.SUPABASE_DB_PASSWORD || '';
+console.log(`DB connecting → host=${dbHost} user=${dbUser} db=${process.env.DB_NAME || 'postgres'} password_length=${dbPassword.length}`);
+
 const pool = new Pool({
-  host: sanitizeHost(process.env.DB_HOST),
+  host: dbHost,
   port: parseInt(process.env.DB_PORT || '5432'),
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  user: dbUser,
+  password: dbPassword,
+  database: process.env.DB_NAME || 'postgres',
   ssl: { rejectUnauthorized: false },
 });
 
