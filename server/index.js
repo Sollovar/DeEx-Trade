@@ -39,13 +39,15 @@ const dbUser = getDbUser(dbHost);
 const dbPassword = process.env.DB_PASSWORD || process.env.SUPABASE_DB_PASSWORD || '';
 console.log(`DB connecting → host=${dbHost} user=${dbUser} db=${process.env.DB_NAME || 'postgres'} password_length=${dbPassword.length}`);
 
+// Replit's built-in PostgreSQL (host: helium) does not support SSL
+const isReplitDb = (process.env.PGHOST || dbHost) === 'helium';
 const pool = new Pool({
-  host: dbHost,
-  port: parseInt(process.env.DB_PORT || '5432'),
-  user: dbUser,
-  password: dbPassword,
-  database: process.env.DB_NAME || 'postgres',
-  ssl: { rejectUnauthorized: false },
+  host: dbHost || process.env.PGHOST,
+  port: parseInt(process.env.DB_PORT || process.env.PGPORT || '5432'),
+  user: dbUser || process.env.PGUSER,
+  password: dbPassword || process.env.PGPASSWORD,
+  database: process.env.DB_NAME || process.env.PGDATABASE || 'postgres',
+  ssl: isReplitDb ? false : { rejectUnauthorized: false },
 });
 
 const app = express();

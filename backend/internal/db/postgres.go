@@ -5,6 +5,7 @@ import (
         "fmt"
         "log"
         "net/url"
+        "os"
         "time"
 
         "github.com/nexus/backend/internal/config"
@@ -20,9 +21,16 @@ type DB struct {
 
 func New(cfg *config.Config) (*DB, error) {
         encodedPassword := url.QueryEscape(cfg.DBPassword)
+
+        // If DATABASE_URL is set (Replit built-in DB), use it directly with sslmode=disable
+        sslMode := cfg.DBSSLMode
+        if os.Getenv("PGHOST") == "helium" || cfg.DBHost == "helium" {
+                sslMode = "disable"
+        }
+
         dsn := fmt.Sprintf(
                 "postgres://%s:%s@%s:%d/%s?sslmode=%s",
-                cfg.DBUser, encodedPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBSSLMode,
+                cfg.DBUser, encodedPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, sslMode,
         )
 
         log.Printf("Connecting to database: host=%s port=%d dbname=%s user=%s", cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBUser)

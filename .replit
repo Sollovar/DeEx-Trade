@@ -44,13 +44,13 @@ waitForPort = 5000
 name = "Go Backend"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "export PATH=\"/nix/store/60z37432vmgkg54krwr1z057bqwp7583-go-1.25.5/bin:$PATH\" && cd backend && go run ./cmd/api/..."
 waitForPort = 8080
-
-[workflows.workflow.metadata]
-outputType = "console"
 
 [[workflows.workflow]]
 name = "Pair Indexer"
@@ -87,10 +87,6 @@ externalPort = 5000
 [[ports]]
 localPort = 8080
 externalPort = 8080
-
-[[ports]]
-localPort = 8081
-externalPort = 80
 
 [[ports]]
 localPort = 8082
