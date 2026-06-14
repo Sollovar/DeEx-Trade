@@ -75,7 +75,7 @@ func Load() *Config {
                 DBName:                 getEnvFallback("DB_NAME", "PGDATABASE", "postgres"),
                 DBSSLMode:              getEnv("DB_SSL_MODE", "require"),
                 DBMaxConns:             getEnvAsInt("DB_MAX_CONNS", 25),
-                RedisHost:              getEnv("REDIS_HOST", "localhost"),
+                RedisHost:              sanitizeHost(getEnv("REDIS_HOST", "localhost")),
                 RedisPort:              getEnvAsInt("REDIS_PORT", 6379),
                 RedisPassword:          getEnv("REDIS_PASSWORD", ""),
                 RedisURL:               getEnv("REDIS_URL", ""),
@@ -131,6 +131,16 @@ func getEnvFallback(primaryKey, fallbackKey, defaultValue string) string {
         }
         if value, exists := os.LookupEnv(fallbackKey); exists && value != "" {
                 return value
+        }
+        return defaultValue
+}
+
+// getEnvFallback3 checks three keys in order, returning the first non-empty value.
+func getEnvFallback3(key1, key2, key3, defaultValue string) string {
+        for _, key := range []string{key1, key2, key3} {
+                if value, exists := os.LookupEnv(key); exists && value != "" {
+                        return value
+                }
         }
         return defaultValue
 }
