@@ -68,10 +68,10 @@ func Load() *Config {
         return &Config{
                 Port:                   getEnv("PORT", "8080"),
                 Environment:            getEnv("ENVIRONMENT", "development"),
-                DBHost:                 sanitizeHost(getEnvFallback("DB_HOST", "PGHOST", "localhost")),
+                DBHost:                 sanitizeHost(getEnvFallback3("DB_HOST", "SUPABASE_DB_HOST", "PGHOST", "localhost")),
                 DBPort:                 getEnvAsInt(getEnvFallbackKey("DB_PORT", "PGPORT"), 5432),
                 DBUser:                 getEnvFallback("DB_USER", "PGUSER", "postgres"),
-                DBPassword:             getEnvFallback("DB_PASSWORD", "PGPASSWORD", ""),
+                DBPassword:             getEnvFallback3("DB_PASSWORD", "SUPABASE_DB_PASSWORD", "PGPASSWORD", ""),
                 DBName:                 getEnvFallback("DB_NAME", "PGDATABASE", "postgres"),
                 DBSSLMode:              getEnv("DB_SSL_MODE", "require"),
                 DBMaxConns:             getEnvAsInt("DB_MAX_CONNS", 25),
