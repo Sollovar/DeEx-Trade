@@ -5,7 +5,6 @@ import (
         "fmt"
         "log"
         "net/url"
-        "os"
         "time"
 
         "github.com/nexus/backend/internal/config"
@@ -20,18 +19,14 @@ type DB struct {
 }
 
 func New(cfg *config.Config) (*DB, error) {
-        var dsn string
-        if databaseURL := os.Getenv("DATABASE_URL"); databaseURL != "" {
-                dsn = databaseURL
-                log.Printf("Connecting to database via DATABASE_URL")
-        } else {
-                encodedPassword := url.QueryEscape(cfg.DBPassword)
-                dsn = fmt.Sprintf(
-                        "postgres://%s:%s@%s:%d/%s?sslmode=%s",
-                        cfg.DBUser, encodedPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBSSLMode,
-                )
-                log.Printf("Connecting to database: host=%s port=%d dbname=%s user=%s", cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBUser)
-        }
+        encodedPassword := url.QueryEscape(cfg.DBPassword)
+        dsn := fmt.Sprintf(
+                "postgres://%s:%s@%s:%d/%s?sslmode=%s",
+                cfg.DBUser, encodedPassword, cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBSSLMode,
+        )
+
+        log.Printf("Connecting to database: host=%s port=%d dbname=%s user=%s", cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBUser)
+        log.Printf("Password length: %d", len(cfg.DBPassword))
 
         // Use PreferSimpleProtocol to disable prepared statements for Supabase pooler compatibility
         gormCfg := &gorm.Config{
