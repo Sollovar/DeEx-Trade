@@ -512,10 +512,12 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
     ? (sizeNum / execPrice).toFixed(6) + " " + baseToken
     : null;
 
-  const priceUp      = market.price >= market.prevPrice;
+  // Use real pair price/change — fall back to market sim only if pair not yet loaded
+  const realPrice    = pair?.priceUSD ?? pair?.price ?? market.price;
+  const realChange   = pair?.priceChange24h ?? market.change24h;
+  const priceUp      = realPrice >= market.prevPrice;
   const priceColor   = priceUp ? "#00c8a0" : "#ff4d6a";
-  const changePct    = (market.change24h * 100).toFixed(2);
-  const changeDollar = (market.price * Math.abs(market.change24h)).toFixed(3);
+  const changePct    = (realChange * 100).toFixed(2);
   const sparkColor   = priceHistory.length >= 2 && priceHistory[priceHistory.length - 1] >= priceHistory[0]
     ? "#00c8a0" : "#ff4d6a";
 
@@ -560,6 +562,16 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
         </button>
         <div className="flex items-center gap-2">
           <Sparkline prices={priceHistory} color={sparkColor} w={60} h={22} />
+          <div className="text-right">
+            <div className="font-bold text-[18px] font-mono tabular-nums leading-none" style={{ color: priceColor }}>
+              {realPrice > 0
+                ? realPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+                : "—"}
+            </div>
+            <div className="text-[11px] font-mono tabular-nums mt-0.5" style={{ color: priceColor }}>
+              {realPrice > 0 ? `${realChange >= 0 ? "+" : ""}${changePct}%` : ""}
+            </div>
+          </div>
           <Toggle on={toggleOn} onToggle={() => setToggleOn(!toggleOn)} />
         </div>
       </div>

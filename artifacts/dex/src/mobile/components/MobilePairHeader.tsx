@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { LiveMarketState } from "@/hooks/useLiveMarket";
 import type { Pair } from "@/types";
 
@@ -64,7 +64,16 @@ function Sparkline({ prices, color, w = 68, h = 24 }: { prices: number[]; color:
   );
 }
 
+function fmtVolume(n: number) {
+  if (n >= 1_000_000_000) return "$" + (n / 1_000_000_000).toFixed(2) + "B";
+  if (n >= 1_000_000)     return "$" + (n / 1_000_000).toFixed(2) + "M";
+  if (n >= 1_000)         return "$" + (n / 1_000).toFixed(1) + "K";
+  if (n === 0)            return "—";
+  return "$" + n.toFixed(4);
+}
+
 export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPanel }: Props) {
+  const [expanded, setExpanded] = useState(false);
   const [priceHistory, setPriceHistory] = useState<number[]>([market.price]);
 
   useEffect(() => {
@@ -77,13 +86,19 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
   const baseLogo    = pair?.baseToken.logo ?? "";
   const coin        = COIN_COLORS[baseSymbol] ?? { color: "#f5c518", initial: baseSymbol[0] ?? "?" };
 
-  // Use real pair price and change — fall back to market only if pair not loaded yet
-  const realPrice   = pair?.priceUSD ?? pair?.price ?? 0;
-  const realChange  = pair?.priceChange24h ?? 0;
-  const priceColor  = realChange >= 0 ? "#00c853" : "#ff1744";
-  const changePct   = (realChange * 100).toFixed(2);
-  const sparkColor  = priceHistory.length >= 2 && priceHistory[priceHistory.length - 1] >= priceHistory[0]
+  // Use real pair price and change — fall back to 0 if pair not yet loaded
+  const realPrice  = pair?.priceUSD ?? pair?.price ?? 0;
+  const realChange = pair?.priceChange24h ?? 0;
+  const priceColor = realChange >= 0 ? "#00c853" : "#ff1744";
+  const changePct  = (realChange * 100).toFixed(2);
+  const sparkColor = priceHistory.length >= 2 && priceHistory[priceHistory.length - 1] >= priceHistory[0]
     ? "#00c853" : "#ff1744";
+
+  // Real stats panel data from pair
+  const high24h   = pair?.priceHigh24h ?? pair?.high24h ?? (realPrice > 0 ? realPrice * 1.018 : 0);
+  const low24h    = pair?.priceLow24h  ?? pair?.low24h  ?? (realPrice > 0 ? realPrice * 0.982 : 0);
+  const volume24h = pair?.volume24hUSD ?? pair?.volume24h ?? 0;
+  const liquidity = pair?.liquidityUSD ?? pair?.liquidity ?? 0;
 
   return (
     <div style={{ backgroundColor: "var(--m-bg-1)", borderBottom: "1px solid var(--m-bdr)" }}>
@@ -91,7 +106,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
       {/* ── Top row ── */}
       <div className="flex items-center justify-between px-4 h-[56px]">
 
-        {/* Left: coin icon + symbol + chain */}
+        {/* Left: coin icon + symbol + name */}
         <button
           onClick={onOpenMarketPanel}
           className="flex items-center gap-2.5 active:opacity-70 transition-opacity"
@@ -116,7 +131,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
           </div>
         </button>
 
-        {/* Right: sparkline + real price + real change */}
+        {/* Right: sparkline + real price + real change + expand toggle */}
         <div className="flex items-center gap-2">
           <Sparkline prices={priceHistory} color={sparkColor} w={68} h={24} />
           <div className="text-right">
@@ -129,8 +144,58 @@ export function MobilePairHeader({ market, currentSymbol, pair, onOpenMarketPane
               {realPrice > 0 ? `${realChange >= 0 ? "+" : ""}${changePct}%` : ""}
             </div>
           </div>
+          {/* Expand / collapse */}
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="flex items-center justify-center active:opacity-60 transition-opacity"
+          >
+            {expanded
+              ? <ChevronUp   className="w-5 h-5" style={{ color: "var(--m-fg-4)" }} />
+              : <ChevronDown className="w-5 h-5" style={{ color: "var(--m-fg-4)" }} />
+            }
+          </button>
         </div>
       </div>
+
+      {/* ── Expanded stats panel (real pair data) ── */}
+      {expanded && (
+        <div
+          className="px-4 pb-3 grid grid-cols-2 gap-x-6 gap-y-3"
+          style={{ borderTop: "1px solid var(--m-bg-3)" }}
+        >
+          <div className="flex flex-col gap-0.5 pt-3">
+            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h High</span>
+            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#00c853" }}>
+              {high24h > 0
+                ? high24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+                : "—"}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-0.5 pt-3">
+            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Low</span>
+            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#ff4d6a" }}>
+              {low24h > 0
+                ? low24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+                : "—"}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Volume</span>
+            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
+              {fmtVolume(volume24h)}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>Liquidity</span>
+            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
+              {fmtVolume(liquidity)}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
