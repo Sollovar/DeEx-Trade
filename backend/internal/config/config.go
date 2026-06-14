@@ -68,11 +68,11 @@ func Load() *Config {
         return &Config{
                 Port:                   getEnv("PORT", "8080"),
                 Environment:            getEnv("ENVIRONMENT", "development"),
-                DBHost:                 sanitizeHost(getEnv("DB_HOST", "localhost")),
-                DBPort:                 getEnvAsInt("DB_PORT", 5432),
-                DBUser:                 getEnv("DB_USER", "postgres"),
-                DBPassword:             getEnv("DB_PASSWORD", ""),
-                DBName:                 getEnv("DB_NAME", "postgres"),
+                DBHost:                 sanitizeHost(getEnvFallback("DB_HOST", "PGHOST", "localhost")),
+                DBPort:                 getEnvAsInt(getEnvFallbackKey("DB_PORT", "PGPORT"), 5432),
+                DBUser:                 getEnvFallback("DB_USER", "PGUSER", "postgres"),
+                DBPassword:             getEnvFallback("DB_PASSWORD", "PGPASSWORD", ""),
+                DBName:                 getEnvFallback("DB_NAME", "PGDATABASE", "postgres"),
                 DBSSLMode:              getEnv("DB_SSL_MODE", "require"),
                 DBMaxConns:             getEnvAsInt("DB_MAX_CONNS", 25),
                 RedisHost:              getEnv("REDIS_HOST", "localhost"),
@@ -122,6 +122,26 @@ func getEnv(key, defaultValue string) string {
                 return value
         }
         return defaultValue
+}
+
+// getEnvFallback returns the value of primaryKey, falling back to fallbackKey, then defaultValue.
+func getEnvFallback(primaryKey, fallbackKey, defaultValue string) string {
+        if value, exists := os.LookupEnv(primaryKey); exists && value != "" {
+                return value
+        }
+        if value, exists := os.LookupEnv(fallbackKey); exists && value != "" {
+                return value
+        }
+        return defaultValue
+}
+
+// getEnvFallbackKey returns the first env key that has a non-empty value.
+func getEnvFallbackKey(primaryKey, fallbackKey string) string {
+        if value, exists := os.LookupEnv(primaryKey); exists && value != "" {
+                _ = value
+                return primaryKey
+        }
+        return fallbackKey
 }
 
 func getEnvAsInt(key string, defaultValue int) int {
