@@ -17,7 +17,8 @@ function Sparkline({ prices, color, w = 64, h = 22 }: { prices: number[]; color:
   if (prices.length < 2) return <div style={{ width: w, height: h }} />;
   const min = Math.min(...prices);
   const max = Math.max(...prices);
-  const range = max - min || 1;
+  if (max === min) return <div style={{ width: w, height: h }} />;
+  const range = max - min;
   const pad = 2;
   const coords = prices.map((p, i) => ({
     x: (i / (prices.length - 1)) * w,
