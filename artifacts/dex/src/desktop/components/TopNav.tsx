@@ -1,117 +1,109 @@
-import { useState, useRef, useEffect } from "react";
-import { Globe, Settings, ArrowRight, ChevronDown, Check, Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useConnectedNetwork, useSetNetwork, type Network } from "@/hooks/useConnectedNetwork";
-import { ChainIcon } from "@/components/ChainIcons";
+import { useState, useRef } from "react";
+import { Globe, Settings, ArrowRight, Wallet } from "lucide-react";
+import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
-type SupportedNetwork = Extract<Network, "bsc" | "base" | "solana">;
+function WalletButton() {
+  const { primaryWallet, setShowDynamicUserProfile } = useDynamicContext();
 
-const NETWORKS: { id: SupportedNetwork; label: string; abbr: string; color: string }[] = [
-  { id: "bsc",    label: "BNB Chain", abbr: "BNB", color: "#F3BA2F" },
-  { id: "base",   label: "Base",      abbr: "BASE", color: "#0052FF" },
-  { id: "solana", label: "Solana",    abbr: "SOL",  color: "#9945FF" },
-];
+  if (primaryWallet) {
+    const addr = primaryWallet.address ?? "";
+    const short = addr.slice(0, 6) + "…" + addr.slice(-4);
+    return (
+      <button
+        onClick={() => setShowDynamicUserProfile(true)}
+        style={{
+          backgroundColor: "rgba(245,197,24,0.10)",
+          border: "1px solid rgba(245,197,24,0.35)",
+          color: "#f5c518",
+          fontWeight: 700,
+          fontSize: 11,
+          paddingLeft: 10,
+          paddingRight: 10,
+          height: 28,
+          borderRadius: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <Wallet style={{ width: 13, height: 13, flexShrink: 0, color: "#f5c518" }} />
+        {short}
+      </button>
+    );
+  }
 
-const EVM_CHAIN_IDS: Partial<Record<SupportedNetwork, number>> = {
-  bsc:  56,
-  base: 8453,
-};
+  return (
+    <DynamicConnectButton buttonContainerClassName="nexus-connect-wrap">
+      <button
+        style={{
+          backgroundColor: "#f5c518",
+          color: "#000",
+          fontWeight: 700,
+          fontSize: 12,
+          paddingLeft: 12,
+          paddingRight: 14,
+          height: 28,
+          borderRadius: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: 5,
+          border: "none",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <Wallet style={{ width: 13, height: 13, flexShrink: 0 }} />
+        Connect Wallet
+      </button>
+    </DynamicConnectButton>
+  );
+}
 
-function NetworkDropdown() {
-  const network = useConnectedNetwork() as SupportedNetwork;
-  const setNetwork = useSetNetwork();
-  const { primaryWallet } = useDynamicContext();
+function MoreDropdown() {
   const [open, setOpen] = useState(false);
-  const [switching, setSwitching] = useState<SupportedNetwork | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const active = NETWORKS.find((n) => n.id === network) ?? NETWORKS[0];
+  const handleEnter = () => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setOpen(true);
+  };
 
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [open]);
-
-  const pick = async (id: SupportedNetwork) => {
-    if (id === network) { setOpen(false); return; }
-
-    const net = NETWORKS.find((n) => n.id === id)!;
-    setOpen(false);
-    setNetwork(id);
-
-    const chainId = EVM_CHAIN_IDS[id];
-    if (!primaryWallet || !chainId) {
-      toast.success(`Switched to ${net.label}`);
-      return;
-    }
-    if ((primaryWallet as any).chain !== "EVM") {
-      toast.success(`Switched to ${net.label}`);
-      return;
-    }
-
-    setSwitching(id);
-    const tid = toast.loading(`Switching to ${net.label}…`);
-    try {
-      await primaryWallet.connector.switchNetwork({ networkChainId: chainId });
-      toast.success(`Switched to ${net.label}`, { id: tid });
-    } catch (err) {
-      console.warn("[TopNav] switchNetwork failed:", err);
-      toast.error(`Failed to switch to ${net.label}`, { id: tid });
-    } finally {
-      setSwitching(null);
-    }
+  const handleLeave = () => {
+    leaveTimer.current = setTimeout(() => setOpen(false), 120);
   };
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-1 py-1 transition-colors"
+    <div
+      className="relative h-full flex items-center"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <a
+        href="#"
+        className="hover:text-foreground transition-colors flex items-center text-muted-foreground font-medium"
       >
-        <ChainIcon id={active.id} size={14} />
-        <span className="font-medium text-foreground" style={{ color: active.color }}>
-          {active.abbr}
-        </span>
-        {switching ? (
-          <Loader2 className="w-3 h-3 animate-spin text-muted-foreground" />
-        ) : (
-          <ChevronDown className="w-3 h-3 text-muted-foreground" />
-        )}
-      </button>
+        More <span className="ml-1 text-[10px]">▼</span>
+      </a>
 
       {open && (
         <div
-          className="absolute right-0 top-full mt-1 z-50 flex flex-col py-1 rounded-lg border border-border"
-          style={{ backgroundColor: "#161616", minWidth: 160 }}
+          className="absolute left-0 top-full mt-0 z-50 flex flex-col py-1 rounded-lg border border-border"
+          style={{ backgroundColor: "#161616", minWidth: 140 }}
         >
-          {NETWORKS.map((net) => {
-            const isActive = network === net.id;
-            const isSwitchingThis = switching === net.id;
-            return (
-              <button
-                key={net.id}
-                onClick={() => pick(net.id)}
-                disabled={switching !== null}
-                className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium transition-colors hover:bg-white/5 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                <ChainIcon id={net.id} size={16} />
-                <span className="flex-1 text-left" style={{ color: isActive ? net.color : "var(--foreground)" }}>
-                  {net.label}
-                </span>
-                {isSwitchingThis ? (
-                  <Loader2 className="w-3 h-3 animate-spin" style={{ color: net.color }} />
-                ) : isActive ? (
-                  <Check className="w-3 h-3" style={{ color: net.color }} />
-                ) : null}
-              </button>
-            );
-          })}
+          <a
+            href="#"
+            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
+          >
+            Docs
+          </a>
+          <a
+            href="#"
+            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
+          >
+            API
+          </a>
         </div>
       )}
     </div>
@@ -120,7 +112,7 @@ function NetworkDropdown() {
 
 export function TopNav() {
   return (
-    <div className="flex items-center justify-between h-[44px] px-4 border-b border-[#1e1e1e] bg-[#111111] shrink-0 text-xs">
+    <div className="flex items-center justify-between h-[44px] px-4 border-b border-[#1e1e1e] bg-[#040404] shrink-0 text-xs">
       <div className="flex items-center gap-6 h-full">
         <div className="flex items-center gap-2 font-bold text-lg tracking-wider text-primary">
           <div className="w-5 h-5 bg-primary rotate-45 rounded-sm" />
@@ -131,25 +123,12 @@ export function TopNav() {
             Trade <span className="ml-1 text-[10px]">▼</span>
           </a>
           <a href="#" className="hover:text-foreground transition-colors">Portfolio</a>
-          <a href="#" className="hover:text-foreground transition-colors">Referral</a>
-          <a href="#" className="hover:text-foreground transition-colors flex items-center">
-            Rewards <span className="ml-1 text-[10px]">▼</span>
-          </a>
-          <a href="#" className="hover:text-foreground transition-colors flex items-center">
-            More <span className="ml-1 text-[10px]">▼</span>
-          </a>
+          <MoreDropdown />
         </nav>
       </div>
 
       <div className="flex items-center gap-3">
-        <NetworkDropdown />
-        <DynamicWidget
-          innerButtonComponent={
-            <Button variant="outline" className="h-7 text-xs border-primary text-primary hover:bg-primary/10 rounded">
-              Connect Wallet
-            </Button>
-          }
-        />
+        <WalletButton />
         <div className="w-[1px] h-4 bg-border mx-1" />
         <button className="text-muted-foreground hover:text-foreground transition-colors">
           <Globe className="w-4 h-4" />
