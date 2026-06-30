@@ -139,8 +139,6 @@ export function TradingPairHeader({ market }: Props) {
           </span>
         </div>
 
-        <div className="w-px h-8 bg-[#1e1e1e] shrink-0" />
-
         <Stat label="24h High" value={
           activePair?.priceHigh24h
             ? activePair.priceHigh24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
@@ -148,7 +146,6 @@ export function TradingPairHeader({ market }: Props) {
             ? (market.price * 1.018).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
             : "—"
         } color="#00c853" />
-        <div className="w-px h-8 bg-[#1e1e1e] shrink-0" />
         <Stat label="24h Low" value={
           activePair?.priceLow24h
             ? activePair.priceLow24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
@@ -156,9 +153,7 @@ export function TradingPairHeader({ market }: Props) {
             ? (market.price * 0.983).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
             : "—"
         } color="#ff1744" />
-        <div className="w-px h-8 bg-[#1e1e1e] shrink-0" />
         <Stat label="24h Volume" value={fmtVolume(activePair?.volume24hUSD ?? activePair?.volume24h ?? market.volume24h)} />
-        <div className="w-px h-8 bg-[#1e1e1e] shrink-0" />
         <Stat label="Liquidity" value={
           activePair?.liquidityUSD
             ? "$" + fmtVolume(activePair.liquidityUSD)

@@ -154,19 +154,14 @@ function BookFilter({
     />
   );
   return (
-    <div
-      className="flex items-center rounded overflow-hidden"
-      style={{ border: "1px solid #222", height: 22 }}
-    >
+    <div className="flex items-center gap-1">
       <button
         onClick={() => onChange(view === "asks" ? "both" : "asks")}
-        className="flex items-center justify-center transition-all hover:opacity-80"
+        className="flex items-center justify-center transition-all hover:opacity-80 rounded-md"
         style={{
           width: 26,
-          height: "100%",
-          backgroundColor:
-            view === "asks" ? "rgba(255,23,68,0.2)" : "transparent",
-          borderRight: "1px solid #222",
+          height: 22,
+          backgroundColor: view === "asks" ? "rgba(255,23,68,0.2)" : "transparent",
         }}
         title="Show asks only"
       >
@@ -182,13 +177,11 @@ function BookFilter({
 
       <button
         onClick={() => onChange("both")}
-        className="flex items-center justify-center transition-all hover:opacity-80"
+        className="flex items-center justify-center transition-all hover:opacity-80 rounded-md"
         style={{
           width: 26,
-          height: "100%",
-          backgroundColor:
-            view === "both" ? "rgba(255,255,255,0.08)" : "transparent",
-          borderRight: "1px solid #222",
+          height: 22,
+          backgroundColor: view === "both" ? "rgba(255,255,255,0.08)" : "transparent",
         }}
         title="Show both"
       >
@@ -201,12 +194,11 @@ function BookFilter({
 
       <button
         onClick={() => onChange(view === "bids" ? "both" : "bids")}
-        className="flex items-center justify-center transition-all hover:opacity-80"
+        className="flex items-center justify-center transition-all hover:opacity-80 rounded-md"
         style={{
           width: 26,
-          height: "100%",
-          backgroundColor:
-            view === "bids" ? "rgba(0,200,83,0.15)" : "transparent",
+          height: 22,
+          backgroundColor: view === "bids" ? "rgba(0,200,83,0.15)" : "transparent",
         }}
         title="Show bids only"
       >
@@ -411,20 +403,27 @@ export function OrderBook({ market }: Props) {
   return (
     <div className="flex flex-col h-full bg-[#000000] overflow-hidden">
       {/* Tab header */}
-      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0 gap-5">
-        {(["orderbook", "trades"] as const).map(t => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`h-full flex items-center text-[13px] font-semibold transition-colors capitalize ${
-              tab === t
-                ? "text-white border-b-2 border-white"
-                : "text-[#555] hover:text-[#aaa]"
-            }`}
-          >
-            {t === "orderbook" ? "Order Book" : "Trades"}
-          </button>
-        ))}
+      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0">
+        <button
+          onClick={() => setTab("orderbook")}
+          className={`h-full flex items-center text-[13px] font-semibold transition-colors ${
+            tab === "orderbook"
+              ? "text-white border-b-2 border-white"
+              : "text-[#555] hover:text-[#aaa]"
+          }`}
+        >
+          Order Book
+        </button>
+        <button
+          onClick={() => setTab("trades")}
+          className={`ml-auto h-full flex items-center text-[13px] font-semibold transition-colors ${
+            tab === "trades"
+              ? "text-white border-b-2 border-white"
+              : "text-[#555] hover:text-[#aaa]"
+          }`}
+        >
+          Trades
+        </button>
       </div>
 
       {tab === "orderbook" && (
@@ -469,13 +468,20 @@ export function OrderBook({ market }: Props) {
           )}
 
           {/* Mid price */}
-          <div className="h-[38px] flex items-center justify-center border-y border-[#1e1e1e] shrink-0 bg-[#0e0e0e]">
-            <div className="flex items-center gap-3 font-mono font-bold tabular-nums">
-              <span className="text-[15px]" style={{ color: priceColor }}>
+          <div className="flex items-center justify-center py-1.5 shrink-0 border-y border-[#1a1a1a]">
+            <div
+              className="flex items-center gap-3 font-mono font-bold tabular-nums px-4 py-1"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.04)",
+                border: "1px solid #222",
+                borderRadius: 999,
+              }}
+            >
+              <span className="text-[14px]" style={{ color: priceColor }}>
                 {fmtPrice(market.price)}
-                <span className="text-[11px] ml-1.5">{arrow}</span>
+                <span className="text-[10px] ml-1.5">{arrow}</span>
               </span>
-              <span className="text-[12px] text-[#555] border-b border-dotted border-[#444]">
+              <span className="text-[11px] text-[#555] border-b border-dotted border-[#444]">
                 {fmtPrice(market.markPrice)}
               </span>
             </div>
