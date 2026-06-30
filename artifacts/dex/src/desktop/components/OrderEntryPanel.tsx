@@ -515,29 +515,31 @@ export function OrderEntryPanel({ market }: Props) {
 
         {/* Submit / Connect button */}
         {!isConnected ? (
-          <DynamicConnectButton buttonContainerClassName="w-full">
-            <button
-              style={{
-                width: "100%",
-                backgroundColor: "#f5c518",
-                color: "#000",
-                fontWeight: 700,
-                fontSize: 13,
-                height: 40,
-                borderRadius: 999,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 6,
-                border: "none",
-                cursor: "pointer",
-                marginTop: 4,
-              }}
-            >
-              <Wallet style={{ width: 14, height: 14, flexShrink: 0 }} />
-              Connect Wallet
-            </button>
-          </DynamicConnectButton>
+          <div style={{ width: "100%", marginTop: 4 }}>
+            <DynamicConnectButton buttonContainerClassName="nexus-panel-connect">
+              <button
+                style={{
+                  width: "100%",
+                  backgroundColor: "#f5c518",
+                  color: "#000",
+                  fontWeight: 700,
+                  fontSize: 13,
+                  height: 40,
+                  borderRadius: 999,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                  border: "none",
+                  cursor: "pointer",
+                  boxSizing: "border-box",
+                }}
+              >
+                <Wallet style={{ width: 14, height: 14, flexShrink: 0 }} />
+                Connect Wallet
+              </button>
+            </DynamicConnectButton>
+          </div>
         ) : (
           <button
             disabled={!canSubmit}

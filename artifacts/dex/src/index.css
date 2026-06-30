@@ -415,6 +415,27 @@
   min-width: 0 !important;
 }
 
+/* Full-width panel connect button override */
+.nexus-panel-connect {
+  display: block !important;
+  width: 100% !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+.nexus-panel-connect .connect-button {
+  display: block !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  min-width: 0 !important;
+}
+
 /* ── Mobile theme: block text-selection globally (prevents accidental selection
    during swipe), but FORCE it back on every input/textarea so the OS keyboard
    can deliver ALL characters (WebKit blocks certain key events when the input's
