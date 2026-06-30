@@ -409,9 +409,9 @@ export function OrderBook({ market }: Props) {
   });
 
   return (
-    <div className="flex flex-col h-full bg-[#0a0a0a] overflow-hidden">
+    <div className="flex flex-col h-full bg-[#000000] overflow-hidden">
       {/* Tab header */}
-      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#0e0e0e] shrink-0 gap-5">
+      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0 gap-5">
         {(["orderbook", "trades"] as const).map(t => (
           <button
             key={t}

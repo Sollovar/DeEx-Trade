@@ -13,7 +13,7 @@ export function DesktopTradePage() {
   const activePairId = useStore((s) => s.selectedPair?.id);
 
   return (
-    <div className="h-screen w-full bg-[#040404] flex flex-col overflow-hidden text-sm text-white select-none">
+    <div className="h-screen w-full bg-[#000000] flex flex-col overflow-hidden text-sm text-white select-none">
       <TopNav />
       <TradingPairHeader market={market} />
 

@@ -83,7 +83,7 @@ export function TradingPairHeader({ market }: Props) {
 
   return (
     <>
-      <div className="flex items-center h-[52px] px-4 border-b border-[#1a1a1a] bg-[#0e0e0e] shrink-0 gap-5 whitespace-nowrap overflow-x-auto">
+      <div className="flex items-center h-[52px] px-4 border-b border-[#1a1a1a] bg-[#000000] shrink-0 gap-5 whitespace-nowrap overflow-x-auto">
 
         {/* Pair selector trigger */}
         <div className="flex items-center gap-2.5 shrink-0">

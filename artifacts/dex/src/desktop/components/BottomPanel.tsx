@@ -81,7 +81,7 @@ function OpenOrdersView({ orders, pairs, loading, onCancel, cancelling }: OpenOr
   return (
     <div className="flex-1 overflow-auto">
       <table className="w-full min-w-[750px]">
-        <thead className="sticky top-0 bg-[#0a0a0a]">
+        <thead className="sticky top-0 bg-[#000000]">
           <tr className="border-b border-[#141414]">
             {["Symbol","Type","Side","Price","Amount","Filled","Status","Time",""].map(h=>(
               <th key={h} className={TH}>{h}</th>
@@ -167,7 +167,7 @@ function OrderHistoryView({ orders, pairs, loading }: OrderHistoryViewProps) {
   return (
     <div className="flex-1 overflow-auto">
       <table className="w-full min-w-[750px]">
-        <thead className="sticky top-0 bg-[#0a0a0a]">
+        <thead className="sticky top-0 bg-[#000000]">
           <tr className="border-b border-[#141414]">
             {["Symbol","Type","Side","Price","Amount","Filled","Status","Time"].map(h=>(
               <th key={h} className={TH}>{h}</th>
@@ -282,7 +282,7 @@ function AssetsView({ holdings, summary, loading, syncing, error, refetch, hasWa
         </button>
       </div>
       <table className="w-full min-w-[600px]">
-        <thead className="sticky top-0 bg-[#0a0a0a]">
+        <thead className="sticky top-0 bg-[#000000]">
           <tr className="border-b border-[#141414]">
             {["Asset", "Balance", "Price", "24h", "Value (USD)", "Unrealized PnL", "All-Time PnL"].map(h => (
               <th key={h} className={TH}>{h}</th>
@@ -345,7 +345,7 @@ function TxHistoryView() {
   return (
     <div className="flex-1 overflow-auto">
       <table className="w-full min-w-[600px]">
-        <thead className="sticky top-0 bg-[#0a0a0a]">
+        <thead className="sticky top-0 bg-[#000000]">
           <tr className="border-b border-[#141414]">
             {["Type","Coin","Amount","Status","Time"].map(h=>(<th key={h} className={TH}>{h}</th>))}
           </tr>

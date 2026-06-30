@@ -206,9 +206,9 @@ export function OrderEntryPanel({ market }: Props) {
   })();
 
   return (
-    <div className="flex flex-col bg-[#0a0a0a] h-full">
+    <div className="flex flex-col bg-[#000000] h-full">
       {/* Tabs */}
-      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#0e0e0e] shrink-0 gap-5">
+      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0 gap-5">
         {(["Limit", "Market", "Ladder"] as const).map((t) => (
           <button
             key={t}
