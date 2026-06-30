@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Wallet } from "lucide-react";
 import { LiveMarketState } from "@/hooks/useLiveMarket";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
@@ -35,7 +35,7 @@ function Check({ checked, onChange, label }: { checked: boolean; onChange: () =>
   );
 }
 
-const INPUT_ROW = "flex items-center bg-[#111] border border-[#222] focus-within:border-[#3a3a3a] px-3 h-[40px] gap-2 transition-colors rounded-xl";
+const INPUT_ROW = "flex items-center bg-[#111] border border-[#222] focus-within:border-[#3a3a3a] px-3 h-[40px] gap-2 transition-colors rounded-full";
 
 export function OrderEntryPanel({ market }: Props) {
   const { primaryWallet } = useDynamicContext();
@@ -207,24 +207,31 @@ export function OrderEntryPanel({ market }: Props) {
 
   return (
     <div className="flex flex-col bg-[#000000] h-full">
-      {/* Tabs */}
-      <div className="flex items-center h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0">
-        {(["Limit", "Market"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className="h-full flex items-center text-[13px] font-semibold transition-colors mr-5"
-            style={{
-              color: tab === t ? "#fff" : "#555",
-              borderBottom: tab === t ? "2px solid #f5c518" : "2px solid transparent",
-            }}
-          >
-            {t}
-          </button>
-        ))}
+      {/* Tabs — 3-column grid so Market is always truly centered */}
+      <div className="grid grid-cols-3 h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0">
+        <button
+          onClick={() => setTab("Limit")}
+          className="h-full flex items-center text-[13px] font-semibold transition-colors justify-start"
+          style={{
+            color: tab === "Limit" ? "#fff" : "#555",
+            borderBottom: tab === "Limit" ? "2px solid #f5c518" : "2px solid transparent",
+          }}
+        >
+          Limit
+        </button>
+        <button
+          onClick={() => setTab("Market")}
+          className="h-full flex items-center text-[13px] font-semibold transition-colors justify-center"
+          style={{
+            color: tab === "Market" ? "#fff" : "#555",
+            borderBottom: tab === "Market" ? "2px solid #f5c518" : "2px solid transparent",
+          }}
+        >
+          Market
+        </button>
         <button
           onClick={() => setTab("Ladder")}
-          className="ml-auto h-full flex items-center text-[13px] font-semibold transition-colors"
+          className="h-full flex items-center text-[13px] font-semibold transition-colors justify-end"
           style={{
             color: tab === "Ladder" ? "#a78bfa" : "#555",
             borderBottom: tab === "Ladder" ? "2px solid #a78bfa" : "2px solid transparent",
@@ -302,7 +309,7 @@ export function OrderEntryPanel({ market }: Props) {
         <div className="flex gap-1.5">
           <button
             onClick={() => setSide("long")}
-            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-xl"
+            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-full"
             style={{
               backgroundColor: side === "long" ? "#f5c518" : "transparent",
               color: side === "long" ? "#000" : "#555",
@@ -313,7 +320,7 @@ export function OrderEntryPanel({ market }: Props) {
           </button>
           <button
             onClick={() => setSide("short")}
-            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-xl"
+            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-full"
             style={{
               backgroundColor: side === "short" ? "#ff4d6a" : "transparent",
               color: side === "short" ? "#fff" : "#555",
@@ -509,15 +516,27 @@ export function OrderEntryPanel({ market }: Props) {
         {/* Submit / Connect button */}
         {!isConnected ? (
           <DynamicConnectButton buttonContainerClassName="w-full">
-            <div
-              className="w-full font-bold py-3 text-[14px] transition-colors mt-1 text-center cursor-pointer flex items-center justify-center gap-2"
-              style={{ backgroundColor: "#f5c518", color: "#000", borderRadius: 999 }}
+            <button
+              style={{
+                width: "100%",
+                backgroundColor: "#f5c518",
+                color: "#000",
+                fontWeight: 700,
+                fontSize: 13,
+                height: 40,
+                borderRadius: 999,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+                border: "none",
+                cursor: "pointer",
+                marginTop: 4,
+              }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
-              </svg>
+              <Wallet style={{ width: 14, height: 14, flexShrink: 0 }} />
               Connect Wallet
-            </div>
+            </button>
           </DynamicConnectButton>
         ) : (
           <button
