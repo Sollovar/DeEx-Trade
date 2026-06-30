@@ -8,41 +8,68 @@ import { OrderEntryPanel } from "./components/OrderEntryPanel";
 import { TickerBar } from "./components/TickerBar";
 import { BottomPanel } from "./components/BottomPanel";
 
-const HEADER_HEIGHT = 44 + 52 + 28; // TopNav + PairHeader + TickerBar
+// TopNav(44) + PairHeader(52) + TickerBar(28) + vertical padding(16) + card borders(2)
+const CHART_H = "calc(100vh - 142px)";
 
 export function DesktopTradePage() {
   const market = useLiveMarket();
   const activePairId = useStore((s) => s.selectedPair?.id);
 
   return (
-    <div className="h-screen w-full bg-[#000000] flex flex-col overflow-hidden text-sm text-white select-none">
+    <div className="h-screen w-full flex flex-col overflow-hidden text-sm text-white select-none" style={{ background: "#0d0d0d" }}>
       <TopNav />
       <TradingPairHeader market={market} />
 
-      {/* Main trading area */}
-      <div className="flex-1 min-h-0 flex overflow-hidden">
+      {/* Main trading area — padded with gap between cards */}
+      <div className="flex-1 min-h-0 flex gap-2 p-2 overflow-hidden">
 
-        {/* LEFT: chart fills the visible viewport height, bottom panel scrolls below */}
-        <div className="flex flex-col flex-1 min-w-0 border-r border-[#1a1a1a] overflow-hidden">
+        {/* LEFT: chart card */}
+        <div
+          className="flex flex-col flex-1 min-w-0 overflow-hidden"
+          style={{
+            background: "#0a0a0a",
+            borderRadius: 12,
+            border: "1px solid #1e1e1e",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+          }}
+        >
           <div className="flex-1 min-h-0 overflow-y-auto">
-            {/* Chart — exactly fills the visible area */}
-            <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)`, minHeight: 400, flexShrink: 0 }}>
+            {/* Chart fills the visible screen height */}
+            <div style={{ height: CHART_H, minHeight: 400, flexShrink: 0 }}>
               <CandlestickChart livePrice={market.price} pairId={activePairId} />
             </div>
-            {/* Bottom panel — scrolls into view below the chart */}
+            {/* Open Orders / Order History scrolls into view below */}
             <div style={{ minHeight: 220, flexShrink: 0 }}>
               <BottomPanel />
             </div>
           </div>
         </div>
 
-        {/* MIDDLE: order book — wider for better readability */}
-        <div className="flex flex-col border-r border-[#1a1a1a] overflow-hidden shrink-0" style={{ width: 300 }}>
+        {/* MIDDLE: order book card */}
+        <div
+          className="flex flex-col overflow-hidden shrink-0"
+          style={{
+            width: 300,
+            background: "#0a0a0a",
+            borderRadius: 12,
+            border: "1px solid #1e1e1e",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+          }}
+        >
           <OrderBook market={market} />
         </div>
 
-        {/* RIGHT: order entry */}
-        <div className="flex flex-col overflow-y-auto shrink-0" style={{ width: 260 }}>
+        {/* RIGHT: order entry card */}
+        <div
+          className="flex flex-col overflow-y-auto shrink-0"
+          style={{
+            width: 268,
+            background: "#0a0a0a",
+            borderRadius: 12,
+            border: "1px solid #1e1e1e",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+          }}
+        >
           <OrderEntryPanel market={market} symbol="BTCUSDT" />
         </div>
 
