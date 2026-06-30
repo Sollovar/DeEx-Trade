@@ -1,0 +1,11 @@
+modules = ["nodejs-20", "go-1.21"]
+[agent]
+expertMode = true
+stack = "BEST_EFFORT_FALLBACK"
+
+[nix]
+channel = "stable-25_05"
+
+[[ports]]
+localPort = 23444
+externalPort = 80
