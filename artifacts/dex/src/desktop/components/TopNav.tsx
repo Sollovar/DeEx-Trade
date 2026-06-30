@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Globe, Settings, ArrowRight, Wallet } from "lucide-react";
+import { Globe, Settings, Wallet } from "lucide-react";
 import { DynamicConnectButton, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 function WalletButton() {
@@ -136,9 +136,6 @@ export function TopNav() {
         <button className="text-muted-foreground hover:text-foreground transition-colors">
           <Settings className="w-4 h-4" />
         </button>
-        <a href="#" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors ml-2">
-          To Old Version <ArrowRight className="w-3 h-3" />
-        </a>
       </div>
     </div>
   );

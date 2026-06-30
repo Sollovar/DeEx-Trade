@@ -138,7 +138,7 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
       ref={panelRef}
       data-testid="pair-selector-panel"
       style={{ position: "fixed", top, left, width: 700, maxHeight: 500, zIndex: 9999 }}
-      className="bg-[#0e0e0e] border border-[#252525] shadow-2xl shadow-black/90 flex flex-col"
+      className="bg-[#000000] border border-[#252525] shadow-2xl shadow-black/90 flex flex-col"
     >
       {/* Search */}
       <div className="flex items-center gap-2 px-3 h-[38px] border-b border-[#1a1a1a] shrink-0">
