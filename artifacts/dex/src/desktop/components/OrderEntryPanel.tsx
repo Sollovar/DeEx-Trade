@@ -241,7 +241,7 @@ export function OrderEntryPanel({ market }: Props) {
         </button>
       </div>
 
-      <div className="p-3 flex flex-col gap-3 overflow-y-auto">
+      <div className="p-3 flex flex-col gap-3 overflow-y-auto no-scrollbar">
         {/* Available */}
         <div className="flex items-center justify-between text-[12px]">
           <span className="text-[#555]">Avail. to Trade</span>
