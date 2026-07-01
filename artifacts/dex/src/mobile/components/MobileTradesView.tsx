@@ -264,19 +264,19 @@ export function MobileTradesView({ pairId }: Props) {
                 }}
               >
                 <div
-                  className="flex items-center font-mono tabular-nums text-[13px] font-medium"
+                  className="flex items-center tabular-nums text-[13px] font-medium"
                   style={{ color: t.isBuy ? "#00c853" : "#ff1744" }}
                 >
                   {fmtPrice(t.price)}
                 </div>
                 <div
-                  className="flex items-center justify-end font-mono tabular-nums text-[12px]"
+                  className="flex items-center justify-end tabular-nums text-[12px]"
                   style={{ color: "var(--m-fg-3)" }}
                 >
                   {fmtSize(t.size)}
                 </div>
                 <div className="flex items-center justify-end gap-1.5">
-                  <span className="font-mono tabular-nums text-[12px]" style={{ color: "var(--m-fg-4)" }}>
+                  <span className="tabular-nums text-[12px]" style={{ color: "var(--m-fg-4)" }}>
                     {t.time}
                   </span>
                   {explorerUrls.length > 0 ? (

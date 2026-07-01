@@ -154,12 +154,12 @@ function MoverCard({ p, flash, onSelect }: { p: DisplayPair; flash?: "up" | "dow
         <span className="text-[11px] font-bold" style={{ color:"var(--m-fg)" }}>{p.base}</span>
       </div>
       <span
-        className="text-[12px] font-mono font-semibold"
+        className="text-[12px] font-semibold"
         style={{ color: priceColor, transition: "color 0.15s ease" }}
       >
         {fmtPrice(p.price)}
       </span>
-      <span className="text-[9px] font-mono tabular-nums" style={{ color:"var(--m-fg-3)" }}>{fmtUsdBrief(p.priceUSD)}</span>
+      <span className="text-[9px] tabular-nums" style={{ color:"var(--m-fg-3)" }}>{fmtUsdBrief(p.priceUSD)}</span>
       <span className="text-[11px] font-bold flex items-center gap-0.5" style={{ color: up ? "#00c853" : "#ff4d6a" }}>
         {up ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
         {up ? "+" : ""}{p.change.toFixed(2)}%
@@ -669,7 +669,7 @@ export function MobileMarketsPage({ market, currentPairId, flashMap = {}, onSele
                     <div className="flex items-center flex-1">
                       <div className="flex flex-col items-end shrink-0" style={{ width:78, paddingRight:8 }}>
                         <span
-                          className="text-[12px] font-mono font-semibold tabular-nums"
+                          className="text-[12px] font-semibold tabular-nums"
                           style={{
                             color: flashMap[pair.id] === "up"   ? "#00ff7f"
                                  : flashMap[pair.id] === "down" ? "#ff4d6a"
@@ -682,13 +682,13 @@ export function MobileMarketsPage({ market, currentPairId, flashMap = {}, onSele
                         >
                           {fmtPrice(pair.price)}
                         </span>
-                        <span className="text-[9px] font-mono tabular-nums mt-0.5" style={{ color:"#94a3b8" }}>
+                        <span className="text-[9px] tabular-nums mt-0.5" style={{ color:"#94a3b8" }}>
                           {fmtUsdBrief(pair.priceUSD)}
                         </span>
                       </div>
                       <div className="text-right shrink-0" style={{ width:74, paddingRight:8 }}>
                         <span
-                          className="text-[11px] font-bold font-mono tabular-nums px-1.5 py-0.5 rounded-md inline-block"
+                          className="text-[11px] font-bold tabular-nums px-1.5 py-0.5 rounded-md inline-block"
                           style={{
                             color: up ? "#00c853" : "#ff4d6a",
                             backgroundColor: up ? "rgba(0,200,83,0.1)" : "rgba(255,77,106,0.1)",
@@ -698,23 +698,23 @@ export function MobileMarketsPage({ market, currentPairId, flashMap = {}, onSele
                         </span>
                       </div>
                       <div className="flex flex-col items-end shrink-0" style={{ width:74, paddingRight:8 }}>
-                        <span className="text-[11px] font-mono tabular-nums" style={{ color:"var(--m-fg-4)" }}>
+                        <span className="text-[11px] tabular-nums" style={{ color:"var(--m-fg-4)" }}>
                           {fmtCompact(pair.volume)}
                         </span>
-                        <span className="text-[9px] font-mono tabular-nums" style={{ color:"var(--m-fg-5)" }}>
+                        <span className="text-[9px] tabular-nums" style={{ color:"var(--m-fg-5)" }}>
                           {pair.volumeUSD > 0 ? fmtUsdBrief(pair.volumeUSD) : "—"}
                         </span>
                       </div>
                       <div className="flex flex-col items-end shrink-0" style={{ width:74, paddingRight:8 }}>
-                        <span className="text-[11px] font-mono tabular-nums" style={{ color:"var(--m-fg-4)" }}>
+                        <span className="text-[11px] tabular-nums" style={{ color:"var(--m-fg-4)" }}>
                           {pair.liquidity > 0 ? fmtCompact(pair.liquidity) : "—"}
                         </span>
-                        <span className="text-[9px] font-mono tabular-nums" style={{ color:"var(--m-fg-5)" }}>
+                        <span className="text-[9px] tabular-nums" style={{ color:"var(--m-fg-5)" }}>
                           {pair.liquidityUSD > 0 ? fmtUsdBrief(pair.liquidityUSD) : "—"}
                         </span>
                       </div>
                       <div className="text-right shrink-0" style={{ width:92, paddingRight:8 }}>
-                        <span className="text-[11px] font-mono tabular-nums" style={{ color:"var(--m-fg-4)" }}>
+                        <span className="text-[11px] tabular-nums" style={{ color:"var(--m-fg-4)" }}>
                           {fmtCompact(pair.marketCap)}
                         </span>
                       </div>

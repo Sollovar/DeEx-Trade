@@ -28,8 +28,8 @@ export function MobileHeader() {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-lg font-bold text-[#ff1744] font-mono">61,203.6</div>
-          <div className="text-xs text-[#ff1744] font-mono">-0.70%</div>
+          <div className="text-lg font-bold text-[#ff1744]">61,203.6</div>
+          <div className="text-xs text-[#ff1744]">-0.70%</div>
         </div>
       </div>
     </div>

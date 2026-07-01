@@ -140,15 +140,15 @@ function OpenOrdersContent({ orders, loading, onCancel }: {
               <div className="flex gap-4">
                 <div>
                   <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.price')}</div>
-                  <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
+                  <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
                 </div>
                 <div>
                   <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.amount')}</div>
-                  <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{amount.toFixed(4)}</div>
+                  <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{amount.toFixed(4)}</div>
                 </div>
                 <div>
                   <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.filled')}</div>
-                  <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{parseFloat(filled.toFixed(4))}</div>
+                  <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{parseFloat(filled.toFixed(4))}</div>
                 </div>
               </div>
               <button
@@ -216,15 +216,15 @@ function OrderHistoryContent({ orders, loading }: { orders: OrderWithPair[]; loa
             <div className="flex gap-4">
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.price')}</div>
-                <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
+                <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
               </div>
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.amount')}</div>
-                <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{amount.toFixed(4)}</div>
+                <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{amount.toFixed(4)}</div>
               </div>
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.time')}</div>
-                <div className="text-[11px] font-mono" style={{ color: "var(--m-fg-4)" }}>{fmtDateTime(ord.created_at)}</div>
+                <div className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>{fmtDateTime(ord.created_at)}</div>
               </div>
             </div>
           </div>
@@ -271,15 +271,15 @@ function TradeHistoryContent({ orders, loading }: { orders: OrderWithPair[]; loa
             <div className="flex gap-4">
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.price')}</div>
-                <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
+                <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{fmtPrice(price)}</div>
               </div>
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.qty')}</div>
-                <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{qty.toFixed(4)}</div>
+                <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{qty.toFixed(4)}</div>
               </div>
               <div>
                 <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>{t('orders.col.estFee')}</div>
-                <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-4)" }}>{fee.toFixed(3)} USDT</div>
+                <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-4)" }}>{fee.toFixed(3)} USDT</div>
               </div>
             </div>
           </div>

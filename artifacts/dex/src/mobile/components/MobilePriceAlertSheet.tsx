@@ -111,7 +111,7 @@ export function MobilePriceAlertSheet({
                 {base}<span style={{ color: "var(--m-fg-4)", fontWeight: 400 }}>/USDT</span>
               </p>
               <p className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>
-                Current: <span className="font-mono font-semibold" style={{ color: "var(--m-fg)" }}>{fmtPrice(currentPrice)}</span>
+                Current: <span className="font-semibold" style={{ color: "var(--m-fg)" }}>{fmtPrice(currentPrice)}</span>
               </p>
             </div>
           </div>
@@ -168,7 +168,7 @@ export function MobilePriceAlertSheet({
               value={rawInput}
               onChange={e => setRawInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !invalid && handleAdd()}
-              className="flex-1 bg-transparent outline-none text-[16px] font-mono font-semibold tabular-nums"
+              className="flex-1 bg-transparent outline-none text-[16px] font-semibold tabular-nums"
               style={{ color: "var(--m-fg)" }}
             />
           </div>
@@ -215,7 +215,7 @@ export function MobilePriceAlertSheet({
                         ? <ArrowUp className="w-3.5 h-3.5" style={{ color: "#00c853" }} />
                         : <ArrowDown className="w-3.5 h-3.5" style={{ color: "#ff4d6a" }} />
                       }
-                      <span className="text-[13px] font-mono font-semibold" style={{ color: "var(--m-fg)" }}>
+                      <span className="text-[13px] font-semibold" style={{ color: "var(--m-fg)" }}>
                         {a.direction === "above" ? "≥" : "≤"} ${fmtPrice(a.target)}
                       </span>
                       <span className="text-[11px]" style={{ color: "var(--m-fg-5)" }}>

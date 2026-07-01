@@ -184,7 +184,7 @@ export function MobileAccountPage() {
 
           {/* address row */}
           <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[12px]" style={{ color: "var(--m-fg-4)" }}>{shortAddr}</span>
+            <span className="text-[12px]" style={{ color: "var(--m-fg-4)" }}>{shortAddr}</span>
             <button
               onClick={copyAddr}
               className="w-6 h-6 flex items-center justify-center rounded-lg transition-all active:scale-90"
@@ -312,12 +312,12 @@ export function MobileAccountPage() {
                 <div className="flex flex-col flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-0.5">
                     <span className="font-bold text-[13px]" style={{ color: "var(--m-fg)" }}>{b.token}</span>
-                    <span className="font-bold text-[13px] font-mono" style={{ color: "var(--m-fg)" }}>
+                    <span className="font-bold text-[13px]" style={{ color: "var(--m-fg)" }}>
                       ${fmtUsd(b.usdValue)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono" style={{ color: "var(--m-fg-4)" }}>
+                    <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>
                       {b.amount.toLocaleString("en-US", { maximumFractionDigits: 6 })} {b.token}
                     </span>
                     <span className="text-[10px]" style={{ color: "var(--m-fg-5)" }}>{allocPct}%</span>
@@ -371,17 +371,17 @@ export function MobileAccountPage() {
                 <div className="flex items-center gap-4">
                   <div>
                     <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>Price</div>
-                    <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>
+                    <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>
                       {h.price.toLocaleString("en-US")}
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>Qty</div>
-                    <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>{h.qty}</div>
+                    <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>{h.qty}</div>
                   </div>
                   <div>
                     <div className="text-[10px]" style={{ color: "var(--m-fg-4)" }}>Total</div>
-                    <div className="text-[12px] font-mono font-semibold" style={{ color: "var(--m-fg-2)" }}>
+                    <div className="text-[12px] font-semibold" style={{ color: "var(--m-fg-2)" }}>
                       ${fmtUsd(h.total)}
                     </div>
                   </div>

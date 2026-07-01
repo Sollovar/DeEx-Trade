@@ -279,14 +279,14 @@ export function MobileMarketSelectPanel({ onClose, onSelect, currentPairId }: Pr
 
               {/* Volume */}
               <div className="flex flex-col leading-none gap-0.5 text-right pr-3 shrink-0">
-                <span className="text-[11px] font-mono tabular-nums" style={{ color: "var(--m-fg-2)" }}>{fmtCompact(pair.volume)}</span>
+                <span className="text-[11px] tabular-nums" style={{ color: "var(--m-fg-2)" }}>{fmtCompact(pair.volume)}</span>
               </div>
 
               {/* Price + change */}
               <div className="flex flex-col leading-none gap-0.5 text-right shrink-0" style={{ minWidth: 72 }}>
-                <span className="text-[13px] font-mono tabular-nums font-semibold" style={{ color: "var(--m-fg)" }}>{fmtPrice(pair.price)}</span>
+                <span className="text-[13px] tabular-nums font-semibold" style={{ color: "var(--m-fg)" }}>{fmtPrice(pair.price)}</span>
                 <span
-                  className="text-[10px] font-mono tabular-nums font-semibold"
+                  className="text-[10px] tabular-nums font-semibold"
                   style={{ color: pair.change >= 0 ? "#00c853" : "#ff1744" }}
                 >
                   {pair.change >= 0 ? "+" : ""}{pair.change.toFixed(2)}%

@@ -218,7 +218,7 @@ export function MobileChartView({ livePrice, pairId, pairAddress, network }: Pro
               Date Range <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0 0L4 5L8 0H0Z"/></svg>
             </button>
             <div className="w-px h-3" style={{ backgroundColor: "var(--m-bdr)" }} />
-            <span className="font-mono text-[10px]">
+            <span className="text-[10px]">
               {new Date().toLocaleTimeString("en-US", { hour12: false })} UTC+1
             </span>
             <div className="ml-auto flex items-center gap-2">

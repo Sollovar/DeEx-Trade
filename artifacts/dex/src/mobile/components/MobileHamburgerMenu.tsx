@@ -242,7 +242,7 @@ export function MobileHamburgerMenu({ open, onClose }: Props) {
           className="px-5 py-3 shrink-0 flex items-center justify-between"
           style={{ borderTop: "1px solid var(--m-bdr)" }}
         >
-          <span className="text-[11px] font-mono" style={{ color: "var(--m-fg-5)" }}>v1.0.0</span>
+          <span className="text-[11px]" style={{ color: "var(--m-fg-5)" }}>v1.0.0</span>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[#00c853] animate-pulse" />
             <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>{t('menu.allSystemsOk')}</span>

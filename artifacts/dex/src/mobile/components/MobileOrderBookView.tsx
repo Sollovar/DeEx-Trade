@@ -199,7 +199,7 @@ function TickSizeSelector({
       <button
         ref={btnRef}
         onClick={toggle}
-        className="flex items-center gap-1 font-mono font-semibold"
+        className="flex items-center gap-1 font-semibold"
         style={{
           fontSize: 12,
           color: open ? "#f5c518" : "var(--m-fg-2)",
@@ -349,7 +349,7 @@ function DepthChart({ market, bookUnit }: { market: LiveMarketState; bookUnit: "
           <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "#00c853" }} />
           <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>
             Bids&nbsp;
-            <span className="font-mono tabular-nums" style={{ color: "#00c853" }}>
+            <span className="tabular-nums" style={{ color: "#00c853" }}>
               {(() => {
                 const last = bids[bids.length - 1];
                 return fmtTotal(bookUnit === "quote" && last ? last.total * last.price : last?.total ?? 0);
@@ -361,7 +361,7 @@ function DepthChart({ market, bookUnit }: { market: LiveMarketState; bookUnit: "
           <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "#ff1744" }} />
           <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>
             Asks&nbsp;
-            <span className="font-mono tabular-nums" style={{ color: "#ff1744" }}>
+            <span className="tabular-nums" style={{ color: "#ff1744" }}>
               {(() => {
                 const last = asks[asks.length - 1];
                 return fmtTotal(bookUnit === "quote" && last ? last.total * last.price : last?.total ?? 0);
@@ -585,7 +585,7 @@ export function MobileOrderBookView({ market, walletAddress, pairId, baseSymbol,
                     {bid && (
                       <div className="relative z-10 flex items-center gap-1 px-3 overflow-hidden">
                         {bid.isMyOrder && <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "#f5c518" }} />}
-                        <span className="font-mono tabular-nums text-[12px] text-[#00c853] truncate" style={{ opacity: 0.7 }}>
+                        <span className="tabular-nums text-[12px] text-[#00c853] truncate" style={{ opacity: 0.7 }}>
                           {fmtTotal(bookUnit === "quote" ? bid.total * bid.price : bid.total)}
                         </span>
                       </div>
@@ -596,7 +596,7 @@ export function MobileOrderBookView({ market, walletAddress, pairId, baseSymbol,
                   <div className={`overflow-hidden flex items-center justify-end px-2 ${bid?.flash === "up" ? "flash-up" : bid?.flash === "down" ? "flash-down" : ""}`}>
                     {bid && (
                       <span
-                        className="font-mono tabular-nums text-[13px] font-medium truncate"
+                        className="tabular-nums text-[13px] font-medium truncate"
                         style={{ color: bid.isMyOrder ? "#f5c518" : "#00c853" }}
                       >
                         {fmtPrice(bid.price, decimals)}
@@ -610,7 +610,7 @@ export function MobileOrderBookView({ market, walletAddress, pairId, baseSymbol,
                     <div className={`flex items-center px-2 overflow-hidden flex-1 min-w-0 ${ask?.flash === "up" ? "flash-up" : ask?.flash === "down" ? "flash-down" : ""}`}>
                       {ask && (
                         <span
-                          className="font-mono tabular-nums text-[13px] font-medium truncate"
+                          className="tabular-nums text-[13px] font-medium truncate"
                           style={{ color: ask.isMyOrder ? "#f5c518" : "#ff1744" }}
                         >
                           {fmtPrice(ask.price, decimals)}
@@ -628,7 +628,7 @@ export function MobileOrderBookView({ market, walletAddress, pairId, baseSymbol,
                     )}
                     {ask && (
                       <div className="relative z-10 flex items-center gap-1 px-3 overflow-hidden">
-                        <span className="font-mono tabular-nums text-[12px] text-[#ff1744] truncate" style={{ opacity: 0.7 }}>
+                        <span className="tabular-nums text-[12px] text-[#ff1744] truncate" style={{ opacity: 0.7 }}>
                           {fmtTotal(bookUnit === "quote" ? ask.total * ask.price : ask.total)}
                         </span>
                         {ask.isMyOrder && <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "#f5c518" }} />}

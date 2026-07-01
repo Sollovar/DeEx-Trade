@@ -213,13 +213,13 @@ function MiniRow({ row, side, maxSize, onFill, decimals }: {
         }}
       />
       <span
-        className="font-mono tabular-nums text-[11px] font-semibold z-10 pl-2"
+        className="tabular-nums text-[11px] font-semibold z-10 pl-2"
         style={{ color: priceColor, flex: "1 1 0", minWidth: 0 }}
       >
         {fmtPrice(row.price, decimals)}
       </span>
       <span
-        className="font-mono tabular-nums text-[11px] z-10 pr-2 text-right"
+        className="tabular-nums text-[11px] z-10 pr-2 text-right"
         style={{ color: "var(--m-fg-3)", flex: "0 0 auto" }}
       >
         {fmtSize(row.size)}
@@ -363,7 +363,7 @@ function MiniTickSelector({ value, onChange }: { value: number; onChange: (v: nu
   return (
     <>
       <button ref={btnRef} onClick={toggle}
-        className="flex items-center gap-0.5 font-mono font-semibold rounded px-1.5 py-0.5"
+        className="flex items-center gap-0.5 font-semibold rounded px-1.5 py-0.5"
         style={{
           fontSize: 10,
           color: open ? "#f5c518" : "var(--m-fg-4)",
@@ -462,7 +462,7 @@ function MiniPriceChart({
       >
         <div className="flex flex-col leading-none gap-0.5">
           <span
-            className="font-mono font-bold tabular-nums"
+            className="font-bold tabular-nums"
             style={{ fontSize: 17, color: lineColor }}
           >
             {fmtCompactPrice(currentPrice)}
@@ -471,7 +471,7 @@ function MiniPriceChart({
         </div>
         <div className="text-right flex flex-col leading-none gap-0.5">
           <span
-            className="font-mono font-bold tabular-nums"
+            className="font-bold tabular-nums"
             style={{ fontSize: 13, color: lineColor }}
           >
             {isUp ? "+" : ""}{(change24h * 100).toFixed(2)}%
@@ -829,33 +829,33 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
           <div className="text-right flex flex-col leading-none gap-[4px]">
             {/* Line 1: Gecko (market/default) price with change + USD equiv */}
             <div className="flex items-center justify-end gap-1">
-              <span className="font-bold text-[15px] font-mono tabular-nums leading-none" style={{ color: geckoColor }}>
+              <span className="font-bold text-[15px] tabular-nums leading-none" style={{ color: geckoColor }}>
                 {geckoPrice > 0 ? fmtCompactPrice(geckoPrice) : "—"}
               </span>
               {geckoPrice > 0 && (
-                <span className="font-mono text-[11px] font-semibold tabular-nums" style={{ color: geckoColor }}>
+                <span className="text-[11px] font-semibold tabular-nums" style={{ color: geckoColor }}>
                   {geckoUp ? "+" : ""}{geckoChange.toFixed(2)}%
                 </span>
               )}
             </div>
             {geckoPriceUSD != null && geckoPriceUSD > 0 && (
-              <div className="text-[10px] font-mono tabular-nums leading-none" style={{ color: "#94a3b8" }}>
+              <div className="text-[10px] tabular-nums leading-none" style={{ color: "#94a3b8" }}>
                 ≈ {fmtUsd(geckoPriceUSD)}
               </div>
             )}
             {/* Line 2: Exchange (backend fill) price with change + USD equiv */}
             <div className="flex items-center justify-end gap-1" style={{ marginTop: 2 }}>
-              <span className="font-mono text-[12px] tabular-nums leading-none" style={{ color: "var(--m-fg-3)" }}>
+              <span className="text-[12px] tabular-nums leading-none" style={{ color: "var(--m-fg-3)" }}>
                 {exchangePrice > 0 ? fmtCompactPrice(exchangePrice) : "—"}
               </span>
               {exchangePrice > 0 && (
-                <span className="font-mono text-[10px] tabular-nums" style={{ color: exchangeColor }}>
+                <span className="text-[10px] tabular-nums" style={{ color: exchangeColor }}>
                   {exchangeUp ? "+" : ""}{exchangeChange.toFixed(2)}%
                 </span>
               )}
             </div>
             {exchangePrice > 0 && exchangePriceUSD > 0 && (
-              <div className="text-[10px] font-mono tabular-nums leading-none" style={{ color: "#94a3b8" }}>
+              <div className="text-[10px] tabular-nums leading-none" style={{ color: "#94a3b8" }}>
                 ≈ {fmtUsd(exchangePriceUSD)}
               </div>
             )}
@@ -928,14 +928,14 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                     onFocus={() => setPriceFocused(true)}
                     onBlur={() => setPriceFocused(false)}
                     onChange={(e) => { priceUserEdited.current = true; setLimitPrice(e.target.value); }}
-                    className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                    className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                     style={{ color: "var(--m-fg)" }}
                   />
                   <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>{quoteToken}</span>
                 </div>
                 {limitPrice && parseFloat(limitPrice) > 0 && (
                   <div className="flex justify-end pr-1">
-                    <span className="text-[10px] font-mono" style={{ color: "#94a3b8" }}>
+                    <span className="text-[10px]" style={{ color: "#94a3b8" }}>
                       ≈ {fmtUsd(parseFloat(limitPrice) * usdPerQuote)}
                     </span>
                   </div>
@@ -955,7 +955,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                     placeholder="0.00"
                     value={ladderPriceStart}
                     onChange={(e) => setLadderPriceStart(e.target.value)}
-                    className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                    className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                     style={{ color: "var(--m-fg)" }}
                   />
                   <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>{quoteToken}</span>
@@ -969,7 +969,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                     placeholder="0.00"
                     value={ladderPriceEnd}
                     onChange={(e) => setLadderPriceEnd(e.target.value)}
-                    className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                    className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                     style={{ color: "var(--m-fg)" }}
                   />
                   <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>{quoteToken}</span>
@@ -987,7 +987,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                       const n = Math.min(30, Math.max(1, Number(v) || 1));
                       setLadderLevels(v === "" ? "" : String(n));
                     }}
-                    className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                    className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                     style={{ color: "var(--m-fg)" }}
                   />
                   <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>/ 30</span>
@@ -1024,13 +1024,13 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
               <span style={{ color: "var(--m-fg-4)" }}>{t('trade.availToTrade')}</span>
               <div className="flex items-center gap-2">
                 {!isConnected ? (
-                  <span className="font-mono font-medium" style={{ color: "var(--m-fg-5)" }}>—</span>
+                  <span className="font-medium" style={{ color: "var(--m-fg-5)" }}>—</span>
                 ) : balLoading ? (
-                  <span className="font-mono font-medium" style={{ color: "var(--m-fg-5)" }}>…</span>
+                  <span className="font-medium" style={{ color: "var(--m-fg-5)" }}>…</span>
                 ) : (
                   <>
                     <button
-                      className="font-mono font-medium tabular-nums flex items-center gap-1"
+                      className="font-medium tabular-nums flex items-center gap-1"
                       style={{ color: "var(--m-fg-3)" }}
                       onClick={refetchBalances}
                       title="Tap to refresh"
@@ -1057,7 +1057,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                   placeholder={t('trade.size')}
                   value={size}
                   onChange={(e) => setSize(e.target.value.replace(/[^0-9.]/g, ""))}
-                  className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30"
+                  className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30"
                   style={{ color: "var(--m-fg)" }}
                 />
                 <div className="w-px h-3.5 shrink-0" style={{ backgroundColor: "var(--m-bg-4)" }} />
@@ -1072,13 +1072,13 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
               {tokenEquiv && (
                 <div className="flex items-center justify-end gap-1 px-1">
                   <span className="text-[10px]" style={{ color: "var(--m-fg-5)" }}>≈</span>
-                  <span className="text-[10px] font-mono font-medium" style={{ color: "#f5c518" }}>{tokenEquiv}</span>
+                  <span className="text-[10px] font-medium" style={{ color: "#f5c518" }}>{tokenEquiv}</span>
                 </div>
               )}
               {!isNaN(sizeNum) && sizeNum > 0 && (
                 <div className="flex items-center justify-end gap-1 px-1">
                   <span className="text-[10px]" style={{ color: "#94a3b8" }}>≈</span>
-                  <span className="text-[10px] font-mono font-medium" style={{ color: "#94a3b8" }}>
+                  <span className="text-[10px] font-medium" style={{ color: "#94a3b8" }}>
                     {fmtUsd(sizeUnit === "base" ? sizeNum * execPrice * usdPerQuote : sizeNum * usdPerQuote)} USD
                   </span>
                 </div>
@@ -1166,7 +1166,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                         placeholder="Take Profit price"
                         value={tpPrice}
                         onChange={(e) => setTpPrice(e.target.value)}
-                        className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                        className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                         style={{ color: "var(--m-fg)" }}
                       />
                       <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>{quoteToken}</span>
@@ -1180,7 +1180,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                         placeholder="Stop Loss price"
                         value={slPrice}
                         onChange={(e) => setSlPrice(e.target.value)}
-                        className="bg-transparent outline-none flex-1 font-mono text-[13px] w-0 placeholder:opacity-30 text-right"
+                        className="bg-transparent outline-none flex-1 text-[13px] w-0 placeholder:opacity-30 text-right"
                         style={{ color: "var(--m-fg)" }}
                       />
                       <span className="text-[11px] font-semibold shrink-0" style={{ color: "var(--m-fg-4)" }}>{quoteToken}</span>
@@ -1196,13 +1196,13 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
               <div className="flex items-start justify-between">
                 <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>Order Value</span>
                 <div className="flex flex-col items-end leading-none gap-[3px]">
-                  <span className="text-[11px] font-mono font-medium" style={{ color: "var(--m-fg-3)" }}>
+                  <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-3)" }}>
                     {orderType === "Ladder" && ladderAvgPrice
                       ? `~${orderValue} (avg @ ${ladderAvgPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`
                       : orderValue}
                   </span>
                   {!isNaN(sizeNum) && sizeNum > 0 && !isNaN(execPrice) && (
-                    <span className="text-[10px] font-mono" style={{ color: "#94a3b8" }}>
+                    <span className="text-[10px]" style={{ color: "#94a3b8" }}>
                       ≈ {fmtUsd(sizeUnit === "base" ? sizeNum * execPrice * usdPerQuote : sizeNum * usdPerQuote)} USD
                     </span>
                   )}
@@ -1211,7 +1211,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
               {/* Slippage row */}
               <div className="flex items-center justify-between">
                 <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>Slippage</span>
-                <span className="text-[11px] font-mono font-medium" style={{ color: "#f5c518" }}>
+                <span className="text-[11px] font-medium" style={{ color: "#f5c518" }}>
                   {orderType === "Ladder" ? "Spread across levels" : "Est: 0% / Max: 0.50%"}
                 </span>
               </div>
@@ -1246,17 +1246,17 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                     <>
                       <div className="flex items-center justify-between">
                         <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>Child Orders</span>
-                        <span className="text-[11px] font-mono font-bold" style={{ color: "#a78bfa" }}>{totalOrders}</span>
+                        <span className="text-[11px] font-bold" style={{ color: "#a78bfa" }}>{totalOrders}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>Price Interval</span>
-                        <span className="text-[11px] font-mono font-medium" style={{ color: "var(--m-fg-3)" }}>
+                        <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-3)" }}>
                           {interval!.toFixed(3)} {quoteToken}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-[11px]" style={{ color: "var(--m-fg-4)" }}>Range</span>
-                        <span className="text-[11px] font-mono font-medium" style={{ color: "var(--m-fg-3)" }}>
+                        <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-3)" }}>
                           {Math.min(start, end).toFixed(3)} → {Math.max(start, end).toFixed(3)}
                         </span>
                       </div>
@@ -1389,7 +1389,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                 style={{ backgroundColor: "var(--m-bg-2)" }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-bold tabular-nums text-[12px] leading-none" style={{ color: priceUp ? "#00c8a0" : "#ff4d6a" }}>
+                  <span className="font-bold tabular-nums text-[12px] leading-none" style={{ color: priceUp ? "#00c8a0" : "#ff4d6a" }}>
                     {fmtCompactPrice(market.price)}
                   </span>
                   <span className="text-[9px] font-semibold" style={{ color: priceUp ? "#00c8a0" : "#ff4d6a", opacity: 0.8 }}>
@@ -1397,7 +1397,7 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
                   </span>
                 </div>
                 {usdPerQuote > 0 && market.price > 0 && (
-                  <span className="font-mono text-[9px] tabular-nums leading-none" style={{ color: "var(--m-fg-5)" }}>
+                  <span className="text-[9px] tabular-nums leading-none" style={{ color: "var(--m-fg-5)" }}>
                     ≈ {fmtUsd(market.price * usdPerQuote)}
                   </span>
                 )}
@@ -1421,10 +1421,10 @@ export function MobileTradeView({ market, currentSymbol, pair, onOpenMarketPanel
           <div className="shrink-0 px-2 pb-1">
             {/* Labels */}
             <div className="flex items-center justify-between mb-1">
-              <span className="font-mono text-[9px] font-bold" style={{ color: "#00c8a0" }}>
+              <span className="text-[9px] font-bold" style={{ color: "#00c8a0" }}>
                 B {bidPct}%
               </span>
-              <span className="font-mono text-[9px] font-bold" style={{ color: "#ff4d6a" }}>
+              <span className="text-[9px] font-bold" style={{ color: "#ff4d6a" }}>
                 {askPct}% S
               </span>
             </div>

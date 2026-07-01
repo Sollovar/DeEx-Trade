@@ -121,7 +121,7 @@ function SRow({ label, value, accent }: { label: string; value: string; accent?:
   return (
     <div className="flex items-center justify-between py-2.5" style={{ borderBottom: "1px solid var(--m-bdr)" }}>
       <span className="text-[12px]" style={{ color: "var(--m-fg-4)" }}>{label}</span>
-      <span className="text-[12px] font-semibold font-mono" style={{ color: accent ?? "var(--m-fg)" }}>{value}</span>
+      <span className="text-[12px] font-semibold" style={{ color: accent ?? "var(--m-fg)" }}>{value}</span>
     </div>
   );
 }
@@ -133,7 +133,7 @@ function AddrRow({ label, value, net }: { label: string; value: string; net: str
     <div className="flex items-center justify-between py-2.5" style={{ borderBottom: "1px solid var(--m-bdr)" }}>
       <span className="text-[11px] shrink-0 mr-2" style={{ color: "var(--m-fg-5)" }}>{label}</span>
       <div className="flex items-center gap-2 min-w-0">
-        <span className="text-[11px] font-mono truncate" style={{ color: "var(--m-fg-3)" }}>{shortAddr(value)}</span>
+        <span className="text-[11px] truncate" style={{ color: "var(--m-fg-3)" }}>{shortAddr(value)}</span>
         <CopyBtn text={value} />
         {url && (
           <a href={url} target="_blank" rel="noreferrer" className="shrink-0 active:opacity-50">

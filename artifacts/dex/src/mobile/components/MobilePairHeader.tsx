@@ -205,7 +205,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
           <Sparkline prices={priceHistory} color={sparkColor} w={68} h={24} />
           <div className="text-right flex flex-col leading-none gap-[3px]">
             <div
-              className="font-bold text-[17px] font-mono tabular-nums leading-none"
+              className="font-bold text-[17px] tabular-nums leading-none"
               style={{
                 color: priceColor,
                 transition: "color 0.15s ease",
@@ -222,7 +222,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
               )}
             </div>
             {geckoPriceUSD != null && geckoPriceUSD > 0 && (
-              <div className="text-[10px] font-mono tabular-nums leading-none" style={{ color: "var(--m-fg-5)" }}>
+              <div className="text-[10px] tabular-nums leading-none" style={{ color: "var(--m-fg-5)" }}>
                 ≈ {fmtUsdHeader(geckoPriceUSD)}
               </div>
             )}
@@ -248,7 +248,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
         >
           <div className="flex flex-col gap-0.5 pt-3">
             <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h High</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#00c853" }}>
+            <span className="text-[13px] font-semibold tabular-nums" style={{ color: "#00c853" }}>
               {high24h > 0
                 ? high24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
                 : "—"}
@@ -257,7 +257,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
 
           <div className="flex flex-col gap-0.5 pt-3">
             <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Low</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "#ff4d6a" }}>
+            <span className="text-[13px] font-semibold tabular-nums" style={{ color: "#ff4d6a" }}>
               {low24h > 0
                 ? low24h.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
                 : "—"}
@@ -266,14 +266,14 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
 
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>24h Volume</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
+            <span className="text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
               {volume24hNative > 0 ? fmtNative(volume24hNative) : "—"}
               {volume24hNative > 0 && (
                 <span className="text-[10px] font-normal" style={{ color: "var(--m-fg-5)" }}> {quoteSymbol2}</span>
               )}
             </span>
             {volume24hUSD > 0 && (
-              <span className="font-mono text-[11px] tabular-nums" style={{ color: "var(--m-fg-5)" }}>
+              <span className="text-[11px] tabular-nums" style={{ color: "var(--m-fg-5)" }}>
                 ≈ {fmtVolume(volume24hUSD)}
               </span>
             )}
@@ -281,7 +281,7 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
 
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>Liquidity</span>
-            <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
+            <span className="text-[13px] font-semibold tabular-nums" style={{ color: "var(--m-fg-2)" }}>
               {fmtVolume(liquidity)}
             </span>
           </div>
@@ -289,19 +289,19 @@ export function MobilePairHeader({ market, currentSymbol, pair, flash, onOpenMar
           <div className="flex flex-col gap-0.5 col-span-2" style={{ borderTop: "1px solid var(--m-bg-3)", paddingTop: 10 }}>
             <span className="text-[11px] font-medium" style={{ color: "var(--m-fg-4)" }}>Last Exchange Price</span>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[13px] font-semibold tabular-nums" style={{ color: exchangeChangeColor }}>
+              <span className="text-[13px] font-semibold tabular-nums" style={{ color: exchangeChangeColor }}>
                 {exchangePrice > 0
                   ? exchangePrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
                   : "—"}
               </span>
               {exchangePrice > 0 && (
-                <span className="font-mono text-[11px] font-semibold tabular-nums" style={{ color: exchangeChangeColor }}>
+                <span className="text-[11px] font-semibold tabular-nums" style={{ color: exchangeChangeColor }}>
                   {exchangeChange >= 0 ? "+" : ""}{exchangeChange.toFixed(2)}%
                 </span>
               )}
             </div>
             {exchangePrice > 0 && exchangePriceUSD > 0 && (
-              <span className="font-mono text-[11px] tabular-nums" style={{ color: "var(--m-fg-5)" }}>
+              <span className="text-[11px] tabular-nums" style={{ color: "var(--m-fg-5)" }}>
                 ≈ {fmtUsdHeader(exchangePriceUSD)}
               </span>
             )}
