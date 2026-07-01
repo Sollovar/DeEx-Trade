@@ -17,16 +17,18 @@ export function DesktopTradePage() {
   const activePairId = useStore((s) => s.selectedPair?.id);
   const chartScrollRef = useRef<HTMLDivElement>(null);
   const orderEntryScrollRef = useRef<HTMLDivElement>(null);
+  const activeScrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      const target = activeScrollRef.current ?? chartScrollRef.current;
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        chartScrollRef.current?.scrollBy({ top: SCROLL_STEP, behavior: "smooth" });
+        target?.scrollBy({ top: SCROLL_STEP, behavior: "smooth" });
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        chartScrollRef.current?.scrollBy({ top: -SCROLL_STEP, behavior: "smooth" });
+        target?.scrollBy({ top: -SCROLL_STEP, behavior: "smooth" });
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -49,6 +51,7 @@ export function DesktopTradePage() {
             border: "1px solid #1e1e1e",
             boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
+          onMouseDown={() => { activeScrollRef.current = chartScrollRef.current; }}
         >
           <div ref={chartScrollRef} className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
             <div style={{ height: CHART_H, minHeight: 400, flexShrink: 0 }}>
@@ -76,8 +79,7 @@ export function DesktopTradePage() {
 
         {/* RIGHT: order entry card */}
         <div
-          ref={orderEntryScrollRef}
-          className="flex flex-col overflow-y-auto no-scrollbar shrink-0"
+          className="flex flex-col overflow-hidden shrink-0"
           style={{
             width: 272,
             background: "#000000",
@@ -85,8 +87,11 @@ export function DesktopTradePage() {
             border: "1px solid #1e1e1e",
             boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
+          onMouseDown={() => { activeScrollRef.current = orderEntryScrollRef.current; }}
         >
-          <OrderEntryPanel market={market} symbol="BTCUSDT" />
+          <div ref={orderEntryScrollRef} className="flex flex-col h-full overflow-y-auto no-scrollbar">
+            <OrderEntryPanel market={market} symbol="BTCUSDT" />
+          </div>
         </div>
 
       </div>

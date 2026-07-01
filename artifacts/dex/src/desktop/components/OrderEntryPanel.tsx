@@ -206,7 +206,7 @@ export function OrderEntryPanel({ market }: Props) {
   })();
 
   return (
-    <div className="flex flex-col bg-[#000000] h-full">
+    <div className="flex flex-col bg-[#000000]">
       {/* Tabs — 3-column grid so Market is always truly centered */}
       <div className="grid grid-cols-3 h-[38px] px-3 border-b border-[#1a1a1a] bg-[#000000] shrink-0">
         <button
@@ -241,7 +241,7 @@ export function OrderEntryPanel({ market }: Props) {
         </button>
       </div>
 
-      <div className="p-3 flex flex-col gap-3 overflow-y-auto no-scrollbar">
+      <div className="p-3 flex flex-col gap-3">
         {/* Available */}
         <div className="flex items-center justify-between text-[12px]">
           <span className="text-[#555]">Avail. to Trade</span>
