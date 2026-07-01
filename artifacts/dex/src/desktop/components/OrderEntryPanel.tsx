@@ -202,7 +202,7 @@ export function OrderEntryPanel({ market }: Props) {
     if (submitStatus === "success") return statusMsg;
     if (submitStatus === "error") return statusMsg;
     if (tab === "Ladder") return "Place Ladder Order";
-    return `${side === "long" ? "Buy / Long" : "Sell / Short"}`;
+    return `${side === "long" ? "Buy" : "Sell"}`;
   })();
 
   return (
@@ -316,7 +316,7 @@ export function OrderEntryPanel({ market }: Props) {
               border: `1px solid ${side === "long" ? "#f5c518" : "#222"}`,
             }}
           >
-            Buy / Long
+            Buy
           </button>
           <button
             onClick={() => setSide("short")}
@@ -327,7 +327,7 @@ export function OrderEntryPanel({ market }: Props) {
               border: `1px solid ${side === "short" ? "#ff4d6a" : "#222"}`,
             }}
           >
-            Sell / Short
+            Sell
           </button>
         </div>
 
