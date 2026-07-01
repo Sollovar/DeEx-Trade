@@ -44,7 +44,9 @@ function chainLabel(network?: string): string {
 export function TradingPairHeader({ market }: Props) {
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelPos, setPanelPos]   = useState({ top: 0, left: 0 });
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef  = useRef<HTMLButtonElement>(null);
+  const triggerArea = useRef<HTMLDivElement>(null);
+  const closeTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   usePairs();
   const pairs         = useStore((s) => s.pairs);
@@ -73,12 +75,29 @@ export function TradingPairHeader({ market }: Props) {
   const changePct  = (market.change24h * 100).toFixed(2);
   const changeColor = market.change24h >= 0 ? "#00c853" : "#ff1744";
 
-  function handleToggle() {
-    if (!panelOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
+  function openPanel() {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    if (!panelOpen && triggerArea.current) {
+      const rect = triggerArea.current.getBoundingClientRect();
       setPanelPos({ top: rect.bottom + 4, left: rect.left });
     }
-    setPanelOpen((v) => !v);
+    setPanelOpen(true);
+  }
+
+  function scheduleClose() {
+    closeTimer.current = setTimeout(() => setPanelOpen(false), 150);
+  }
+
+  function cancelClose() {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  }
+
+  function handleToggle() {
+    if (panelOpen) {
+      setPanelOpen(false);
+    } else {
+      openPanel();
+    }
   }
 
   return (
@@ -86,7 +105,12 @@ export function TradingPairHeader({ market }: Props) {
       <div className="flex items-center h-[52px] px-4 border-b border-[#1a1a1a] bg-[#0d0d0d] shrink-0 gap-5 whitespace-nowrap overflow-x-auto">
 
         {/* Pair selector trigger */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div
+          ref={triggerArea}
+          className="flex items-center gap-2.5 shrink-0"
+          onMouseEnter={openPanel}
+          onMouseLeave={scheduleClose}
+        >
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 overflow-hidden"
             style={{ backgroundColor: tokenColor + "22" }}
@@ -172,6 +196,8 @@ export function TradingPairHeader({ market }: Props) {
             setPanelOpen(false);
           }}
           currentSymbol={activePair ? `${activePair.baseToken?.symbol}/${activePair.quoteToken?.symbol}` : ""}
+          onMouseEnter={cancelClose}
+          onMouseLeave={scheduleClose}
         />
       )}
     </>

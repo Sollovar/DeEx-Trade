@@ -87,9 +87,11 @@ interface Props {
   onClose: () => void;
   onSelect: (symbol: string, pairId: string) => void;
   currentSymbol: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol }: Props) {
+export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol, onMouseEnter, onMouseLeave }: Props) {
   const [query, setQuery]           = useState("");
   const [marketTab, setMarketTab]   = useState<MarketTab>("Futures");
   const [categoryTab, setCategoryTab] = useState("All markets");
@@ -139,6 +141,8 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
       data-testid="pair-selector-panel"
       style={{ position: "fixed", top, left, width: 700, maxHeight: 500, zIndex: 9999 }}
       className="bg-[#000000] border border-[#252525] shadow-2xl shadow-black/90 flex flex-col"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {/* Search */}
       <div className="flex items-center gap-2 px-3 h-[38px] border-b border-[#1a1a1a] shrink-0">
