@@ -362,7 +362,7 @@ export function CandlestickChart({ livePrice = 0, showToolbar = true, pairId, ti
       {/* Loading overlay */}
       {loading && !showToolbar && (
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-          <span className="text-[#444] text-[11px] font-mono">loading chart…</span>
+          <span className="text-[#444] text-[11px]">loading chart…</span>
         </div>
       )}
 

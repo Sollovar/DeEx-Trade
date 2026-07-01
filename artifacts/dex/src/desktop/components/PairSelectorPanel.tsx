@@ -254,22 +254,22 @@ export function PairSelectorPanel({ top, left, onClose, onSelect, currentSymbol 
                 </div>
               </div>
 
-              <div className="text-right font-mono tabular-nums text-[#ccc] text-[12px]">
+              <div className="text-right tabular-nums text-[#ccc] text-[12px]">
                 {fmtPrice(pair.lastPrice)}
               </div>
 
               <div
-                className="text-right font-mono tabular-nums font-semibold text-[12px]"
+                className="text-right tabular-nums font-semibold text-[12px]"
                 style={{ color: pair.change24h >= 0 ? "#00c853" : "#ff1744" }}
               >
                 {pair.change24h >= 0 ? "+" : ""}{pair.change24h.toFixed(2)}%
               </div>
 
-              <div className="text-right font-mono tabular-nums text-[#555] text-[11px]">
+              <div className="text-right tabular-nums text-[#555] text-[11px]">
                 {fmtNum(pair.volume)}
               </div>
 
-              <div className="text-right font-mono tabular-nums text-[#555] text-[11px]">
+              <div className="text-right tabular-nums text-[#555] text-[11px]">
                 {fmtNum(pair.marketCap)}
               </div>
             </div>

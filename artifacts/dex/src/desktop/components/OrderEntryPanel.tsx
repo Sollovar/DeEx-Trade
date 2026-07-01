@@ -245,7 +245,7 @@ export function OrderEntryPanel({ market }: Props) {
         {/* Available */}
         <div className="flex items-center justify-between text-[12px]">
           <span className="text-[#555]">Avail. to Trade</span>
-          <span className="text-[#888] font-mono">0.00 {quoteToken}</span>
+          <span className="text-[#888]">0.00 {quoteToken}</span>
         </div>
 
         {/* Price input — Limit only */}
@@ -258,7 +258,7 @@ export function OrderEntryPanel({ market }: Props) {
               placeholder={displayPrice}
               value={limitPrice}
               onChange={(e) => setLimitPrice(e.target.value)}
-              className="bg-transparent outline-none flex-1 font-mono tabular-nums text-white text-[13px] font-medium w-0 text-right"
+              className="bg-transparent outline-none flex-1 tabular-nums text-white text-[13px] font-medium w-0 text-right"
             />
             <span className="text-[11px] text-[#555] shrink-0">{quoteToken}</span>
           </div>
@@ -280,7 +280,7 @@ export function OrderEntryPanel({ market }: Props) {
                   placeholder={ph}
                   value={val}
                   onChange={(e) => set(e.target.value)}
-                  className="bg-transparent outline-none flex-1 font-mono text-white text-[13px] w-0 text-right placeholder:text-[#333]"
+                  className="bg-transparent outline-none flex-1 text-white text-[13px] w-0 text-right placeholder:text-[#333]"
                 />
                 <span className="text-[11px] text-[#555] shrink-0">{quoteToken}</span>
               </div>
@@ -298,7 +298,7 @@ export function OrderEntryPanel({ market }: Props) {
                   const n = Math.min(30, Math.max(1, Number(v) || 1));
                   setLadderLevels(v === "" ? "" : String(n));
                 }}
-                className="bg-transparent outline-none flex-1 font-mono text-white text-[13px] w-0 text-right placeholder:text-[#333]"
+                className="bg-transparent outline-none flex-1 text-white text-[13px] w-0 text-right placeholder:text-[#333]"
               />
               <span className="text-[11px] text-[#555] shrink-0">/ 30</span>
             </div>
@@ -341,7 +341,7 @@ export function OrderEntryPanel({ market }: Props) {
               placeholder="0"
               value={size}
               onChange={(e) => setSize(e.target.value.replace(/[^0-9.]/g, ""))}
-              className="bg-transparent outline-none flex-1 text-white text-right font-mono text-[13px] w-0 placeholder:text-[#333]"
+              className="bg-transparent outline-none flex-1 text-white text-right text-[13px] w-0 placeholder:text-[#333]"
             />
             <div className="w-px h-3.5 bg-[#222] shrink-0" />
             <button
@@ -355,7 +355,7 @@ export function OrderEntryPanel({ market }: Props) {
           {tokenEquiv && (
             <div className="flex justify-end items-center gap-1 px-1">
               <span className="text-[11px] text-[#555]">≈</span>
-              <span className="text-[11px] font-mono font-medium text-[#f5c518]">{tokenEquiv}</span>
+              <span className="text-[11px] font-medium text-[#f5c518]">{tokenEquiv}</span>
             </div>
           )}
         </div>
@@ -427,7 +427,7 @@ export function OrderEntryPanel({ market }: Props) {
                     placeholder="Take Profit price"
                     value={tpPrice}
                     onChange={(e) => setTpPrice(e.target.value)}
-                    className="bg-transparent outline-none flex-1 font-mono text-white text-[13px] w-0 text-right placeholder:text-[#333]"
+                    className="bg-transparent outline-none flex-1 text-white text-[13px] w-0 text-right placeholder:text-[#333]"
                   />
                   <span className="text-[11px] text-[#555] shrink-0">{quoteToken}</span>
                 </div>
@@ -439,7 +439,7 @@ export function OrderEntryPanel({ market }: Props) {
                     placeholder="Stop Loss price"
                     value={slPrice}
                     onChange={(e) => setSlPrice(e.target.value)}
-                    className="bg-transparent outline-none flex-1 font-mono text-white text-[13px] w-0 text-right placeholder:text-[#333]"
+                    className="bg-transparent outline-none flex-1 text-white text-[13px] w-0 text-right placeholder:text-[#333]"
                   />
                   <span className="text-[11px] text-[#555] shrink-0">{quoteToken}</span>
                 </div>
@@ -457,7 +457,7 @@ export function OrderEntryPanel({ market }: Props) {
             ].map(([label, value, yellow]) => (
               <div key={label as string} className="flex items-center justify-between">
                 <span className="text-[12px] text-[#555]">{label as string}</span>
-                <span className="text-[12px] font-mono" style={{ color: yellow ? "#f5c518" : "#888" }}>{value as string}</span>
+                <span className="text-[12px]" style={{ color: yellow ? "#f5c518" : "#888" }}>{value as string}</span>
               </div>
             ))}
           </div>
@@ -490,7 +490,7 @@ export function OrderEntryPanel({ market }: Props) {
                 ].map(([label, value, color]) => (
                   <div key={label} className="flex items-center justify-between">
                     <span className="text-[12px] text-[#555]">{label}</span>
-                    <span className="text-[12px] font-mono font-medium" style={{ color }}>{value}</span>
+                    <span className="text-[12px] font-medium" style={{ color }}>{value}</span>
                   </div>
                 ))}
                 <div className="flex items-end gap-[2px] mt-1" style={{ height: 20 }}>

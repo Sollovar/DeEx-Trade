@@ -18,7 +18,7 @@ function Stat({ label, value, color }: { label: string; value: string; color?: s
   return (
     <div className="flex flex-col justify-center leading-none shrink-0 gap-0.5">
       <span className="text-[11px] text-[#555]">{label}</span>
-      <span className="text-[13px] font-mono tabular-nums font-medium" style={{ color: color ?? "#ccc" }}>{value}</span>
+      <span className="text-[13px] tabular-nums font-medium" style={{ color: color ?? "#ccc" }}>{value}</span>
     </div>
   );
 }
@@ -129,12 +129,12 @@ export function TradingPairHeader({ market }: Props) {
 
         {/* Live price */}
         <div className="flex flex-col justify-center leading-none shrink-0 gap-0.5">
-          <span className="text-[20px] font-bold font-mono tabular-nums" style={{ color: priceColor }}>
+          <span className="text-[20px] font-bold tabular-nums" style={{ color: priceColor }}>
             {market.price > 0
               ? market.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })
               : "—"}
           </span>
-          <span className="text-[12px] font-mono tabular-nums" style={{ color: changeColor }}>
+          <span className="text-[12px] tabular-nums" style={{ color: changeColor }}>
             {market.change24h >= 0 ? "+" : ""}{changePct}%
           </span>
         </div>

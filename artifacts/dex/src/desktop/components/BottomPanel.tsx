@@ -102,14 +102,14 @@ function OpenOrdersView({ orders, pairs, loading, onCancel, cancelling }: OpenOr
                     {o.side === "buy" ? "Buy" : "Sell"}
                   </span>
                 </td>
-                <td className={`${TD} font-mono tabular-nums text-[#ccc]`}>{fmtPx(o.price)}</td>
-                <td className={`${TD} font-mono tabular-nums text-[#ccc]`}>{o.amount?.toFixed(6)}</td>
+                <td className={`${TD} tabular-nums text-[#ccc]`}>{fmtPx(o.price)}</td>
+                <td className={`${TD} tabular-nums text-[#ccc]`}>{o.amount?.toFixed(6)}</td>
                 <td className={TD}>
                   <div className="flex items-center gap-2">
                     <div className="w-14 h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
                       <div className="h-full bg-[#f5c518]/70 rounded-full" style={{ width: `${filledPct}%` }} />
                     </div>
-                    <span className="font-mono tabular-nums text-[#888] text-[11px]">{filledPct.toFixed(0)}%</span>
+                    <span className="tabular-nums text-[#888] text-[11px]">{filledPct.toFixed(0)}%</span>
                   </div>
                 </td>
                 <td className={TD}>
@@ -117,7 +117,7 @@ function OpenOrdersView({ orders, pairs, loading, onCancel, cancelling }: OpenOr
                     {o.status ?? "open"}
                   </span>
                 </td>
-                <td className={`${TD} font-mono tabular-nums text-[#555]`}>{fmtTime(o.createdAt ?? "")}</td>
+                <td className={`${TD} tabular-nums text-[#555]`}>{fmtTime(o.createdAt ?? "")}</td>
                 <td className={TD}>
                   <button
                     onClick={() => onCancel(String(o.id))}
@@ -192,13 +192,13 @@ function OrderHistoryView({ orders, pairs, loading }: OrderHistoryViewProps) {
                     {o.side === "buy" ? "Buy" : "Sell"}
                   </span>
                 </td>
-                <td className={`${TD} font-mono tabular-nums text-[#ccc]`}>{fmtPx(parseFloat(o.price ?? "0"))}</td>
-                <td className={`${TD} font-mono tabular-nums text-[#ccc]`}>{amount.toFixed(6)}</td>
-                <td className={`${TD} font-mono tabular-nums text-[#ccc]`}>{filled.toFixed(6)}</td>
+                <td className={`${TD} tabular-nums text-[#ccc]`}>{fmtPx(parseFloat(o.price ?? "0"))}</td>
+                <td className={`${TD} tabular-nums text-[#ccc]`}>{amount.toFixed(6)}</td>
+                <td className={`${TD} tabular-nums text-[#ccc]`}>{filled.toFixed(6)}</td>
                 <td className={TD}>
                   <span className={`text-[11px] px-1.5 py-0.5 rounded font-medium ${colorClass}`}>{status}</span>
                 </td>
-                <td className={`${TD} font-mono tabular-nums text-[#555]`}>{fmtTime(o.created_at ?? "")}</td>
+                <td className={`${TD} tabular-nums text-[#555]`}>{fmtTime(o.created_at ?? "")}</td>
               </tr>
             );
           })}

@@ -23,7 +23,7 @@ export function TickerBar({ market }: Props) {
       <div className="px-3 flex items-center gap-1.5 border-r border-[#1a1a1a] h-full shrink-0 bg-[#080808] z-10">
         <span className="w-1.5 h-1.5 rounded-full bg-[#00c853] animate-pulse" />
         <span className="text-[#888]">
-          Connected <span className="font-mono tabular-nums text-[#aaa]">{market.latencyMs}ms</span>
+          Connected <span className="tabular-nums text-[#aaa]">{market.latencyMs}ms</span>
         </span>
       </div>
 
