@@ -111,19 +111,19 @@ function Row({
         style={{ width: `${row.depth}%`, backgroundColor: barColor }}
       />
       <div
-        className="font-mono tabular-nums z-10 text-[13px] font-medium"
+        className="tabular-nums z-10 text-[13px] font-medium"
         style={{ color: textColor, lineHeight: `${ROW_H}px` }}
       >
         {fmtPrice(row.price, decimals)}
       </div>
       <div
-        className="font-mono tabular-nums text-right text-[#999] z-10 text-[12px]"
+        className="tabular-nums text-right text-[#999] z-10 text-[12px]"
         style={{ lineHeight: `${ROW_H}px` }}
       >
         {fmtSize(row.size, price)}
       </div>
       <div
-        className="font-mono tabular-nums text-right text-[#666] z-10 text-[12px]"
+        className="tabular-nums text-right text-[#666] z-10 text-[12px]"
         style={{ lineHeight: `${ROW_H}px` }}
       >
         {fmtSize(row.total, price)}
@@ -334,15 +334,14 @@ function TickSizeSelector({
       <button
         ref={btnRef}
         onClick={toggle}
-        className="flex items-center gap-1 px-2 font-mono font-semibold transition-colors hover:text-white"
+        className="flex items-center gap-1 font-semibold transition-colors hover:text-white"
         style={{
-          background: open ? "rgba(245,197,24,0.12)" : "#1a1a1a",
-          border: `1px solid ${open ? "rgba(245,197,24,0.35)" : "#2a2a2a"}`,
-          borderRadius: 4,
+          background: "transparent",
+          border: "none",
           color: open ? "#f5c518" : "#bbb",
           height: 22,
-          minWidth: 52,
           fontSize: 11,
+          padding: 0,
         }}
         title="Price grouping"
       >
@@ -470,7 +469,7 @@ export function OrderBook({ market }: Props) {
           {/* Mid price */}
           <div className="flex items-center justify-center py-1.5 shrink-0 border-y border-[#1a1a1a]">
             <div
-              className="flex items-center gap-3 font-mono font-bold tabular-nums px-4 py-1"
+              className="flex items-center gap-3 font-bold tabular-nums px-4 py-1"
               style={{
                 backgroundColor: "rgba(255,255,255,0.04)",
                 border: "1px solid #222",
@@ -518,7 +517,7 @@ export function OrderBook({ market }: Props) {
             {trades.map((t, i) => (
               <div
                 key={i}
-                className="grid grid-cols-3 px-2 font-mono hover:bg-[#181818]"
+                className="grid grid-cols-3 px-2 hover:bg-[#181818]"
                 style={{ height: ROW_H }}
               >
                 <div
