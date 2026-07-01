@@ -35,7 +35,7 @@ function Check({ checked, onChange, label }: { checked: boolean; onChange: () =>
   );
 }
 
-const INPUT_ROW = "flex items-center bg-[#111] border border-[#222] focus-within:border-[#3a3a3a] px-3 h-[40px] gap-2 transition-colors rounded-full";
+const INPUT_ROW = "flex items-center bg-[#111] border border-[#222] focus-within:border-[#3a3a3a] px-3 h-[40px] gap-2 transition-colors rounded-lg";
 
 export function OrderEntryPanel({ market }: Props) {
   const { primaryWallet } = useDynamicContext();
@@ -309,7 +309,7 @@ export function OrderEntryPanel({ market }: Props) {
         <div className="flex gap-1.5">
           <button
             onClick={() => setSide("long")}
-            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-full"
+            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-lg"
             style={{
               backgroundColor: side === "long" ? "#f5c518" : "transparent",
               color: side === "long" ? "#000" : "#555",
@@ -320,7 +320,7 @@ export function OrderEntryPanel({ market }: Props) {
           </button>
           <button
             onClick={() => setSide("short")}
-            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-full"
+            className="flex-1 py-2 text-[13px] font-bold transition-all rounded-lg"
             style={{
               backgroundColor: side === "short" ? "#ff4d6a" : "transparent",
               color: side === "short" ? "#fff" : "#555",
@@ -525,7 +525,7 @@ export function OrderEntryPanel({ market }: Props) {
                   fontWeight: 700,
                   fontSize: 13,
                   height: 40,
-                  borderRadius: 999,
+                  borderRadius: 8,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -548,7 +548,7 @@ export function OrderEntryPanel({ market }: Props) {
             style={{
               backgroundColor: buttonBg,
               color: tab === "Ladder" || submitStatus === "error" ? "#fff" : "#000",
-              borderRadius: 999,
+              borderRadius: 8,
             }}
           >
             {buttonLabel}
