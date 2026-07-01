@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { useLiveMarket } from "@/hooks/useLiveMarket";
 import { useStore } from "@/stores/useStore";
 import { TopNav } from "./components/TopNav";
@@ -8,19 +9,35 @@ import { OrderEntryPanel } from "./components/OrderEntryPanel";
 import { TickerBar } from "./components/TickerBar";
 import { BottomPanel } from "./components/BottomPanel";
 
-// TopNav(44) + PairHeader(52) + TickerBar(28) + vertical padding(16) + card borders(2)
 const CHART_H = "calc(100vh - 142px)";
+const SCROLL_STEP = 120;
 
 export function DesktopTradePage() {
   const market = useLiveMarket();
   const activePairId = useStore((s) => s.selectedPair?.id);
+  const chartScrollRef = useRef<HTMLDivElement>(null);
+  const orderEntryScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        chartScrollRef.current?.scrollBy({ top: SCROLL_STEP, behavior: "smooth" });
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        chartScrollRef.current?.scrollBy({ top: -SCROLL_STEP, behavior: "smooth" });
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="h-screen w-full flex flex-col overflow-hidden text-sm text-white select-none" style={{ background: "#0d0d0d" }}>
       <TopNav />
       <TradingPairHeader market={market} />
 
-      {/* Main trading area — padded with gap between cards */}
       <div className="flex-1 min-h-0 flex gap-2 p-2 overflow-hidden">
 
         {/* LEFT: chart card */}
@@ -33,12 +50,10 @@ export function DesktopTradePage() {
             boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
         >
-          <div className="flex-1 min-h-0 overflow-y-auto">
-            {/* Chart fills the visible screen height */}
+          <div ref={chartScrollRef} className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
             <div style={{ height: CHART_H, minHeight: 400, flexShrink: 0 }}>
               <CandlestickChart livePrice={market.price} pairId={activePairId} />
             </div>
-            {/* Open Orders / Order History scrolls into view below */}
             <div style={{ minHeight: 220, flexShrink: 0 }}>
               <BottomPanel />
             </div>
@@ -61,7 +76,8 @@ export function DesktopTradePage() {
 
         {/* RIGHT: order entry card */}
         <div
-          className="flex flex-col overflow-y-auto shrink-0"
+          ref={orderEntryScrollRef}
+          className="flex flex-col overflow-y-auto no-scrollbar shrink-0"
           style={{
             width: 272,
             background: "#000000",

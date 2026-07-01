@@ -1,5 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
