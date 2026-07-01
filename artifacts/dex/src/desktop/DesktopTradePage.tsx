@@ -49,7 +49,7 @@ export function DesktopTradePage() {
         <div
           className="flex flex-col overflow-hidden shrink-0"
           style={{
-            width: 300,
+            width: 272,
             background: "#000000",
             borderRadius: 12,
             border: "1px solid #1e1e1e",
@@ -63,7 +63,7 @@ export function DesktopTradePage() {
         <div
           className="flex flex-col overflow-y-auto shrink-0"
           style={{
-            width: 268,
+            width: 272,
             background: "#000000",
             borderRadius: 12,
             border: "1px solid #1e1e1e",
