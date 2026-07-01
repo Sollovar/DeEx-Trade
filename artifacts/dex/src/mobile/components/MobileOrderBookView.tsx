@@ -174,7 +174,7 @@ function TickSizeSelector({
                   width: "100%",
                   padding: "8px 14px",
                   fontSize: 13,
-                  fontFamily: "monospace",
+                  fontFamily: "inherit",
                   color: active ? "#f5c518" : "#ccc",
                   background: active ? "rgba(245,197,24,0.07)" : "transparent",
                   cursor: "pointer",
@@ -318,7 +318,7 @@ function DepthChart({ market, bookUnit }: { market: LiveMarketState; bookUnit: "
 
         <rect x={midX - 30} y={PAD.top - 1} width={60} height={15} rx={4} fill="rgba(245,197,24,0.18)" />
         <text x={midX} y={PAD.top + 10} textAnchor="middle" fontSize="9"
-          fontWeight="600" fontFamily="monospace" fill="#f5c518">
+          fontWeight="600" fontFamily="inherit" fill="#f5c518">
           {fmtPrice(midPrice)}
         </text>
 
@@ -328,14 +328,14 @@ function DepthChart({ market, bookUnit }: { market: LiveMarketState; bookUnit: "
         {labels.map((l) => (
           <text key={l.text} x={l.x} y={yZero + 14}
             textAnchor={l.anchor as "start" | "middle" | "end"}
-            fontSize="9" fontFamily="monospace" fill="rgba(255,255,255,0.35)">
+            fontSize="9" fontFamily="inherit" fill="rgba(255,255,255,0.35)">
             {l.text}
           </text>
         ))}
 
         {yTicks.map((t) => (
           <text key={t.y} x={PAD.left + 4} y={t.y - 3}
-            fontSize="8" fontFamily="monospace" fill="rgba(255,255,255,0.3)">
+            fontSize="8" fontFamily="inherit" fill="rgba(255,255,255,0.3)">
             {t.label}
           </text>
         ))}

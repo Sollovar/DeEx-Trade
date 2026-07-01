@@ -345,7 +345,7 @@ function MiniTickSelector({ value, onChange }: { value: number; onChange: (v: nu
               onMouseDown={e => { e.preventDefault(); onChange(opt); setOpen(false); }}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
-                width: "100%", padding: "7px 14px", fontSize: 13, fontFamily: "monospace",
+                width: "100%", padding: "7px 14px", fontSize: 13, fontFamily: "inherit",
                 color: active ? "#f5c518" : "#ccc",
                 background: active ? "rgba(245,197,24,0.07)" : "transparent",
                 cursor: "pointer", border: "none", textAlign: "left",

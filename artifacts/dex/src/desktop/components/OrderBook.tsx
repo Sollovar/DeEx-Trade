@@ -298,7 +298,7 @@ function TickSizeSelector({
                   width: "100%",
                   padding: "6px 12px",
                   fontSize: 12,
-                  fontFamily: "monospace",
+                  fontFamily: "inherit",
                   color: active ? "#f5c518" : "#aaa",
                   background: active ? "rgba(245,197,24,0.06)" : "transparent",
                   cursor: "pointer",

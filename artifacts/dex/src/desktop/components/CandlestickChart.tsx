@@ -154,7 +154,7 @@ export function CandlestickChart({ livePrice = 0, showToolbar = true, pairId, ti
       layout: {
         background: { color: "#000000" },
         textColor: "#555",
-        fontFamily: "monospace",
+        fontFamily: "inherit",
       },
       grid: {
         vertLines: { color: "rgba(255,255,255,0.025)" },
