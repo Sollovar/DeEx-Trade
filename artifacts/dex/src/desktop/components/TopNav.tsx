@@ -112,7 +112,7 @@ function MoreDropdown() {
 
 export function TopNav() {
   return (
-    <div className="flex items-center justify-between h-[44px] px-4 border-b border-[#1e1e1e] bg-[#000000] shrink-0 text-xs">
+    <div className="flex items-center justify-between h-[44px] px-4 border-b border-[#1a1a1a] bg-[#0d0d0d] shrink-0 text-xs">
       <div className="flex items-center gap-6 h-full">
         <div className="flex items-center gap-2 font-bold text-lg tracking-wider text-primary">
           <div className="w-5 h-5 bg-primary rotate-45 rounded-sm" />

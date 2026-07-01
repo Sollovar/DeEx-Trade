@@ -27,10 +27,10 @@ export function DesktopTradePage() {
         <div
           className="flex flex-col flex-1 min-w-0 overflow-hidden"
           style={{
-            background: "#0a0a0a",
+            background: "#000000",
             borderRadius: 12,
             border: "1px solid #1e1e1e",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
         >
           <div className="flex-1 min-h-0 overflow-y-auto">
@@ -50,10 +50,10 @@ export function DesktopTradePage() {
           className="flex flex-col overflow-hidden shrink-0"
           style={{
             width: 300,
-            background: "#0a0a0a",
+            background: "#000000",
             borderRadius: 12,
             border: "1px solid #1e1e1e",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
         >
           <OrderBook market={market} />
@@ -64,10 +64,10 @@ export function DesktopTradePage() {
           className="flex flex-col overflow-y-auto shrink-0"
           style={{
             width: 268,
-            background: "#0a0a0a",
+            background: "#000000",
             borderRadius: 12,
             border: "1px solid #1e1e1e",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.8)",
           }}
         >
           <OrderEntryPanel market={market} symbol="BTCUSDT" />
